@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table{
+            float: left;
+        }
+        div#both{
+            clear: both;
+        }
+    </style>
+    <script>
+        // 변하는 가로 세로 
+        let line = prompt("행의 개수를 입력하세요.","")
+        let row = prompt("열의 개수를 입력하세요.","")
+        line = parseInt(line)
+        row = parseInt(row)
+        document.write("<h3>" + line + "X" + row + " 행렬의 크기" + "</h3>");
+            for(x = 1; x <= line; x ++){
+                console.log(9)
+                document.write("<table border = 1>");
+                    for(y = 1; y <= row; y ++){
+                    document.write("<tr><td>");
+                    document.write(x + "X" + y + "=" + (x*y) );
+                    document.write("</td></tr>");
+                }
+
+                    
+
+                document.write("</table>")
+  
+            }
+        document.write("<div id='both'><br>")
+        document.write("따라서 행렬의 크기는 " + (line * row) + "이다." );
+        document.write("</div>")
+
+
+
+        // 값들의 배치에 대해 좀더 공부해야 겠다.
+      
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
