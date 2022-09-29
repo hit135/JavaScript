@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // 숫자를 입력 받아서
+        // 트리를 크려주세요 (콘솔)
+
+        let num = prompt("숫자를 입력하세요!");
+        // tip1 입력 받은 수만큼 for
+        // 규칙을 생각하세요.(처음은 공백이 많음)
+        // for문이 반복 될때마다 공백 대신 
+        // *이 많아짐
+
+        // for(let i = 1 ; i <= num; i ++){
+        //     console.log("i:",i);
+        //     for(let x = (2*i - 1); x <= num; x++){          // for문 초기값에 변수를 주면 안되나
+        //          document.write("*");
+        //          console.log(5);
+        //     }
+        // }
+
+        let tree = "";
+        // for(let p = (num - 1) ; p >= 0; p -- ){
+        //     console.log("p:",p);
+        //     tree += " ";
+        // }
+
+        // for(let i = 1 ; i <= num; i ++){
+        //     for(let j = 1 ; j <= (num - i); j ++){                  // 틀린 이유 : 따로 반복하고 있잖아!
+        //     }
+        // }
+
+        // 각 요소값을 더해주면 되는데
+        // ex7_4가 각 요소값 덧셈인데..
+        // 활용을 못하겠다.
+
+        for(let i = 1 ; i<= num; i ++){
+            // 공백과 열을 담을 공간이 필요하다.
+            for(let p = 1 ; p <= (num - i); p ++){
+                tree += " ";
+            }
+            for(let j = 1 ; j <= i * 2 - 1; j ++){
+                tree += "*";
+            }
+            tree += '\n'
+        }
+        console.log(tree);
+        
+       
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

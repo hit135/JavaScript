@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script>
+       let num = prompt("숫자를 입력하세요!");
+       let tree = "";
+       for(let i = 1 ; i<= num; i ++){
+            // 공백과 열을 담을 공간이 필요하다.
+            for(let p = 1 ; p <= (num - i); p ++){
+                tree += " ";
+            }
+            for(let j = 1 ; j <= i * 2 - 1; j ++){
+                tree += "*";
+            }
+            tree += '\n'
+        }
+
+        for( i = 2 ; i <= num ; i ++){
+            for( p = 1 ; p <= (i - 1); p ++ ){
+                tree += " "
+            }
+            for( j = 1 ; j <= (2 * num) - (2 * i - 1) ; j ++ ){
+                tree += "*"                
+            }
+            tree += "\n"
+        }
+
+        console.log(tree);
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
