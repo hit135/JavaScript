@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>DOM 객체의 프로퍼티</h3>
+    <hr>
+    <p id = "firstP" style= "color:white; background-color: aqua;" onclick="change()">
+        돔 객체의 
+        <span>
+            프로퍼티
+        </span>
+        들입니다.
+    </p>
+    <script>
+
+        let p = document.getElementById("firstP");
+        console.log(p);
+        let text = "p.id : " + p.id + "\n";
+        text += "p.tagName : " + p.tagName + "\n";
+        text += "p.innerHTML : " + p.innerHTML + "\n"
+        text += "p.style.color : " + p.style.color + "\n"
+        text += "p.onclick : " + p.onclick + "\n"
+        text += "p.childElementCount : " + p.childElementCount + "\n"
+        text += "p.tagName : " + p.tagName + "\n"
+        text += "p.style.backgroundColor : " + p.style.backgroundColor + "\n"
+        alert(text);
+
+    </script>
+    
+</body>
+</html>
