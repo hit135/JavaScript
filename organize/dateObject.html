@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date 객체</title>
+    <script>
+
+        // Date 객체
+        // 시간을 원하는대로 뽑아 쓸 수 있다.
+        let today = new Date();
+        document.write("현재 시간: " + today.getTime() + "<br>");
+
+        // .get으로 시작하는 것들은 대부분 메소드
+        document.write("속성: " + today.getVarDate + "<br>");
+        console.log("toString:",today.toString());
+
+    </script>
+</head>
+<body>
+    <hr>
+    <!-- 현재 시간 알아내기 -->
+    <h3>Date 객체로 현재 시간 알아내기</h3>
+    <hr>
+    <script>
+        let now = new Date();
+        document.write("now 처음 값: " + now + "<br>");
+        document.write("현재 시간: " + now.toUTCString() + "<br>");
+        document.write(now.getFullYear() + "년도<br>");
+        document.write(now.getMonth() + 1 + "월<br>");
+        document.write(now.getDate() + "일<br>");
+        document.write(now.getHours() + "시간<br>");
+        document.write(now.getMinutes() + "분<br>")
+
+        let next = new Date(2022, 9, 30, 12, 12, 12);  // 월은 +1
+        document.write("next date " + next.toLocaleString() + "<br>");
+    </script>
+    
+</body>
+</html>
