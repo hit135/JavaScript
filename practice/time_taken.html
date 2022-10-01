@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        /*  숫자를 강조하기 위해 p에 css를 줬다 */
+            p{
+                color: red;
+                font-size: 30px;
+                display:inline
+            }
+    
+    
+    </style>
+    <script>
+
+        // 처음 들어갔을 때 시간을 기록
+        // 10번째 반복후 경과 시간을 기록
+        // 처음 시간 - 마지막 시간 = 경과 시간
+
+        // 10번 반복후의 경과 시간을 출력
+        // Data.now는 밀리세컨드 까지 있기때문에 초를 계산하려면
+        // 1000을 나눠줘야함
+        // 1. for문 이후에 시간 'end' 객체 생성
+        // 2. end 와 start 를 이용하여 시간 계산
+
+        // 내가 생각하기에 for문은 반복문이라고 깨닫는 것 처럼
+        // 자바스크립트는 시간의 순서대로 구동하는 것을 깨닫는 것이
+        // 정말 중요한 내용이다.
+        // 같은 Date.now값을 줬지만
+        // 첫 Date.now값은 시작할 때의 시간이고
+        // 뒤의 Date.now값은 10번의 구동한 시간이 지난 값이기 때문에 차이가 있다.
+        // 자바스크립트는 위에서부터 순서대로 구동한다!!
+
+        // 화면에 얼마나 걸렸는지 출력 !!
+
+
+        let start = Date.now();
+        var cnt = 10;
+        let Rst = 0;
+        for(let i = 0 ; i < cnt; i++){
+            alert("빠르게 엔터를 누르세요");
+        }
+
+        let end = Date.now();
+        function subtract(a,b,c){
+            Rst = ((a - b) / c);
+            return Rst;
+        }
+        document.write("10번 반복후의 결과 값은 = " +  "<p>" + subtract(end, start, 1000) + "</p>" +" 초입니다.");
+
+
+        // 조건에 따라 백그라운드에 색깔 넣기
+        console.log(Rst);
+        if((Rst * 1000) % 2 == 0){
+            document.body.style.backgroundColor = "violet";
+        } else {
+            document.body.style.backgroundColor = "lightskyblue";
+        }
+            
+
+
+
+    </script>
+</head>
+<body>
+    <hr>
+    <!-- <p style="font-size:25px;color:red;display:inline;"></p> -->
+    <button onclick="location.reload();">다시 도전</button>
+    
+</body>
+</html>
