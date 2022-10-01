@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>math 객체</title>
+    <script>
+        let prt = [1, 2, 3, 4, 5, 6, 7];
+        let pie = 3.141592;
+
+        // Math.random() >>> 0보다 크거나 같고 1보다 작은 수 리턴
+
+        for(let i = 0; i < 5; i ++){
+            // 0 ~ 1 보다 작은 램덤 실수 리턴
+            console.log(Math.random());
+        }
+        console.log("=================================");
+        for(let i = 0; i < 5; i ++){
+            // 0 ~ 100 보다 작은 램덤 실수 리턴
+            console.log(Math.random() * 100);
+        }
+        console.log("=================================");
+        for(let i = 0; i < 5; i ++){
+            // 1 ~ 100 보다 작은 램덤 정수 리턴
+            console.log(Math.floor(Math.random() * 100)+ 1);
+        }        
+
+        console.log("=================================");
+
+
+        // Math.min() >>> 가장 작은 값 반환
+        console.log("Math.min: " + Math.min(1,2,3));
+        // Math.max() >>> 가장 큰 값 반환
+        console.log("Math.max: " + Math.max(1,2,3));
+        // 배열에서 가장 큰 값, 가장 작은 값
+        // Spread Operator - 전개 연산자
+        // ...name = 배열된 원소들을 하나씩 꺼내서 펼쳐줌
+        // Function.prototype.apply(,) 이용
+        console.log("()...name): " + Math.min(...prt));
+        console.log("Function.prototype.apply(,): " + Math.max.apply(null,prt));
+
+
+        console.log("=================================");
+
+        // Math.ceil() >> 올림 (소수 첫째에서 올림)
+        console.log("ceil: " + Math.ceil(pie));
+        console.log("ceil: " + Math.ceil(1.2));
+        console.log("ceil: " + Math.ceil(1.722));
+        console.log("ceil: " + Math.ceil(null));
+        console.log("ceil: " + Math.ceil(-1.777));
+
+        
+        console.log("=================================");
+
+        // Math.floor() >> 내림 (소수 첫째에서 내림)
+        console.log("floor: " + Math.floor(pie));
+        console.log("floor: " + Math.floor(1.2));
+        console.log("floor: " + Math.floor(1.722));
+        console.log("floor: " + Math.floor(null));
+        console.log("floor: " + Math.floor(-1.777));
+
+        console.log("=================================");
+
+        // Math.round() >> 반올림 (소수 첫째에서 반올림)
+        console.log("round: " + Math.round(pie));
+        console.log("round: " + Math.round(1.2));
+        console.log("round: " + Math.round(1.722));
+        console.log("round: " + Math.round(null));
+        console.log("round: " + Math.round(-1.777));
+        
+        console.log("=================================");
+
+        // Math.sqrt() >> 제곱근 구하기 (루트)
+        console.log("sqrt: " + Math.sqrt(4))
+        console.log("sqrt: " + Math.sqrt(100))
+        console.log("sqrt: " + Math.sqrt(30))
+
+        // Math.pow(a,b) >> a를 b제곱한 값
+
+        console.log("pow: " + Math.pow(2,2))
+        console.log("pow: " + Math.pow(2,3))
+        console.log("pow: " + Math.pow(2,3.5))
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
