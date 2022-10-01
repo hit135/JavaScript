@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가위 바위 보</title>
+    <script>
+
+        // let rsp = 0;
+
+        // for(let i = 0 ; i < 100 ; i ++){
+        //     rsp = Math.floor(Math.random() * 100) + 1
+        //         if(1 <= rsp && rsp <= 15){
+        //             document.write("주먹")
+        //         }else if( 15 < rsp && rsp <= 45){
+        //             document.write("가위")
+        //         }else{
+        //             document.write("보자기")
+        //         }
+        // }
+
+        // 기본 시작 js
+
+        let num = Math.ceil(Math.random() * 3);
+        console.log(num);
+        let com = "";
+
+        // 컴퓨터 1~3에 할당한 가위, 바위, 보의 문자열과
+        // 유저가 입력한 문자열을 비교한다
+        // if문과 switch문을 이용해서
+        // 유저 가위일 때 스위치문 3개
+        // 유저 바위일 때 스위치문 3개
+        // 유저 보일 때 스위치문 3개
+
+    </script>
+    <style>
+        /* 이미지 위치 지정
+           이미지를 가운데로 옮기고 싶다. */
+        .class1 {
+            position: relative; left: 150px;
+        }
+        .win {
+            position: relative; left: 260px;
+        }
+        .lose{
+            position: relative; left: 245px;
+        }
+        .title{
+            position: relative; left: 200px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <h1 class="title">컴퓨터 가위, 바위, 보 맞추기</h1>
+    <div>
+        <span>컴퓨터
+            <script>
+                // 컴퓨터의 가위, 바위, 보
+                // 일단 램덤 1~3을 뽑는다. 
+                // 1~3에 바위, 가위, 보를 할당한다.
+                // 램덤하게 이미지 출력
+                if (num == 1) {
+                    com = "가위";
+                    document.write("<img src = 'images/rock_paper_scissors/math_com_1.jpg'>");
+                } else if (num == 2) {
+                    com = "바위";
+                    document.write("<img src = 'images/rock_paper_scissors/math_com_2.jpg'>");
+                } else {
+                    com = "보";
+                    document.write("<img src = 'images/rock_paper_scissors/math_com_3.jpg'>");
+                }
+                console.log(com);
+            </script>
+        </span>
+        <span style="font-size: 100px;">vs</span>
+        <span>
+            당신
+            <script>
+                // 유저의 가위, 바위, 보
+                let user = prompt("가위, 바위, 보 중 하나를 내세요!")
+
+                if (user == "가위") {
+                    document.write("<img src = 'images/rock_paper_scissors/math_user_1.jpg'>")
+                } else if (user == "바위") {
+                    document.write("<img src = 'images/rock_paper_scissors/math_user_2.jpg'>")
+                } else if (user == "보") {
+                    document.write("<img src = 'images/rock_paper_scissors/math_user_3.jpg'>")
+                } else {
+                    document.write("<span style='font-size:50px;'>잘못입력하셨습니다!</span>");
+                    document.write("<img class='class1' onClick='location.reload()' src='images/rock_paper_scissors/game_3.jpg'>")
+                }
+            </script>
+        </span>
+        <div><script>
+
+            // 둘 비교!
+
+            switch (user) {
+                case "가위":
+                    if (com == "가위") {
+                        document.write("<img class='class1' onClick='location.reload()' src='images/rock_paper_scissors/game_3.jpg'>")
+                    } else if (com == "바위") {
+                        document.write("<img class='lose' src='images/rock_paper_scissors/game_2.jpg'>")
+                    } else {
+                        document.write("<img class='win' src='images/rock_paper_scissors/game_1.jpg'>")
+                    }
+                    break;
+                case "바위":
+                    if (com == "가위") {
+                        document.write("<img class='win' src='images/rock_paper_scissors/game_1.jpg'>")
+                    } else if (com == "바위") {
+                        document.write("<img class='class1' onClick='location.reload()' src='images/rock_paper_scissors/game_3.jpg'>")
+                    } else {
+                        document.write("<img class='lose' src='images/rock_paper_scissors/game_2.jpg'>")
+                    }
+                    break;
+                case "보":
+                    if (com == "가위") {
+                        document.write("<img class='lose' src='images/rock_paper_scissors/game_2.jpg'>")
+                    } else if (com == "바위") {
+                        document.write("<img class='win' src='images/rock_paper_scissors/game_1.jpg'>")
+                    } else {
+                        document.write("<img class='class1' onClick='location.reload()' src='images/rock_paper_scissors/game_3.jpg'>")
+                    }
+                    break;
+            }
+        </script></div>
+    </div>
+
+</body>
+
+</html>
