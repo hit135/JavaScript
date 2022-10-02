@@ -28,6 +28,8 @@
         document.write("now 처음 값: " + now + "<br>");
         document.write("현재 시간: " + now.toUTCString() + "<br>");
         document.write(now.getFullYear() + "년도<br>");
+        // 왜 FullYear을 쓰느냐
+        // 그냥 Year을 구하면 두자릿수 연도를 반환하는 경우도 있기 때문
         document.write(now.getMonth() + 1 + "월<br>");
         document.write(now.getDate() + "일<br>");
         document.write(now.getHours() + "시간<br>");
@@ -35,6 +37,68 @@
 
         let next = new Date(2022, 9, 30, 12, 12, 12);  // 월은 +1
         document.write("next date " + next.toLocaleString() + "<br>");
+
+        let practice = new Date(2022, 9, 30);
+        document.write("지정 안한 값은 0이 입력: " + practice.toLocaleString() + "<br>")
+        // 0이 입력이 아닌데..
+        // 시간에 12가 들어가고 나머지 0
+        let practice2 = new Date(2020);
+        document.write("지정 안한 값은 0이 입력? " + practice2.toLocaleString() + "<br>")
+        // ,로 년도, 월, 날을 지정안해주니 
+        // 기본값인 1970, 1, 1, 9, 0, 0 에서 2020밀리세컨드 초가 지나간 값이 추출된다.
+        
+        // 기본이 밀리세컨드이니 1분 지난 시간을 알고 싶으면 1000을 곱해준다.
+        practice2 = new Date(1000 * 30);
+        document.write("30분 경과 후 시간: " + practice2.toLocaleString() + "<br>")
+
+
+        // 시간을 새로 설정하고 싶다. ([]는 넣든 말든 자유)
+        // setFullYear(year, [month], [date])
+        // setMonth(month, [date])
+        // setDate(date)
+        // setHours(hour, [min], [sec], [ms])
+        // setMinutes(min, [sec], [ms])
+        // setSeconds(sec, [ms])
+        // setMilliseconds(ms)
+        // setTime(milliseconds)
+
+
+
+
+
+        // Date.now()
+        // Date 객체를 만들지 않고도 시차를 측정할 방법
+        // 현재 타임스탬프를 반환하는 메서드 Date.now()를 응용
+        // Date.now()는 new Date().getTime()과 의미론적으로 동일하지만 중간에 Date 객체를 만들지 않는다는 점이 다르다
+        // 따라서 new Date().getTime()를 사용하는 것보다 빠르고 가비지 컬렉터의 일을 덜어준다는 장점이 있다
+
+        let start = Date.now(); // 1970년 1월 1일부터 현재까지의 밀리초
+
+        // 원하는 작업을 수행 (반복문)
+        for (let i = 0; i < 100000; i++) {
+        let doSomething = i * i * i;
+        }
+
+        let end = Date.now(); // 반복문의 실행후의 밀리초
+
+        alert( `반복문을 모두 도는데 ${end - start} 밀리초가 걸렸습니다.` );
+
+        /* 구글링으로 얻은 date 요약
+        자바스크립트에선 Date 객체를 사용해 날짜와 시간을 나타냅니다. Date 객체엔 ‘날짜만’ 혹은 ‘시간만’ 저장하는 것은 불가능하고, 항상 날짜와 시간이 함께 저장됩니다.
+        월은 0부터 시작합니다(0은 1월을 나타냅니다).
+        요일은 getDay()를 사용하면 얻을 수 있는데, 요일 역시 0부터 시작합니다(0은 일요일을 나타냅니다).
+        범위를 넘어가는 구성요소를 설정하려 할 때 Date 자동 고침이 활성화됩니다. 이를 이용하면 월/일/시간을 쉽게 날짜에 추가하거나 뺄 수 있습니다.
+        날짜끼리 빼는 것도 가능한데, 이때 두 날짜의 밀리초 차이가 반환됩니다. 이게 가능한 이유는 Date 가 숫자형으로 바뀔 때 타임스탬프가 반환되기 때문입니다.
+        Date.now()를 사용하면 현재 시각의 타임스탬프를 빠르게 구할 수 있습니다.
+        자바스크립트의 타임스탬프는 초가 아닌 밀리초 기준이라는 점을 항상 유의하시기 바랍니다.
+        간혹 밀리초보다 더 정확한 시간 측정이 필요할 때가 있습니다. 자바스크립트는 마이크로초(1/1,000,000초)를 지원하진 않지만 대다수의 호스트 환경은 마이크로초를 지원합니다. 
+        브라우저 환경의 메서드 performance.now()는 페이지 로딩에 걸리는 밀리초를 반환해주는데, 반환되는 숫자는 소수점 아래 세 자리까지 지원합니다.
+        */
+        alert(`페이지 로딩이 ${performance.now()}밀리초 전에 시작되었습니다.`);
+        // 얼럿 창에 "페이지 로딩이 34731.26000000001밀리초 전에 시작되었습니다."와 유사한 메시지가 뜰 텐데
+        // 여기서 '.26'은 마이크로초(260마이크로초)를 나타냅니다.
+        // 소수점 아래 숫자 세 개 이후의 숫자는 정밀도 에러때문에 보이는 숫자이므로 소수점 아래 숫자 세 개만 유효합니다.
+
     </script>
     
 </body>
