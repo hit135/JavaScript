@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>배열과 배열의 순회</title>
+
+    <script>
+        // 다음 두 형식으로 배열을 선언한다.
+        let arr = new Array();
+        let arr1 = [];
+
+        arr = ["사과", "오렌지", "포도"];
+        console.log(arr[0]);
+        console.log(arr[1]);
+        console.log(arr[2]);
+
+        // 배열 수정도 가능하다.
+        arr[2] = "앵두";
+        console.log(arr[2]);
+
+        // 배열에 추가
+        arr[3] = "배";
+        console.log(arr[3]);
+
+        // 요소가 몇 개 인지 확인
+        console.log(arr.length);
+
+        // 요소 전체 출력
+        console.log(arr);
+
+        console.log("===================================================")
+
+        // 요소에는 제약이 없다
+        // 이걸로 객체에는 프로퍼티 메소드가 있음을 알 수 있다
+
+        let all = [ '사과', { name: '박형구' }, true, function() { alert('안녕하세요.'); } ];
+        console.log(all[1]);
+        console.log(all[3]());
+
+        console.log("===================================================")
+
+        // 배열에 추가 제거
+
+        // pop() >> 끝 요소를 제거하고 출력한다
+        console.log(arr.pop());
+        console.log(arr);
+        // push() >> 배열 끝에 요소 추가
+        arr.push("자두");
+        console.log(arr);
+        // shift >> 배열의 앞 요소를 제거하고 출력한다.
+        console.log(arr.shift());
+        console.log(arr);
+        // unshift >> 배얼의 앞에 요소를 추가한다.
+        arr.unshift("참외");
+        console.log(arr);
+
+        // 여기서 끝 요소를 제거하고 추가하는 pop과 push가
+        // 앞 요소를 제거하고 추가하는 shift 와 unshift 보다 동작이 빠르다.
+        // 그 이유는 앞을 제거하면 뒤의 모든 배열이 수정되기 때문이다.
+
+        // 배열의 이점은 순서대로 자료를 저장한다는 것!
+        // 그러니 배열을 설정할 때는 순서가 있는 특수한 자료구조에 사용한다.
+        // 그렇지 않다면 일반 객체 {}가 더 적절할 확률이 높다.
+
+        console.log("===================================================")
+
+        // for문은 배열을 순회할 때 쓰는 가장 오래된 방법. 순회시엔 인덱스를 사용한다.
+
+        let exFor = ["사과", "오렌지", "배"];
+
+        for (let i = 0; i < exFor.length; i++) {
+        console.log( exFor[i] );
+        }
+
+        // 배열에 적용할 수 있는 또 다른 순회 문법으론 for..of가 있다.
+
+        let exForOfs = ["앵두", "참외", "수박"];
+
+        // 배열 요소를 대상으로 반복 작업을 수행한다.
+        for (let exForOf of exForOfs) {
+        console.log( exForOf );
+        }
+        // for..of를 사용하면 현재 요소의 인덱스는 얻을 수 없고 값만 얻을 수 있다. 
+        // 이 정도 기능이면 원하는 것을 충분히 구현할 수 있고 문법도 짧기 때문에 배열의 요소를 대상으로 반복 작업을 할 땐 for..of를 사용하는 것도 효과적이다.
+
+
+    </script>
+</head>
+<body>
+
+
+    
+</body>
+</html>
