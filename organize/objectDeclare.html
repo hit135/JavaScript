@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>객체 선언</title>
+    <script>
+
+        // 객체 선언 기본
+        let place01 = Object();
+        place01.name = "우리집";
+        place01.addr = "어은로 88";
+        place01.check = function(){
+            alert("메소드");
+        }
+
+        console.log(place01.name);
+        console.log(place01.addr);
+        place01.check();
+
+        for(let i in place01){
+            console.log("key: ", i);
+            console.log("value: ", place01[i]);
+        }
+   
+
+        // for in
+
+        let test = ["나는", "박형구", "입니다."]
+        for(let i in test){
+            console.log("key 값: ", i);
+            console.log("value 값: ", test[i]);
+        }
+
+        // for of
+
+        for(let i of test){
+            console.log("value 값: ", i);
+        }
+
+
+        
+        // 객체 선언 방법 (많이 쓰는!)
+        // {}를 사용한다
+
+        let place02 = {
+            name : "충남대학교" ,
+            addr : "우리집 옆에" ,
+            go : function(){
+                console.log(this.name + "에 가자");
+            }
+        }
+
+        // for of는 value 값만 뽑아내는데
+        // 왜 동작하지 않는가...!
+        // 함수가 들어가서 동작하지 않는건지..
+        for(let i of place02){
+            console.log("value 값: ", i);
+        }
+        place02.go();
+
+        
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
