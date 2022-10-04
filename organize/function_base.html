@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>함수 기본</title>
+    <script>
+        // 함수에는 크게 3가지가 있다.
+        // 선언적 함수
+        // 익명 함수
+        // 콜백 함수
+
+
+
+
+        test_01();
+        // test_02();   >> 이름만 호이스팅 했기 때문에 오류가 난다.
+
+        // 선언적 함수 >>> 어디서 선언했든 쓸 수 있는 함수
+        // 밑에서 선언해서 위에서 쓰는 것도 가능하다.
+        function test_01(){
+            console.log("선언적 함수");
+        }
+
+        // 익명적 함수 >>> 변수에 함수를 담는다.
+        // 어디서든 사용 불가
+        // (호이스팅)!!시 이름만 읽기 때문이다.
+        // 변수명과 동작을 다 읽은 후 부터 사용 가능
+
+        let test_02 = function(){
+            console.log("익명 함수");
+        }
+        test_01();
+        test_02();
+
+        // 콜백 함수 >> 함수를 매개변수로 던지는 것...!
+
+        function test_03 (some){
+            for(let i = 0; i < 10; i++){
+                some();             // 중요하다..! 받은 변수값을 출력하는 말!
+            }
+        }
+
+        test_03(function(){
+            console.log("콜백 함수2");
+        });
+
+        let callback = function(){
+            console.log("콜백 함수1");
+        }
+
+        test_03(callback);
+
+        //  자바와 다르게 자바스크립트에서는
+        // 매개변수나 리턴하는 값으로 함수를 던지고 받을 수 있다.
+
+
+
+        // 위에서 언급한 호이스팅이란?
+        // html을 열면 먼저 자바스크립트의 함수와 변수명부터 읽는다.
+        // 그리고 시간의 순서(?)(일단은 위에서부터)에 따라 읽는다.
+        // 따라서 변수명을 주지 않고 선언한 선언적 함수와
+        // 변수명은 어디서든 쓸 수 있다.
+        // 하지만 변수명 속의 콘텐츠는 변수명을 읽고 콘텐츠를 읽은 다음에 가능하다.
+
+
+        
+
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
