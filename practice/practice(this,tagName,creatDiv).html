@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+        // this를 이용해 각각 바꾸기
+        function change (obj, size_ts, color_ts){
+            obj.style.color = color_ts;
+            obj.style.fontSize = size_ts;
+        }
+
+
+
+        // 태그 네임을 이용해 바꾸기
+        let reSpan = document.getElementsByTagName('span');
+        function change(){
+            for(let i = 0 ; i < reSpan.length; i++){
+                let arrReSpan =  reSpan[i];
+                arrReSpan.style.color = 'red';
+                arrReSpan.style.fontSize = '30px';
+            }
+        }
+
+
+
+        // 동적인 객체 생성, 삭제
+        function createDiv(){
+            let obj = document.getElementById('parent');
+            let newDiv = document.createElement('div');
+            newDiv.style.backgroundColor = 'yellow';
+            newDiv.style.color = 'blue';
+            newDiv.style.fontSize = '30px';
+            newDiv.innerHTML = "생성된 DIV";
+            newDiv.setAttribute('class','myDiv');
+            newDiv.onclick = function(){
+                let p = this.parentElement;     // this를 이용해 각 객체 지우기
+                p.removeChild(this);
+            };
+            obj.appendChild(newDiv);
+        }
+    </script>
+</head>
+<body>
+    <!-- this를 이용해 각각 다르게 변화시키기 -->
+    <!-- 여기서의 this는 객체안에서의 this -->
+    <!-- 전역에서 쓰는 this는 또 다르다 -->
+    <h2>this 활용</h2>
+    <hr>
+    <button onclick="change(this, '30px', 'red')">버튼</button>
+    <button onclick="change(this, '15px', 'blue')">버튼2</button>
+    <div onclick="change(this, '30px', 'brown')">
+        여기를 클릭하면 색깔과 크기가 변합니다.
+    </div>
+    <hr>
+    <h2>태그 이름으로 바꾸기</h2>
+    <button onclick="change()">변경</button>
+    <hr>
+    저는 아침마다 <span>자전거</span>를 타고 등교합니다. <span>지하철</span>을
+    타고 등교할 수도 있지만, <span>자전거</span>와의 차이가 많이 나지 않기 때문에
+    <span>지하철</span>은 타지 않습니다. <span>자동차</span>는 기름값이 비싸서 안탑니다.
+    
+</body>
+<body id="parent">
+    <h3>동적인 객체 삽입</h3>
+    <hr>
+    <p>createElement()로 새로운 객체를 생성하고 <br>
+        appendChild()로 객체를 삽입하고 <br>
+        removeChild()로 객체를 삭제할 수 있다.
+    </p>
+    <a href="javascript:createDiv()">DIV 생성</a>
+
+</body>
+</html>
