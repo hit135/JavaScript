@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>캡처, 버블 리스너</title>
+    <script>
+        // form은 클라이언트가 정보를 입력할 수 있도록 만들어진 웹 요소
+        // id 값으로, password 값으로, name 값으로 (폼 배열로) 접근
+    </script>
+</head>
+<body>
+    <h2>캡처, 버블 리스너</h2>
+    <hr>
+    <form action="">
+        <input type="button" value="바디" id="tn">
+        <input type="button" value="타겟" id="btn">
+    </form>
+    <div id="div1" style="background-color:black; color: aliceblue;"></div>
+    <script>
+        let div = document.getElementById('div1');
+        let tn = document.getElementById('tn');
+        let btn = document.getElementById('btn');
+
+
+        // 순서를 이상하게 해도
+        // 상위 문서에서 하위 문서로 들어갔다가 (캡처)
+        // 하위 문서에서 상위 문서로 나오기(버블)
+        // 때문에 순서대로 뜬다.
+
+        // 구조를 생각하고 이해하자
+
+        // 그런데 어떤 경우에 사용하는지는 아직 감이 안온다.
+
+        // body 객체 클릭 이벤트로 캡처 리스너 등록
+        document.body.addEventListener("click", fn_capture, true);
+
+        // 타겟 객체에 클릭 이벤트로 버블 리스너 등록
+        btn.addEventListener("click", fn_bubble, false);  // 디폴트 값 = false(버블 리스너)
+
+        // body 객체에 클릭 이벤트로 버블 리스너 등록
+        document.body.addEventListener("click", fn_bubble);
+
+        // 타겟 객체에 클릭 이벤트로 캡처 리스너 등록
+        btn.addEventListener("click", fn_capture, true);
+
+
+
+        function fn_capture(e){
+            let obj = e.currentTarget;
+            let tagName = obj.tagName;
+            div.innerHTML += "<br> capture 단계: " + tagName + "태그 " + e.type + "이벤트";
+        }
+
+        function fn_bubble(e){
+            let obj = e.currentTarget;
+            let tagName = obj.tagName;
+            div.innerHTML += "<br> bubble 단계: " + tagName + "태그 " + e.type + "이벤트";
+        }
+    </script>    
+
+</body>
+</html>
