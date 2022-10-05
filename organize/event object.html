@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>event object</title>
+    <script>
+        // 이벤트에도 객체(프로퍼티와 메소드)가 존재하다.
+        function eventObj(ev){
+            console.log("타입: ", ev.type);
+            console.log("타겟: ", ev.target);
+            console.log("현재의 타겟: ", ev.currentTarget);
+            console.log("기본값 방해: ", ev.defaultPrevented);
+        }
+
+        function naver(){
+            let ret = confirm("네이버로 갈까요?");
+            return ret;         // 값을 리턴 받는 이유는 디폴트 행동 취소를 하기 위해서
+        }
+
+        function noAction(e){
+            e.preventDefault();
+        }
+
+        // 이벤트의 객체를 가져올때는
+        // 동작하는 함수에 꼭 event를 넣어줘야 된다.
+
+        // 그리고 하나의 행동에 여러가지 이벤트를 넣고 싶으면
+        // onclick="event1(); event2(); event3()" 등등 ;으로 연결시켜준다!
+    </script>
+</head>
+<body>
+    <h3>이벤트 객체와 디폴트행동 취소</h3>
+    <hr>
+    <!-- 디폴트 행동 취소 방법 1 >>> return false -->
+    <a href="http://www.naver.com" onclick="return naver()">네이버로 갈까요?</a>
+
+    <!-- 디폴트 행동 취소 방법 2 >>> event.preventDefault 함수 사용 -->
+    <form action="">
+        <input type="checkbox" onclick="eventObj(event)">체크해줘 <br>
+        <input type="checkbox" onclick="event.preventDefault()">체크하지말아줘
+        <input type="checkbox" onclick="noAction(event)">체크하지말아줘2
+    </form>
+</body>
+</html>
