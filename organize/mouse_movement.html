@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마우스 동작</title>
+    <script>
+        // 대표적으로 마우스를 위에 올리면(onmouseOver)
+        // 마우스를 올린곳에서 나오면(onmouseOut)
+        // 마우스를 클릭하면(onmouseDown)
+        // 마우스 클릭을 떼면(onmouseUp)
+        // 마우스 휠을 올리면(onmouseWheel)
+
+        // 클릭
+        function fn_down(obj){
+            obj.style.fontStyle = "italic";
+        }
+
+        // 클릭 떼기
+        function fn_up(obj){
+            obj.style.fontStyle = "normal";
+        }
+
+        // 마우스를 올리면
+        function fn_over(obj){
+            obj.style.color = 'red';
+            obj.style.borderColor = 'blue';
+        }
+
+        // 마우스를 올린곳에서 나오면
+        function fn_out(obj){
+            obj.style.color = 'blue';
+            obj.style.borderColor = 'red';
+        }
+
+        // 마우스 휠을 올리고 내리면
+        let width = 1;
+        function fn_wheel(e, obj){  // 여기 어딘가 오류
+            if(e.wheelDelta < 0){
+                width--;
+                console.log("a");
+                if(width < 0) width =0; // 경계선이 음수값이 되지 않도록
+            }else{
+                width++; 
+                console.log("b");
+            }   
+            obj.style.borderStyle = 'ridge';
+            obj.style.borderWidth = width + 'px';
+           
+        }
+
+    </script>
+</head>
+<body>
+    <h2>마우스 동작</h2>
+    <hr>
+    <div>
+    <span onmousedown="fn_down(this)"
+          onmouseup="fn_up(this)"
+          onmouseout="fn_out(this)"
+          onmouseover="fn_over(this)"
+          onmousewheel="fn_wheel(event, this)" style="display:inline-block;">마우스 이벤트</span>가 발생합니다.
+    </div>
+    
+</body>
+</html>
