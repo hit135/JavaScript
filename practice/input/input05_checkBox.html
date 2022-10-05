@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>취미를 선택하시오</h3>
+    <label for="">독서</label><input type="checkbox" name="hobby" value="read">
+    <label for="">운동</label><input type="checkbox" name="hobby" value="sports">
+    <label for="">게임</label><input type="checkbox" name="hobby" value="game">
+    <label for="cook">요리</label><input type="checkbox" name="hobby" value="cook" id="cook"> <!-- 텍스트를 눌렀을  때도 체크가 되도록 -->
+    <label for="">서핑</label><input type="checkbox" name="hobby" value="surfing">
+    <input type="button" value="확인" onclick="fn_check()">
+    <label for="">전체</label><input type="checkbox" name="all" onclick="fn_all()" >
+    <label for="">전체2</label><input type="checkbox" onchange="fn_all2(this)" >
+    <!-- 선생님은 onclick에 this 값을 줬다. -->
+    <script>
+        function fn_check(){
+            let obj = document.getElementsByName('hobby');
+            let msg = "당신의 취미는 ";
+            for(let i in obj){
+                if(obj[i].checked){
+                    msg += obj[i].value + obj[i].previousSibling.innerHTML + " ";   // previousSibling.innerHTML 전의 형제의 innerHTML을 가져옴
+                }
+            }
+            alert(msg + " 입니다");
+        }
+
+        // 체크박스를 만들어서 하나를 누르면 전부 선택, 전부 해제
+        // 위 하비를 다 가져와서
+        // 값을 true로 만들고 false로 만든다
+        function fn_all(){
+            let obj = document.getElementsByName('all');
+            for(let i in obj){
+                if(obj[i].checked){             // 처음에 obj[i] == checked라고 했다.
+                    console.log("o");
+                    let hobby = document.getElementsByName('hobby')
+                    for(let j in hobby){
+                        hobby[j].checked = true;
+                    }
+                }else if(obj[i].checked == false){
+                    console.log("x");
+                    let hobby = document.getElementsByName('hobby')
+                    for(let j in hobby){
+                    hobby[j].checked = false;
+
+                }
+            }
+        }  
+
+        }
+
+
+        // 선생님은 위에 this 값을 주고 되게 간단하게 했다.
+
+        function fn_all2(obj){
+            let hobby = document.getElementsByName('hobby');
+            let flag = false;
+            if(obj.checked){
+                flag = true;
+            }
+            for(let i in hobby){
+                hobby[i].checked = flag;
+            }
+        }
+    </script>
+
+    
+</body>
+</html>

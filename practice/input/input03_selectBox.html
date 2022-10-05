@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>select 박스</title>
+</head>
+<body>
+    <form action="">
+        <select name="p_select" id="p_select" onchange="fn_change();">
+            <option value="정찬웅선생님">JAVA</option>
+            <option value="이앞길선생님">화면구현</option>
+            <option value="송태석선생님">ORACLE</option>
+            <option value="이용우선생님">JSP</option>
+            <option value="없음" selected>선택하세요</option>
+            <!-- selected의 속성은 선택한것! -->
+        </select>
+        <input type="button" value="선택값 가져오기" onclick="fn_read()">
+        <input type="text" id="id_txt" value="선택값">
+    </form>
+    <script>
+        function fn_read(){
+            document.getElementById('id_txt').value =
+                document.getElementById('p_select').value;
+        let target = document.getElementById('p_select');
+        alert(target.options[target.selectedIndex].text);   // 위에 밸류 값이 옵션 배열로 들어간다.
+                                                            // 그래서 인덱스로 찾아줘서 텍스트를 뽑아준것
+        }
+
+        function fn_change(){
+            document.getElementById('id_txt').value =
+                document.getElementById('p_select').value;
+        let target = document.getElementById('p_select');
+        alert(target.options[target.selectedIndex].text);   
+        }
+    </script>
+    
+</body>
+</html>

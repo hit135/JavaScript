@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- checkde는 선택된 속성 -->
+    남 <input type="radio" name="gender" value="M" checked>
+    여 <input type="radio" name="gender" value="F">
+    <input type="button" onclick="fn_check('gender')" value="확인">    
+    <br>
+    삼겹살 <input type="radio" name="food" value="Pork" checked>
+    피자 <input type="radio" name="food" value="Pizza">
+    <input type="button" onclick="fn_check('food')" value="확인">
+    <script>
+        function fn_check(check){
+            let objs = document.getElementsByName(check)
+            for(let i in objs){
+                if (objs[i].checked){
+                    alert('체크된 value는 : ' + objs[i].value);
+                    break;
+                }
+            }
+        }
+    </script>
+    
+</body>
+</html>

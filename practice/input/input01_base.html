@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <span><input type="button" id="input_id" value="몇번 눌렀나?" onclick="fn_check();"></span>
+        <span><input type="button" value="소스보기" onclick="fn_source();"></span>
+        <span><input type="button" value="리로드" onclick="fn_reload();"></span>
+        <span><input type="text" onchange="change(this);"></span>
+    </div>
+    <div id = "id_disp">
+        <span><input type="text" disabled value="수정불가" id = 'input2_id'></span>
+        <!-- disabled 같은 경우는 수정불가..! 수정을 막을 때 -->
+    </div>
+    <script>
+        function fn_source(){
+            alert(document.getElementById('id_disp').innerHTML);
+        }
+        function fn_reload(){
+            location.reload()       // location.reload()는 화면 새로고침
+        }
+        let cnt = 0;
+        function fn_check(){
+            cnt ++;
+            // 몇번 눌렀나? 버튼을 클릭하면 클릭 횟수만큼 아래 innerHTML에 추가하시오.
+            let msg = "<br>버튼을 " + cnt + "번 누르셨네요!";
+            alert(document.getElementById('input_id').value);
+            let down = document.getElementById('id_disp').innerHTML += msg;
+            console.log(down);
+            
+        }
+        function change(obj){
+            // obj의 value 값으로 input2_id 의 value 값 변경
+            console.log(obj);
+            console.log(obj.value) // 해당 변수의 타입을 모르면 typeof를 사용
+            document.getElementById('input2_id').value = obj.value;
+            // document.getElementById('input2_id') = obj;
+            // 나는 여기까지는 했다.
+            // 하지만 obj에서 value 값을 뽑아줘서 변경시켜줘야 한다.
+            // 이걸 이용해서 클래스 명이나, 타입이나 요소를 바꿔줄 수 있다.
+        }
+        
+        console.log(document.getElementById('input2_id'));
+
+
+    </script>
+    
+</body>
+</html>
