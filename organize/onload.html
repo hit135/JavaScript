@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>onload로 로딩 완료 후 작업</title>
+    <script>
+        // onload 호출 법
+
+        // window.onload = alert('onload');
+        // <body onload> = alert('onload');
+
+        // 이것들 보다는
+        // 이미지를 온로드 하는게 중요하다!
+
+
+        function change_image(){
+            let myImg = document.getElementById('myImg');
+            let sel = document.getElementById('sel')
+            let selIndex = sel.selectedIndex;   // 셀렉트 박스에서 선택된 인덱스 값을 구함
+
+            myImg.src = sel.options[selIndex].value;   
+             // id 'sel'에서의 옵션 배열에 담긴 것들 중 선택한 인덱스 값을 넣어서 밸류값을 출력
+
+            myImg.onload = function(){
+                let sizeSpan = document.getElementById('sizeSpan');
+                sizeSpan.innerHTML = "높이 x 넓이 = " + myImg.height + " x " + myImg.width; 
+            }
+
+
+        }
+
+
+
+    </script>
+</head>
+<body onload="change_image()">
+    <h3>onload를 이용해서 로드 후 이미지 크기 출력</h3>
+    <form action="">
+        <select name="" id="sel" onchange="change_image()">
+            <option value="https://t1.daumcdn.net/cfile/tistory/215AFC4151FAFE1D0E">1</option>
+            <option value="https://t1.daumcdn.net/cfile/tistory/992D2B4C5AF18A1C15">2</option>
+            <option value="https://t1.daumcdn.net/cfile/tistory/9941CA505F20D6E12E">3</option>
+        </select>
+        <span id="sizeSpan">이미지 크기 출력</span>
+    </form>
+    <p><img src="https://t1.daumcdn.net/cfile/tistory/215AFC4151FAFE1D0E" alt="" id="myImg"></p>
+    
+</body>
+</html>
