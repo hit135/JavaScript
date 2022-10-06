@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<!-- 다음 1 >> n증가 마지막에 다음을 누르면 다시 처음으로 -->
+<!-- 이전을 누르면 이전 이미지가 나오도록 처음이라면 마지막 이미지로 -->
+    <img src="https://t1.daumcdn.net/cfile/tistory/2411E2375894CDA511" id="content" alt="" height="400px" width="600px"><br>
+    <input type="button" value="이전" onclick="fn_prew()">
+    <input type="button" value="다음" onclick="fn_next()">
+    
+
+    <!-- 이미지들을 한 배열에 다 담고 -->
+    <!-- 이전과 다음의 온클릭에 이벤트를 넣어준다. -->
+    <script>
+        let arrImg = ["https://t1.daumcdn.net/cfile/tistory/2411E2375894CDA511",
+                      "https://magazine.securities.miraeasset.com/contents/path/00297/images/mo_01@2x.png?a=a",
+                      "https://t1.daumcdn.net/cfile/tistory/9941CA505F20D6E12E",
+                      "https://vrthumb.imagetoday.co.kr/2019/06/13/tid292t001389.jpg",
+                      "https://t2.daumcdn.net/thumb/R720x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/3Pr8/image/NtHIrg4pvX-neJeOmPOYnnj2wH8",
+                      "https://health.chosun.com/site/data/img_dir/2022/07/21/2022072102113_0.jpg",
+                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSR7QYdYrUHhG0P2CFFu-0FNvb04o5aKghFGg&usqp=CAU"];
+
+        
+        let pages = 0;
+        function fn_next(){
+            if(pages == arrImg.length-1){
+                pages = -1;
+            }
+            
+
+            document.getElementById('content').src = arrImg[pages + 1];
+            pages ++;
+            console.log(pages);
+     
+            
+        }
+
+        function fn_prew(){
+            pages --;
+            if(pages == -1){
+                pages = arrImg.length-1;
+            }
+
+            if(pages == -2){
+                pages = arrImg.length-2;
+            }
+            document.getElementById('content').src = arrImg[pages]
+            console.log(pages);
+            
+        }
+
+    </script>
+
+</body>
+</html>
