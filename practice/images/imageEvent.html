@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이미지에 마우스 이벤트 넣기</title>
+    <style>
+        body{
+            background-color:black;
+        }
+
+        #my_img {
+            opacity: 0.3;
+            border-radius: 70%;
+        }
+
+    </style>
+</head>
+<body>
+    <img id="my_img" src="https://t1.daumcdn.net/cfile/tistory/992D2B4C5AF18A1C15" alt="" onmousemove="over(this)"
+    onmouseout="out(this)" onmousedown="down(this)" onmouseup="up(this)" onclick="fn_click(this)">
+
+    <script>
+        function over(obj){
+            obj.style.opacity = "1.0";
+        }
+
+        function out(obj){
+            obj.style.opacity = "0.7";
+        }
+
+        function down(obj){
+            obj.src = "https://t1.daumcdn.net/cfile/tistory/9941CA505F20D6E12E";
+        }
+
+        function up(obj){
+            obj.src = "https://t1.daumcdn.net/cfile/tistory/992D2B4C5AF18A1C15";
+        }
+
+
+        // 클릭 이벤트 넣으니 마우스 다운 업 이벤트 먹음
+        let imgBoolean = true;
+        function fn_click(obj){
+            if(imgBoolean == true){
+                obj.src = "https://t1.daumcdn.net/cfile/tistory/9941CA505F20D6E12E";
+                imgBoolean = false;
+            }else if(imgBoolean == false){
+                obj.src = "https://t1.daumcdn.net/cfile/tistory/992D2B4C5AF18A1C15";
+                imgBoolean = true;
+            }
+        }
+    </script>
+    
+</body>
+</html>
