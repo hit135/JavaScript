@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자식 윈도우</title>
+
+    <script>
+        function fn_send(){
+            opener.document.getElementById('parent01').value = document.getElementById('children02').value;
+        }
+
+        function fn_close(){
+            window.close();
+            opener.close();
+        }
+
+
+    </script>
+</head>
+<body>
+   
+    부모에서 전달 : <input type="text" id="children01"><br>
+    부모로 전달 : <input type="text" id="children02"><br>
+    <button onclick="fn_send()">부모로 전달</button><br>
+    <button onclick="fn_close()">닫기</button>
+   
+    
+</body>
+</html>

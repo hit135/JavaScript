@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>window 객체</title>
+    <script>
+        // 우리가 늘 띄워서 확인하는 최상위의 window 객체
+        // 그 윈도우도 여러 프로퍼티와 메소드를 가진다.
+        // 윈도우 객체는 새로운 페이지가 로드되거나
+        // 스크립트 코드로 윈도우를 열 때
+        // window 객체가 생성된다. (3가지 경우 >>> 로드, iframe(보안상 안씀), 자바코드(open))
+
+        // 따라서 윈도우에는 부모 윈도우와 자식 윈도우가 존재할 수 있다.
+
+        let newWin = null;
+        function fn_load(URL){
+            newWin = window.open(URL, "_blank", "left=300, top300, width=500, height=400")
+        }
+        // window.open(url주소, '이름', '속성')
+        // 이름에는 _blank, _parent, _top, _self가 들어간다.
+        // url만 입력하고 전부 생략 가능
+
+        // 부모 자식 관계가 있기 때문에
+        // 서로가 서로를 컨트롤 할 수 있다.
+
+        function fn_close(){
+            if(newWin == null || newWin.closed){
+            }else{
+                newWin.close();
+            }
+        }
+
+        let openWin;
+        function fn_onclik(URL){
+            window.name = 'parentForm'
+            newWin = window.open(URL, 'childrenForm', 'width = 400, height = 500, right = 300');
+            newWin.onload = function(){
+                newWin.document.getElementById('children01').value = document.getElementById('parent01').value;
+            }
+        }
+
+
+    </script>
+
+    <style>
+        a{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h3>window open과 부모 window 와 자식 window</h3>
+    <hr>
+    <a href="javascript:fn_load('http://www.naver.com')">네이버</a>
+    <a href="javascript:fn_load('http://www.daum.net')">다음</a>
+    <a href="javascript:fn_load('http://www.google.com')">구글</a>
+    <a href="javascript:window.close()">현재 윈도우 닫기</a>
+    <a href="javascript:fn_close()">자식 윈도우 닫기</a>
+
+    <input type="text" id="parent01">
+    <button onclick="fn_onclik('windowChildren.html')">자식에 보내기</button>
+    
+</body>
+</html>
