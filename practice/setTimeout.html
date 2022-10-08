@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>이미지에 마우스를 올리고 3초간 그대로 있으면 이동합니다.</h3>
+    <hr>
+    <img id="id_img" src="https://t1.daumcdn.net/cfile/tistory/2411E2375894CDA511" onmouseover="fn_start(3000)" onmouseout="fn_cancel()" alt="">
+    <script>
+        let timeId = null;
+        function fn_start(time){
+            timeId = setTimeout("fn_load('https://vrthumb.imagetoday.co.kr/2019/06/13/tid292t001389.jpg')", time);
+            document.getElementById('id_img').title = '타이머 작동 시작...';
+        }
+
+        function fn_load(url){
+            window.location = url; // 이동
+        }
+
+        function fn_cancel(){
+            if(timeId != null){
+                clearTimeout(timeId);
+            }
+        }
+    </script>
+</body>
+</html>
