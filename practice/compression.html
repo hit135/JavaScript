@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>압축</title>
+</head>
+<body>
+    <h3>문자열 압축하기</h3>
+    <hr>
+    <script>
+        let inputString = prompt("중복되는 단어를 압축할 문자를 입력해주세요.");
+        let overlap = 1;
+        let rst = "";
+        for(let i = 1; i <= inputString.length; i++){
+            if( i == inputString.length){
+                rst += (inputString.substring(i-1,i) + (overlap));
+                    document.write(rst);
+            }else{
+                if(inputString.substring(i-1, i) == inputString.substring(i, i+1)){
+                    overlap ++;
+                }else if(inputString.substring(i-1, i) != inputString.substring(i, i+1)){
+                    rst += (inputString.substring(i-1,i) + (overlap));
+                    document.write(rst);
+                    rst = "";
+                    overlap = 1;
+                }
+            }
+        }
+    </script>
+    
+</body>
+</html>
