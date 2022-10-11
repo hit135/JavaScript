@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+            left: 0;
+            background-color: aqua;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="myCanvas" width="840px" height="840px"
+        style="background-color: rgb(219, 183, 65); margin: 40px;"></canvas>
+
+    <script>
+        let p = 20;
+        let cw = 800;   // 캔버스 폭
+        let ch = 800;   // 캔버스 높이
+        let canvas = document.getElementById('myCanvas');
+        let context = canvas.getContext('2d');
+
+        function drawLine() {
+            // 세로 선
+            for (let i = 0; i <= cw; i += 40) {
+                context.moveTo(p + i, p);
+                context.lineTo(p + i, p + cw);
+            }
+
+            // 가로 선
+            for (let i = 0; i <= ch; i += 40) {
+                context.moveTo(p, p + i);
+                context.lineTo(p + ch, p + i);
+            }
+
+            context.strokeStyle = "black";
+            context.stroke();
+        }
+
+        // 0, 40, 80, 120, 160, ... 840
+        let boundary = [0];
+        for (let i = 0; i <= cw + 40; i += 40) {
+            boundary.push(i + p);
+        }
+        console.log(boundary);
+
+        let count = 0;
+
+        window.onload = function () {
+            canvas.addEventListener("click", function (e) {
+                x = e.offsetX;
+                y = e.offsetY;
+                console.log(x, y);
+
+                for (let i = 0; i < boundary.length - 1; i++) {
+                    if (boundary[i] - 20 <= x && x < boundary[i + 1] - 20) {
+                        x = boundary[i];
+                    }
+                    if (boundary[i] - 20 <= y && y < boundary[i + 1] - 20) {
+                        y = boundary[i];
+                    }
+                }
+                if (count % 2 == 0) {
+                    context.beginPath();
+                    context.fillStyle = 'black';
+                    context.arc(x, y, 20, 0, Math.PI * 2);
+                    context.fill();
+                    context.strokeStyle = 'white';
+                    context.stroke();
+                    count++;
+                } else if (count % 2 == 1) {
+                    context.beginPath();
+                    context.fillStyle = 'white';
+                    context.arc(x, y, 20, 0, Math.PI * 2);
+                    context.fill();
+                    context.strokeStyle = 'black';
+                    context.stroke();
+                    count++;
+                }
+
+            })
+        }
+    </script>
+
+    <button onclick="drawLine()">그리기</button>
+</body>
+
+</html>
