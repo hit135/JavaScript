@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h3>마우스를 누른 상태로 드래깅하여 그리기</h3>
+    <hr>
+    <div>
+        <table>
+            <tr>
+                <td>컬러</td>
+                <td><input id="myColor" type="color" value="black" onchange="fn_color()"></td>
+            </tr>
+            <tr>
+                <td>사이즈</td>
+                <td><input id="mySize" type="number" value="5" max="30" onchange="fn_size()"></td>
+            </tr>
+            <tr>
+                <td><label for="">펜슬: <input type="radio" name="tool" value="pencil" onclick="fn_pencil()"></label>
+                <td><label for="">지우개: <input type="radio" name="tool" value="eraser" onclick="fn_eraser()"></label>
+                </td>
+                <td><button onclick="fn_clear()">전체삭제</button></td>
+            </tr>
+        </table>
+    </div>
+    <canvas id="myCanvas" style="background-color: aliceblue;" width="700" height="600"></canvas>
+    <script>
+        let canvas = document.getElementById('myCanvas');
+        let context = canvas.getContext('2d');
+        function init() {
+            context.lineWidth = 5;
+            context.strokeStyle = 'black';
+            canvas.addEventListener('mousemove', function (e) { move(e), false });
+            canvas.addEventListener('mousedown', function (e) { down(e), false });
+            canvas.addEventListener('mouseup', function (e) { up(e), false });
+            canvas.addEventListener('mouseout', function (e) { out(e), false });
+        }
+
+
+        let startX = 0;
+        let startY = 0;
+        let dragging = false;
+
+
+        // 라디오 박스 밸류값 뽑아내기
+        let tool = document.getElementsByName('tool')
+
+
+        // 그림 그리는 함수
+        // 더해진 이벤트를 통해서
+        // 그림 그리기
+
+
+
+
+        // 지우개와 그리기 조건에 따라 나오게
+        function draw(curX, curY) {
+
+            for (let i in tool) {
+                // 라디오박스 밸류값 가져오기
+                if (tool[i].checked) {
+                    if (tool[i].value == "pencil") {
+                        context.beginPath();
+                        context.moveTo(startX, startY);
+                        context.lineTo(curX, curY);
+                        context.stroke();
+                    } else if (tool[i].value == "eraser") {
+                        let size = document.getElementById('mySize').value;
+                        context.clearRect(startX, startY, size, size);
+                    }
+                }
+            }
+        }
+        
+
+        // 마우스 다운
+        function down(e) {
+            startX = e.offsetX;
+            startY = e.offsetY;
+            dragging = true;    // 마우스 클릭시 그림이 그려질 수 있도록
+        }
+
+        // 마우스 업
+        function up(e) {
+            dragging = false;
+        }
+
+        // 마우스 움직임
+        function move(e) {
+            if (!dragging) {
+                return;
+            } else {
+                draw(e.offsetX, e.offsetY);
+                startX = e.offsetX;
+                startY = e.offsetY;
+            }
+        }
+        
+        // 마우스 컨버스 나갔을 때
+        function out(e) {
+            dragging = false;
+        }
+
+
+
+        // 도구들
+
+        // 전체삭제
+        function fn_clear() {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // 색깔변환
+        function fn_color() {
+            context.strokeStyle = document.getElementById('myColor').value;
+        }
+
+        // 사이즈 변환
+        function fn_size() {
+            context.lineWidth = document.getElementById('mySize').value;
+        }
+
+        // 펜슬
+        function fn_pencil() {
+            init();
+            canvas.style.cursor = 'url(image/cursor.cur), auto';
+            context.strokeStyle = document.getElementById('myColor').value; // 색깔 받아오기
+            context.lineWidth = document.getElementById('mySize').value;    // 사이즈 받아오기
+        }
+
+        // 지우개
+        function fn_eraser() {
+            canvas.style.cursor = 'url(image/eraser.cur), auto';
+        }
+
+
+
+    </script>
+
+</body>
+
+</html>
