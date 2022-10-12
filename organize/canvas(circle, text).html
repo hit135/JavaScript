@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>원호, 텍스트 그리기</h3>
+    <hr>
+    <canvas id="myCanvas" style="background-color:aliceblue;" width="500" height="150"></canvas>
+    <script>
+        let canvas = document.getElementById("myCanvas")
+        let context = canvas.getContext("2d");
+
+        // 원호 그리기
+
+        // context.beginPath();
+        // context.strokeStyle = 'magenta';
+        // context.arc(100, 70, 30, 0, 1.5 * Math.PI, false);
+        // context.stroke();
+
+        // context.beginPath();
+        // context.strokeStyle = 'blue';
+        // context.arc(100, 70, 50, 0.5 * Math.PI , Math.PI, true);
+        // context.stroke();
+
+
+        // 버튼을 눌렀을 때 90도씩만 출력
+        // 그리고 한바퀴 돌은 후에 시작점 변하기
+        let angle = 0;
+        let start = 40;
+        let rgb = 1;
+        let rgbMove = 1;
+        var color = random_rgba();
+        function fn_draw (){
+            context.beginPath();
+            context.strokeStyle = color;
+            context.arc(start, 70, 30, angle * Math.PI, (angle + 0.5) * Math.PI, false);
+            context.stroke();
+            angle += 0.5;
+  
+            if ( angle % 2 == 0){
+                start = start + 2;
+                color = random_rgba();
+            }
+        }
+        
+        // function random_rgba() {
+        //     var o = Math.round;
+        //     if(rgb > 255 || rgb <= 0){
+        //         rgbMove = -rgbMove;
+        //     }
+        //     rgb += rgbMove;
+        //     return 'rgb(' + o(rgb) + ',' + o(rgb) + ',' + o(rgb) + ')';
+        // }
+
+        // 랜덤한 rgb값 얻기
+        function random_rgba() {
+            var o = Math.round, r = Math.random, s = 255;
+            return 'rgba(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s) + ',' + r().toFixed(1) + ')';
+        }
+        var color = random_rgba();
+
+        
+        // 시간에 따라 반복 작업
+        let timeDraw = setInterval(fn_draw, 10);
+
+        // 원 그리기
+        function time_draw(){
+            clearInterval(timeDraw);
+            timeDraw = setInterval(fn_draw, 10);
+        }
+
+        // 반복작업 멈추기
+        function time_set (){
+            clearInterval(timeDraw);
+        }
+
+        // 원 초기화
+        function fn_init() {
+            clearInterval(timeDraw);
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            start = 40;
+        }
+
+
+         // setInteval과 rgb값을 이용해 원그리기
+
+
+
+
+
+        // ===========================================================================
+        // 텍스트 넣기
+
+        context.font = '50px forte';
+        context.strokeStyle = 'magenta';
+        context.lineWidth = 2;
+        context.textAlign = 'left';
+
+        // onclick 이벤트를 이용해 값 받아오기
+        function fn_wirte(){
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            // input 입력값 가져오기
+            context.strokeText(document.getElementById('myText').value, 40, 50);
+        }
+
+        // onkeup 이벤트를 이용해 실시간으로 값 받아오기
+        function fn_get(text){
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.strokeText(text, 40, 50);
+        }
+
+   
+
+
+    </script>
+    <button onclick=time_draw()>원 그리기</button>
+    <button onclick=time_set()>원 멈추기</button>
+    <button onclick=fn_init()>초기화</button><br>
+    <input id="myText" type="text" size="30" placeholder="입력하세요" onkeyup="fn_get(this.value)">
+    <button onclick="fn_wirte()">입력하기</button>
+    
+</body>
+</html>
