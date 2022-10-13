@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쿠키</title>
+    <script>
+
+        // 쿠키 정리
+        // 쿠키를 구성할 때 형식은 약속 된 것이라 첨삭할 수 없다.
+        // 인코딩 디코딩 때문에 기본적으로 쿠키에는
+        // 한글을 넣지 않는다.
+
+        // 서버가 데이터를 전부 감당하지 않고
+        // 로컬 컴퓨터에 쿠키형식으로 데이터를 저장해 놓는것
+
+        // 한 도메인당 20개
+        // 전체는 400개 정도 저장 가능
+
+        
+        /** 쿠키 읽기 **/
+        function GetCookie(name){
+            let str = name + "=";
+            let pairs = document.cookie.split(";");
+            for(let i = 0; i < pairs.length; i++){
+                let pair = pairs[i].trim();  // 공백제거
+                let unit = pair.split("=");
+                if(unit[0] == name){
+                    return unescape(unit[1]);
+                    // unescape() 와 escape()는 있는 함수
+                }
+            }
+
+        }
+
+        /** 쿠키 쓰기 **/
+        function SetCookie(name, val, expireDate){
+            let cookieStr = name + "=" + escape(val) +
+            ((expireDate == null)? "":("; expires=" + expireDate.toGMTString()))
+            document.cookie = cookieStr;
+        }
+    </script>
+</head>
+<body>
+    <script>
+        let username = GetCookie('username');
+        let count = GetCookie('count');
+        let expire = new Date();
+        if(username == null){
+            count = 0;
+            username = prompt("이름을 입력하세요." ,"");
+            if(username == null){
+                alert("이름을 입력하시라니까요?!");
+                username = "이름 입력 안함";
+            }else{
+                expire.setTime(expire.getTime() + (365 * 24 * 3600 * 1000));
+                SetCookie('username', username, expire);
+            }
+        }
+        count ++;
+        expire.setTime(expire.getTime() + (365 * 24 * 3600 * 1000)); // 1년후
+        SetCookie('count', count, expire); 
+        document.write('<p> 어서오세요 ' + username + "님의 " + count + "번째 방문을 환영합니다! ")
+
+
+
+    </script>    
+</body>
+</html>
