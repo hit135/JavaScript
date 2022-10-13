@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>세션 스토리지</h3>
+    <hr>
+    품목명 : <input type="text" id="p_item">
+    개수 : <input type="text" id="p_cnt">
+    <button id="p_save" onclick="p_save()">저장</button>
+    <button id="p_search" onclick="p_getSearch()">검색</button>
+    <button id="p_del">삭제</button>
+    <div id="p_div"></div>
+
+    <script>
+        // 세션 스토리지
+        // 윈도우를 기준으로 컨트롤 가능
+        // 윈도우를 닫으면 저장된 값들이 모두 소멸
+        // 같은 윈도우에서는 공유
+        // 다른 윈도우에서는 공유불가
+
+
+        // 로컬 스토리지
+        // 웹 사이트 당 하나씩 생성함
+        // 윈도우가 켜져도 종료돼도 저장
+        // 여러 윈도우에서 공유 가능하다
+        // 자바의 map과 사용가능 함수가 비슷하다.
+
+
+
+
+        // 로컬과 세션 둘다 형식은 같다
+
+       
+        // 세션 스토리지에 저장 //
+        function p_save(){
+            let item = document.getElementById('p_item');
+            let cnt = document.getElementById('p_cnt');
+            if(!window.sessionStorage){
+                alert("세션 스토리지를 지원하지 않음")
+                return;
+            }
+            sessionStorage.setItem(item.value, cnt.value);
+        }
+
+        // 검색 //
+        function p_search(){
+            if(sessionStorage.length > 0){
+                let str ="";
+                for(let i = 0; i < sessionStorage.length; i++){
+                    // 키값을 가져오는 .key 함수
+                    let key = sessionStorage.key(i);
+                    let val = sessionStorage.getItem(key);
+                    str += "key : " + key + " value : " + val + "<br>";
+                }
+                document.getElementById('p_div').innerHTML = str;
+            }else{
+                alert("저장 데이터 없음");
+                return;
+            }
+        }
+
+        // function p_getSearch(){
+        //     let Text = document.getElementById('p_item');
+        //     if(sessionStorage.length >0){
+        //         for(let i = 0; i < sessionStorage.length; i++){
+        //             let key = sessionStorage.key(i);
+        //             let val = sessionStorage.getItem(key);
+        //             if(Text.value == sessionStorage.key(i)){
+        //                 document.getElementById('p_div').innerHTML = "key : " + key + " value : " + val + "<br>";
+        //                 break;
+        //             }
+        //             if(Text.value != sessionStorage.key(i)){
+        //                 alert("저장 데이터 없음");
+        //                 return;
+        //             }
+
+        //         }
+        //     }
+        // }
+
+
+        // id 받아오는 것을 잘못함
+        // 검색 다른 형식
+        function p_getSearch(){
+            let key = [];
+            let val = [];
+            let Text = document.getElementById('p_item');
+            if(sessionStorage.length >0){
+                for(let i = 0; i < sessionStorage.length; i++){
+                    
+                    key.push(sessionStorage.key(i));
+                    
+                    // 여기서 key를 입력해서 value가 null이 나옴
+                    // sessionStorage.key(i)를 넣었어야 했다.
+                    // 왜인지는 생각해보자
+                    val.push(sessionStorage.getItem(sessionStorage.key(i)));
+                }
+                if(key.indexOf(Text.value) != -1){
+                    let indexVal = key.indexOf(Text.value);
+                    console.log(key);
+                    console.log(val);
+                    console.log('in:',indexVal);
+                    document.getElementById('p_div').innerHTML += "key : " + key[indexVal] + " /value : " + val[indexVal] + "<br>";
+                }else if(key.indexOf(Text.value) == -1){
+                    console.log(key);
+                    alert("품목명 없음");
+                    return;
+                }
+            }
+        }
+
+    </script>
+    
+</body>
+</html>
