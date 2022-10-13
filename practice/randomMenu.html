@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        span {
+            font-size: 15px;
+            color: brown;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>오늘은 뭘 먹을까?</h3>
+    <hr>
+    <script>
+        let menus = ["중국집", "맛고을", "버거킹", "다이어트"];
+        let classMate = ["김기윤", "김성식", "김희수", "김예준", "박형구", "이수현", "안재현", "변준모", "이호윤"];
+
+        // 점심식사 팀
+        let objTeam = {};
+        // 학생 메뉴 랜덤 할당(menus의 인덱스로)
+        let arrMate = [];
+        // 팀 인원은 1 ~ 3
+
+        // fn_randomTeam() 함수가 돌때마다
+        // arrMate에 랜덤하게 수가 더해진다.
+        // 이때, arrMate의 길이값인 9를 만족했을 때 
+        // 각 객체 키값(메뉴 4가지)에 랜덤으로 담는것을 반복하는 것을 종료
+
+        // 와일문이 돌 때마다
+        // objTeam 객체의 4개의 메뉴 키값을 선언하면서
+        // 랜덤한 인원을 담는다.
+
+        // 그 때 arrMate의 길이가 9를 만족한다면
+        // 모든 인원이 objTeam객체에 담긴것!
+        while (true) {
+            for (let i = 0; i < menus.length; i++) {
+
+                let randomT = fn_randomTeam();
+                let test = menus[i];
+                objTeam[test] = randomT;
+            }
+            if (arrMate.length != 9) {
+                arrMate = [];
+            } else if (arrMate.length == 9) {
+                break;
+            }
+        }
+
+
+
+        document.write("<h1> 오늘의 점심 메뉴 팀 </h1><br>");
+        for (let i = 0; i < Object.keys(objTeam).length; i++) {
+            document.write("<h3>" + menus[i] + "팀은 : " + "<span>" + objTeam[menus[i]] + "</span></h3>")
+        }
+        document.write("<button onclick = 'location.reload();'>다시 추첨</button>")
+
+
+        // 일단 랜덤하게 값을 뽑아서 넣는 것부터!
+
+        // menus에서 랜덤하게 뽑음
+        console.log(menus[Math.floor(Math.random() * menus.length)]);
+        // classMate에서 랜덤하게 뽑음
+        console.log(classMate[Math.floor(Math.random() * classMate.length)]);
+
+
+
+
+        // 랜덤하게 팀원 뽑음
+
+        // fn_randomTeam() 함수가 돌때마다
+        // rndTeam 배열과 arrMate 배열에 랜덤하게 1~3명 담는다.
+        // 중복되지 않게 담는 조건을 추가해줌
+        function fn_randomTeam() {
+            let rndTeam = [];
+
+            let teamNum = Math.ceil(Math.random() * 3);  // 1~3 사이의 수
+
+            for (let j = 0; j < teamNum; j++) {
+                let randomTeam = classMate[Math.floor(Math.random() * classMate.length)];  // 랜덤한 팀원
+
+                if (rndTeam.indexOf(randomTeam) == -1 && arrMate.indexOf(randomTeam) == -1) {  // 랜덤한 팀원이 결과값에 담겨있지 않으면
+
+                    rndTeam.push(randomTeam);
+                    arrMate.push(randomTeam)
+
+                }
+            }
+
+            return rndTeam;
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>
