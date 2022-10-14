@@ -32,7 +32,7 @@
             원한 <td class="One"></td><td class="One"></td><td class="One"></td>
             <td class="One"></td><td class="One"></td><td class="One"></td>
             <td class="One"></td><td class="One"></td><td class="One"></td><td class="One"></td>
-        </tr><button onclick="fn_handwork()">세공</button>
+        </tr><button onclick="fn_handwork(); fn_result()">세공</button>
     </table>
     <br>
     <table>
@@ -40,7 +40,7 @@
             예둔 <td class="Two"></td><td class="Two"></td><td class="Two"></td>
             <td class="Two"></td><td class="Two"></td><td class="Two"></td>
             <td class="Two"></td><td class="Two"></td><td class="Two"></td><td class="Two"></td>
-        </tr><button onclick="fn_handwork2()">세공</button>
+        </tr><button onclick="fn_handwork2(); fn_result()">세공</button>
     </table>
     <br>
     <table>
@@ -48,12 +48,11 @@
             방감 <td class="Three"></td><td class="Three"></td><td class="Three"></td>
             <td class="Three"></td><td class="Three"></td><td class="Three"></td>
             <td class="Three"></td><td class="Three"></td><td class="Three"></td><td class="Three"></td>
-        </tr><button onclick="fn_handwork3()">세공</button>
+        </tr><button onclick="fn_handwork3(); fn_result()">세공</button>
     </table>
     <br>
 
     <button onclick="location.reload()">다시하기</button>
-    <button onclick="fn_test()">테스트</button>
     
     <script>
         // 변하는 확률에 확률에 따라 랜덤하게 성공 실패
@@ -63,8 +62,12 @@
 
         let percent = 75;
         let count = 0;
+        let resentment = 0;
         let count2 = 0;
+        let acumen = 0;
         let count3 = 0;
+        let decreaseDefense = 0;
+
         document.getElementById('percentDiv').innerHTML = "성공확률: " + percent + "%";
 
         /**
@@ -81,6 +84,7 @@
                     rock[i].style["background-color"] = "blue";
                     percent -= 10;
                     count ++;
+                    resentment ++;
                     break;
                 }else{
                     rock[i].style["background-color"] = "gray";
@@ -106,6 +110,7 @@
                     rock[i].style["background-color"] = "blue";
                     percent -= 10;
                     count2 ++;
+                    acumen++;
                     break;
                 }else{
                     rock[i].style["background-color"] = "gray";
@@ -129,9 +134,10 @@
                 let randomNum = Math.floor(Math.random() * 100);
                 
                 if(randomNum < percent){
-                    rock[i].style["background-color"] = "blue";
+                    rock[i].style["background-color"] = "red";
                     percent -= 10;
                     count3 ++;
+                    decreaseDefense++;
                     break;
                 }else{
                     rock[i].style["background-color"] = "gray";
@@ -143,13 +149,12 @@
             document.getElementById('percentDiv').innerHTML = "성공확률: " + percent + "%";
         }
 
-        function fn_test(){
-            console.log(count, count2, count3);
-        }
 
         // 결과값 출력
-        if( count == 10 && count2 == 10 && count3 == 10){
-            alert("깍으신 돌의 결과는");
+        function fn_result(){
+            if( count == 10 && count2 == 10 && count3 == 10){
+                alert("깍으신 돌의 결과는\n원한 : " + resentment +"\n예둔 : " + acumen + "\n방감 : " + decreaseDefense);
+            }
         }
 
 
