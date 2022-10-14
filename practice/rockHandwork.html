@@ -75,6 +75,20 @@
             font-size: 13px;
             font-style: italic;
         }
+        .but_re{
+            position: relative;
+            right: -840px;
+            cursor: pointer;
+            background-color: rgb(105, 64, 172);
+            color: white;
+            width: 70px;
+            height: 50px;
+            border-radius: 20%;
+            border: none;
+        }
+        .but_re:hover{
+            background-color: rgb(83, 28, 172);
+        }
 
     </style>
 </head>
@@ -83,7 +97,7 @@
     <h3>돌깎기 시뮬레이션</h3>
     <hr>
     <br>
-    
+
     <!-- 1. 10개의 사각형이 있다.
             세공을 누르면 하나씩 채워진다.
             테이블 쓸까...? 
@@ -138,6 +152,9 @@
         <button class="rockButton" onclick="fn_handwork3(); fn_result()">세공</button>
     </div>
     <br>
+    <button class="but_re" onclick="location.reload()">다시하기</button>
+
+
 
     <script>
         // 변하는 확률에 확률에 따라 랜덤하게 성공 실패
