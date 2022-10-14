@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        td{
+            border-style: solid;
+            width: 15px;
+            height: 15px;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <h3>돌깎기 시뮬레이션</h3>
+    <hr>
+    <br>
+    <!-- 1. 10개의 사각형이 있다.
+            세공을 누르면 하나씩 채워진다.
+            테이블 쓸까...? 
+        -->
+    <!-- 75%에서 시작.. 두가지 조건을 준다
+         75%확률로 성공하면 백그라운드 블루 출력, 65%로
+         25%확률로 실패하면 백그라운드 그레이 출력 35%로
+         -->
+         <div id="percentDiv"></div>
+    <table>
+        <tr>
+            원한 <td class="One"></td><td class="One"></td><td class="One"></td>
+            <td class="One"></td><td class="One"></td><td class="One"></td>
+            <td class="One"></td><td class="One"></td><td class="One"></td><td class="One"></td>
+        </tr><button onclick="fn_handwork()">세공</button>
+    </table>
+    <br>
+    <table>
+        <tr>
+            예둔 <td class="Two"></td><td class="Two"></td><td class="Two"></td>
+            <td class="Two"></td><td class="Two"></td><td class="Two"></td>
+            <td class="Two"></td><td class="Two"></td><td class="Two"></td><td class="Two"></td>
+        </tr><button onclick="fn_handwork2()">세공</button>
+    </table>
+    <br>
+    <table>
+        <tr>
+            방감 <td class="Three"></td><td class="Three"></td><td class="Three"></td>
+            <td class="Three"></td><td class="Three"></td><td class="Three"></td>
+            <td class="Three"></td><td class="Three"></td><td class="Three"></td><td class="Three"></td>
+        </tr><button onclick="fn_handwork3()">세공</button>
+    </table>
+    <br>
+
+    <button onclick="location.reload()">다시하기</button>
+    <button onclick="fn_test()">테스트</button>
+    
+    <script>
+        // 변하는 확률에 확률에 따라 랜덤하게 성공 실패
+        // 일단 75퍼에 성공 실패를 나누자!
+
+
+
+        let percent = 75;
+        let count = 0;
+        let count2 = 0;
+        let count3 = 0;
+        document.getElementById('percentDiv').innerHTML = "성공확률: " + percent + "%";
+
+        /**
+         * 세공 원한
+         */
+        function fn_handwork(){
+            console.log(document.getElementsByClassName("One"));
+            let rock = document.getElementsByClassName("One");
+            for(let i = count; i < rock.length; i++){
+
+                let randomNum = Math.floor(Math.random() * 100);
+                
+                if(randomNum < percent){
+                    rock[i].style["background-color"] = "blue";
+                    percent -= 10;
+                    count ++;
+                    break;
+                }else{
+                    rock[i].style["background-color"] = "gray";
+                    percent += 10;
+                    count ++;
+                    break;
+                }
+            }
+            document.getElementById('percentDiv').innerHTML = "성공확률: " + percent + "%";
+        }
+
+        /**
+         * 세공 예둔
+        */
+        function fn_handwork2(){
+            console.log(document.getElementsByClassName("Two"));
+            let rock = document.getElementsByClassName("Two");
+            for(let i = count2; i < rock.length; i++){
+
+                let randomNum = Math.floor(Math.random() * 100);
+                
+                if(randomNum < percent){
+                    rock[i].style["background-color"] = "blue";
+                    percent -= 10;
+                    count2 ++;
+                    break;
+                }else{
+                    rock[i].style["background-color"] = "gray";
+                    percent += 10;
+                    count2 ++;
+                    break;
+                }
+            }
+            document.getElementById('percentDiv').innerHTML = "성공확률: " + percent + "%";
+        }
+
+        /**
+         * 세공 방감
+        */
+
+        function fn_handwork3(){
+            console.log(document.getElementsByClassName("Three"));
+            let rock = document.getElementsByClassName("Three");
+            for(let i = count3; i < rock.length; i++){
+
+                let randomNum = Math.floor(Math.random() * 100);
+                
+                if(randomNum < percent){
+                    rock[i].style["background-color"] = "blue";
+                    percent -= 10;
+                    count3 ++;
+                    break;
+                }else{
+                    rock[i].style["background-color"] = "gray";
+                    percent += 10;
+                    count3 ++;
+                    break;
+                }
+            }
+            document.getElementById('percentDiv').innerHTML = "성공확률: " + percent + "%";
+        }
+
+        function fn_test(){
+            console.log(count, count2, count3);
+        }
+
+        // 결과값 출력
+        if( count == 10 && count2 == 10 && count3 == 10){
+            alert("깍으신 돌의 결과는");
+        }
+
+
+
+
+
+    </script>
+</body>
+</html>
