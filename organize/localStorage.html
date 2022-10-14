@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>로컬 스토리지 이벤트</h3>
+    <hr>
+    품목명 : <input type="text" id="item_id"> <br>
+    개수 : <input type="text" id="cnt_id">
+    <button onclick="fn_save()">저장</button>
+    <button>검색</button>
+    <p>로컬 스토리지 변경 내용</p>
+    <textarea name="" id="area_id" cols="30" rows="10"></textarea>
+    <script>
+
+        window.addEventListener('storage', storageEventListener, false);
+        
+
+
+        function storageEventListener(e){
+            let msg = "";
+            msg += "key: " + e.key + "\n";
+            msg += "oldValue: " + e.oldValue + "\n";
+            msg += "newValue: " + e.newValue + "\n";
+            msg += "storageArea: " + e.storageArea + "\n";
+            msg += "url: " + e.url + "\n";
+            document.getElementById('area_id').innerHTML = msg;
+        }
+
+
+        function fn_save(){
+            let id = document.getElementById('item_id').value;
+            let cnt = document.getElementById('cnt_id').value;
+            localStorage.setItem(id, cnt);
+            
+        }
+        
+        </script>
+</body>
+</html>
