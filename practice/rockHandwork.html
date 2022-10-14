@@ -1,19 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        td{
-            border-style: solid;
-            width: 15px;
-            height: 15px;
-            color: blue;
+        body{
+            background-image:url("https://mblogthumb-phinf.pstatic.net/MjAyMDAzMTVfNTUg/MDAxNTg0MjU5ODg0NzM2.WAi2CQve7G-L0a4OrdsiDtQ2HWRBzahxQrkP4aW1-RQg.iuFxfgSnnd6CLb2wpZq56MnRgPUg8jN2EtlXwijR3KMg.JPEG.se___ovo/%EC%BB%B4%ED%93%A8%ED%84%B0%EB%B0%B0%EA%B2%BD%ED%99%94%EB%A9%B4%EC%9E%90%EC%97%B016.jpg?type=w800");
+            background-repeat: no-repeat;
+            background-size: cover;
         }
+
+        body > h3 {
+            color: rgb(231, 216, 216);
+            text-align: center;
+        }
+
+        body > div {
+            margin-left: 25%;
+        }
+
+        p {
+            display: inline-block;
+            border-radius: 5%;
+            background-color: rgb(204, 235, 131);
+            opacity: 30%;
+            transform: rotate(45deg);
+            width: 25px;
+            height: 25px;
+            margin-left: 2%;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+            
+        }
+
+        .Three {
+            border-color: rgb(224, 139, 139);
+        }
+
+        .p_rock{
+            opacity: 130%;
+            background: none;
+            box-shadow: none;
+            transform: rotate(360deg);
+            border-style: none;
+            display: inline;
+            color: rgba(180, 238, 248, 0.822);
+            font-weight: bolder;
+            font-size: large;
+            position: relative;
+            top: -23px;
+        }
+
+        .rockButton{
+            position: relative;
+            right: -30px;
+            height: 50px;
+            width: 50px;
+            top: -22px;
+            cursor: pointer;
+            border-radius: 40%;
+            background-color: rgb(163, 74, 94);   
+            color: white;
+            border: none;
+        }
+        .rockButton:hover{
+            background-color: rgb(141, 8, 8);
+        }
+        #divPercent{
+            color: rgb(255, 254, 253);
+            position: relative;
+            left: 600px;
+            font-size: 13px;
+            font-style: italic;
+        }
+
     </style>
 </head>
+
 <body>
     <h3>돌깎기 시뮬레이션</h3>
     <hr>
@@ -26,34 +91,53 @@
          75%확률로 성공하면 백그라운드 블루 출력, 65%로
          25%확률로 실패하면 백그라운드 그레이 출력 35%로
          -->
-         <div id="percentDiv"></div>
-    <table>
-        <tr>
-            원한 <td class="One"></td><td class="One"></td><td class="One"></td>
-            <td class="One"></td><td class="One"></td><td class="One"></td>
-            <td class="One"></td><td class="One"></td><td class="One"></td><td class="One"></td>
-        </tr><button onclick="fn_handwork(); fn_result()">세공</button>
-    </table>
+    <div id="divPercent"></div><br>
+    <div class="divRock">
+        <p class="p_rock">원한</p>
+        <p class="One"></p>
+        <p class="One"></p>
+        <p class="One"></p>
+        <p class="One"></p>
+        <p class="One"></p>
+        <p class="One"></p>
+        <p class="One"></p>
+        <p class="One"></p>
+        <p class="One"></p>
+        <p class="One"></p>
+        <button class="rockButton" onclick="fn_handwork(); fn_result()">세공</button>
+    </div>
     <br>
-    <table>
-        <tr>
-            예둔 <td class="Two"></td><td class="Two"></td><td class="Two"></td>
-            <td class="Two"></td><td class="Two"></td><td class="Two"></td>
-            <td class="Two"></td><td class="Two"></td><td class="Two"></td><td class="Two"></td>
-        </tr><button onclick="fn_handwork2(); fn_result()">세공</button>
-    </table>
+    <div class="divRock">
+        <p class="p_rock">예둔</p>
+        <p class="Two"></p>
+        <p class="Two"></p>
+        <p class="Two"></p>
+        <p class="Two"></p>
+        <p class="Two"></p>
+        <p class="Two"></p>
+        <p class="Two"></p>
+        <p class="Two"></p>
+        <p class="Two"></p>
+        <p class="Two"></p>
+        <button class="rockButton" onclick="fn_handwork2(); fn_result()">세공</button>
+    </div>
     <br>
-    <table>
-        <tr>
-            방감 <td class="Three"></td><td class="Three"></td><td class="Three"></td>
-            <td class="Three"></td><td class="Three"></td><td class="Three"></td>
-            <td class="Three"></td><td class="Three"></td><td class="Three"></td><td class="Three"></td>
-        </tr><button onclick="fn_handwork3(); fn_result()">세공</button>
-    </table>
+    <div class="divRock">
+        <p class="p_rock">방감</p>
+        <p class="Three"></p>
+        <p class="Three"></p>
+        <p class="Three"></p>
+        <p class="Three"></p>
+        <p class="Three"></p>
+        <p class="Three"></p>
+        <p class="Three"></p>
+        <p class="Three"></p>
+        <p class="Three"></p>
+        <p class="Three"></p>
+        <button class="rockButton" onclick="fn_handwork3(); fn_result()">세공</button>
+    </div>
     <br>
 
-    <button onclick="location.reload()">다시하기</button>
-    
     <script>
         // 변하는 확률에 확률에 따라 랜덤하게 성공 실패
         // 일단 75퍼에 성공 실패를 나누자!
@@ -68,92 +152,98 @@
         let count3 = 0;
         let decreaseDefense = 0;
 
-        document.getElementById('percentDiv').innerHTML = "성공확률: " + percent + "%";
+        document.getElementById('divPercent').innerHTML = "성공확률: " + percent + "%";
 
         /**
          * 세공 원한
          */
-        function fn_handwork(){
+        function fn_handwork() {
             console.log(document.getElementsByClassName("One"));
             let rock = document.getElementsByClassName("One");
-            for(let i = count; i < rock.length; i++){
+            for (let i = count; i < rock.length; i++) {
 
                 let randomNum = Math.floor(Math.random() * 100);
-                
-                if(randomNum < percent){
-                    rock[i].style["background-color"] = "blue";
+
+                if (randomNum < percent) {
+                    rock[i].style["background-color"] = "rgb(194, 237, 245)";
+                    rock[i].style["opacity"] = "120%";
                     percent -= 10;
-                    count ++;
-                    resentment ++;
+                    count++;
+                    resentment++;
                     break;
-                }else{
-                    rock[i].style["background-color"] = "gray";
+                } else {
+                    rock[i].style["background-color"] = "rgb(167, 167, 167)";
+                    rock[i].style["opacity"] = "120%";
                     percent += 10;
-                    count ++;
+                    count++;
                     break;
                 }
             }
-            document.getElementById('percentDiv').innerHTML = "성공확률: " + percent + "%";
+            document.getElementById('divPercent').innerHTML = "성공확률: " + percent + "%";
         }
 
         /**
          * 세공 예둔
         */
-        function fn_handwork2(){
+        function fn_handwork2() {
             console.log(document.getElementsByClassName("Two"));
             let rock = document.getElementsByClassName("Two");
-            for(let i = count2; i < rock.length; i++){
+            for (let i = count2; i < rock.length; i++) {
 
                 let randomNum = Math.floor(Math.random() * 100);
-                
-                if(randomNum < percent){
-                    rock[i].style["background-color"] = "blue";
+
+                if (randomNum < percent) {
+                    rock[i].style["background-color"] = "rgb(194, 237, 245)";
+                    rock[i].style["opacity"] = "120%";
                     percent -= 10;
-                    count2 ++;
+                    count2++;
                     acumen++;
                     break;
-                }else{
-                    rock[i].style["background-color"] = "gray";
+                } else {
+                    rock[i].style["background-color"] = "rgb(167, 167, 167)";
+                    rock[i].style["opacity"] = "120%";
                     percent += 10;
-                    count2 ++;
+                    count2++;
                     break;
                 }
             }
-            document.getElementById('percentDiv').innerHTML = "성공확률: " + percent + "%";
+            document.getElementById('divPercent').innerHTML = "성공확률: " + percent + "%";
         }
 
         /**
          * 세공 방감
         */
 
-        function fn_handwork3(){
+        function fn_handwork3() {
             console.log(document.getElementsByClassName("Three"));
             let rock = document.getElementsByClassName("Three");
-            for(let i = count3; i < rock.length; i++){
+            for (let i = count3; i < rock.length; i++) {
 
                 let randomNum = Math.floor(Math.random() * 100);
-                
-                if(randomNum < percent){
-                    rock[i].style["background-color"] = "red";
+
+                if (randomNum < percent) {
+                    rock[i].style["background-color"] = "rgb(248, 80, 80)";
+                    rock[i].style["opacity"] = "120%";
                     percent -= 10;
-                    count3 ++;
+                    count3++;
                     decreaseDefense++;
                     break;
-                }else{
-                    rock[i].style["background-color"] = "gray";
+                } else {
+                    rock[i].style["background-color"] = "rgb(167, 167, 167)";
+                    rock[i].style["opacity"] = "120%";
                     percent += 10;
-                    count3 ++;
+                    count3++;
                     break;
                 }
             }
-            document.getElementById('percentDiv').innerHTML = "성공확률: " + percent + "%";
+            document.getElementById('divPercent').innerHTML = "성공확률: " + percent + "%";
         }
 
 
         // 결과값 출력
-        function fn_result(){
-            if( count == 10 && count2 == 10 && count3 == 10){
-                alert("깍으신 돌의 결과는\n원한 : " + resentment +"\n예둔 : " + acumen + "\n방감 : " + decreaseDefense);
+        function fn_result() {
+            if (count == 10 && count2 == 10 && count3 == 10) {
+                alert("깍으신 돌의 결과는\n원한 : " + resentment + "\n예둔 : " + acumen + "\n방감 : " + decreaseDefense);
             }
         }
 
@@ -163,4 +253,5 @@
 
     </script>
 </body>
+
 </html>
