@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   <link rel="stylesheet" href="register.css">
+</head>
+<body>
+    <div id="container">
+        <h1>회원가입</h1>
+        <form action="#" id="register">
+            <ul>
+                <li>
+                    <label for="user-id" class="field">아이디</label>
+                    <input type="text" id="user-id" placeholder = "4~15자리 영문과 숫자로 입력" required>
+                </li>
+                <li>
+                    <label for="user-pw" class="field">비밀번호</label>
+                    <input type="password" id="user-pw" placeholder="8자리 이상" required>
+                </li>
+                <li>
+                    <label for="user-pw2" class="field">비밀번호 확인</label>
+                    <input type="password" id="user-pw2" placeholder="확인해주세요" required>
+                </li>
+            </ul>
+            <ul id="button">
+                <li>
+                    <button type="button" onclick="fn_save()">가입하기</button>
+                </li>
+                <li>
+                    <button type="button" onclick="window.close()">닫기</button>
+                </li>
+            </ul>
+        </form>
+        <script>
+            // .querySelector()는 css에서 선택하는 방법으로 쓰는것
+            let userId = document.querySelector('#user-id');
+            let pw1 = document.querySelector('#user-pw');
+            let pw2 = document.querySelector('#user-pw2');
+
+            // 프로퍼티에 바로 함수를 넣어줄 때, ()를 안쓴다...
+            // addEventListener 할 때!
+            // 이벤트를 넣을 때 3가지 방법...!
+            userId.onchange = checkId;
+            pw1.onchange = checkPw;
+            pw2.onchange = comparePw;
+
+
+
+            function checkId(){
+                if(userId.value.length < 4 || userId.value.length > 15){
+                    alert("아이디는 4 ~ 15자리 영문과 숫자로 작성하세요");
+                    userId.focus();
+                }
+            }
+
+            function checkPw(){
+                // 비밀번호 8자리 이상
+                // 아니라면 (1)alert (2) 비밀번호 지우고 (3) 비밀번호 쪽에 포커스 주기
+                if(pw1.value.length < 8){
+                    alert("8자리 이상의 비밀번호를 입력하세요.");
+                    pw1.value = "";
+                    pw1.focus();
+                }
+            }
+
+            function comparePw(){
+                // user-pw 와 user-pw2 값이 같지 않으면
+                // (1) alert (2) 비밀번호 지우기 (3) 포커스 주기
+                if(pw1.value != pw2.value){
+                    alert("비밀번호가 일치하지 않습니다.");
+                    pw1.value = "";
+                    pw2.value = "";
+                    pw1.focus();
+                }
+            }
+
+            function fn_save(){
+                let val = localStorage.getItem(userId.value);
+                if(val != null){
+                    alert(userId.value + "는 이미 있는 아이디 입니다.");
+                    return;
+                }
+                localStorage.setItem(userId.value, pw1.value);
+                alert(userId.value + "님 회원가입을 축하합니다!")
+                window.close();     // 이건 왜 들어갔을까..?
+            }
+
+
+        </script>
+    </div>
+    
+</body>
+</html>
