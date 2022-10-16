@@ -19,7 +19,7 @@
         }
 
         body > div {
-            margin-left: 25%;
+            text-align: center;
         }
 
         p {
@@ -70,15 +70,12 @@
         }
         #divPercent{
             color: rgb(255, 254, 253);
-            position: relative;
-            left: 600px;
+            text-align: right;
+            margin-right: 3%;
             font-size: 13px;
             font-style: italic;
         }
         .but_re{
-            position: relative;
-            bottom: -70px;
-            left: -34px;
             cursor: pointer;
             background-color: rgb(105, 64, 172);
             color: white;
@@ -107,8 +104,8 @@
          75%확률로 성공하면 백그라운드 블루 출력, 65%로
          25%확률로 실패하면 백그라운드 그레이 출력 35%로
          -->
-    <div id="divPercent"></div><br>
     <div class="divRock">
+        <div id="divPercent"></div><br>
         <p class="p_rock">원한</p>
         <p class="One"></p>
         <p class="One"></p>
@@ -151,8 +148,10 @@
         <p class="Three"></p>
         <p class="Three"></p>
         <button class="rockButton" onclick="fn_handwork3(); fn_result()">세공</button>
+        <br>
         <button class="but_re" onclick="location.reload()">다시하기</button>
     </div>
+    
     <br>
 
 
