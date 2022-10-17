@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .runCat{
+            width: 200px;
+            height: 100px;
+            animation-name: running;
+            animation-duration: 0.8s;
+            animation-iteration-count: infinite;
+            position: relative;
+            animation-play-state: running;
+        }
+        @keyframes running{
+            8%{background-image: url(cat/cat01.png); background-repeat: no-repeat; background-size: contain;}
+            15%{background-image: url(cat/cat02.png); background-repeat: no-repeat; background-size: contain;}
+            23%{background-image: url(cat/cat03.png); background-repeat: no-repeat; background-size: contain;}
+            30%{background-image: url(cat/cat04.png); background-repeat: no-repeat; background-size: contain;}
+            38%{background-image: url(cat/cat05.png); background-repeat: no-repeat; background-size: contain;}
+            45%{background-image: url(cat/cat06.png); background-repeat: no-repeat; background-size: contain;}
+            53%{background-image: url(cat/cat07.png); background-repeat: no-repeat; background-size: contain;}
+            60%{background-image: url(cat/cat08.png); background-repeat: no-repeat; background-size: contain;}
+            68%{background-image: url(cat/cat09.png); background-repeat: no-repeat; background-size: contain;}
+            75%{background-image: url(cat/cat10.png); background-repeat: no-repeat; background-size: contain;}
+            83%{background-image: url(cat/cat11.png); background-repeat: no-repeat; background-size: contain;}
+            90%{background-image: url(cat/cat12.png); background-repeat: no-repeat; background-size: contain;}
+            100%{background-image: url(cat/cat13.png); background-repeat: no-repeat; background-size: contain;}
+        }
+        /* body > div :nth-child(1){
+        } */
+
+    </style>
+    <script>
+        let start = 1000;
+        function leftDown (){
+            let leftArr = document.getElementsByClassName('runCat');
+            for(let i = 0; i < leftArr.length; i++){
+                let randInt = Math.ceil(Math.random()* 20);
+                leftArr[i].style["left"] = start - randInt + "px";
+                start = start - randInt;
+                console.log(start);
+
+
+                if(start <= 0){
+                    clearInterval(timeId);
+                    // 왜 애니메이션 안멈추냐
+                    window.onload = function(){
+                        leftArr[i].style.animationPlayState = 'paused';
+                    }
+                }
+            }
+        }
+
+        // 이건 되면서
+        let stop;
+        window.onload = function(){
+            div = document.getElementsByClassName('runCat')[0];
+            stop = document.getElementById('stop');
+            stop.addEventListener('click', function(e){
+                div.style.animationPlayState = 'paused';
+            });
+        }
+        
+        let timeId = setInterval('leftDown()', 100);
+    </script>
+</head>
+<body>
+    <div>
+        <p class="runCat"></p>
+        <p class="runCat"></p>
+        <p class="runCat"></p>
+        <p class="runCat"></p>
+        <button id="stop">멈춤</button>
+    </div>
+    
+</body>
+</html>
