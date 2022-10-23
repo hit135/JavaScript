@@ -12,6 +12,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/login.css">
     <style>
+        /* 스크롤 바 지우기 */
+        body{
+            -ms-overflow-style: none;
+        }
+        ::-webkit-scrollbar {
+            display: none;
+        }
         /* ======================================== 메인의 gif css */
         #main_contents{
             opacity: 1;
@@ -298,7 +305,7 @@
             s_form.style['opacity'] = '0';
             s_form.style['width'] = '10px';
             s_form.style['height'] = '70px';
-            setTimeout("displayNone('sign_form','none');",1000);
+            setTimeout("displayNone('sign_form','none');",800);
             
             // 이미지 제어
             displayNone("main_contents", "block");
