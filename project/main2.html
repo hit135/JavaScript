@@ -10,10 +10,14 @@
     </script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-    <script src="js/mainJs.js"></script>
-    <link rel="stylesheet" href="css/css2.css">
+    <link rel="stylesheet" href="css/login.css">
     <style>
         /* ======================================== 메인의 gif css */
+        #main_contents{
+            opacity: 1;
+            display: block;
+            transition-duration: 1.5s;
+        }
         .main_img{
             width: 150px;
             margin-top: -300px;
@@ -52,6 +56,7 @@
             transition-duration: 3.5s;
         }
         /* main 고정된 것들 */
+        /* 홈페이지 버튼 */
         #title_name{
             cursor: pointer;
             position: absolute;
@@ -65,13 +70,7 @@
             height: 75px;
             float: left;
         }
-        #bottom_bar{
-            position: fixed;
-            bottom: 0;
-            transition-duration: 1.5s; border-top: 1px solid rgb(206, 191, 191);
-            height: 1px;
-            width: 1px;
-        }
+        /* 상위 버튼들 */
         #main_button > ul{
             list-style: none;
             font-size: 0.75em;
@@ -90,11 +89,44 @@
             right: 1500px;
             opacity: 0;
         }
+        /* 바텀 바 */
+        #bottom_bar{
+            position: fixed;
+            bottom: 0;
+            transition-duration: 1.5s; border-top: 1px solid rgb(206, 191, 191);
+            height: 1px;
+            width: 1px;
+        }
+        /* 바텀 버튼 (로그인) */
         #bottom_button{
             position: absolute;
             bottom: 70px;
             right: 0;
             margin-right: 20px;
+        }
+
+        /* 로그인 창 */
+        #p_registe{
+            background-color: rgb(253, 253, 253);
+            transition-duration: 3s;
+            text-align: center;
+
+            display: flex;
+            justify-content: center;
+            width: 0;
+            height: 0;
+            
+        }
+        #c_registe{
+            transition-duration: 3s;
+            background-color: white;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            text-align: center;
+            
+            width: 0;
+            height: 0px;
         }
     </style>
     <script>
@@ -165,8 +197,6 @@
         // -80 <  x  < 400 , x > 400
         // 시간에 따라 반복 동작
         // 6초후 멈춤
-        let timeId = setInterval('imgMarginTop()', 15);
-        setTimeout("clearInterval(timeId)", 7000);
         
 
 
@@ -200,6 +230,11 @@
             let getEle = document.getElementById(p_id);
             getEle.style["opacity"] = p_num;
         }
+        // display  바꾸기
+        function displayNone(p_id , p_string){
+            let getEle = document.getElementById(p_id);
+            getEle.style["display"] = p_string;
+        }
 
         // 홈 버튼 함수
         function homeBut(){
@@ -208,16 +243,77 @@
 
         // 홈 바텀의 로그인 버튼
         function fn_registe(){
-            changeOpacity('main_gifs',0);
+            changeOpacity('main_contents',0);
+            imgRotateId('main_contents', 0, 1.5, -650);
+            setTimeout('displayNone("main_contents", "None");', 1500)
+            let c_reg = document.getElementById('c_registe');
+            let s_form = document.getElementById('sign_form');
+            c_reg.style['position'] = 'static';
+            s_form.style['right'] = '25%';
+            s_form.style['top'] = '50%';
+            s_form.style['bottom'] = '0px';
+            s_form.style['opacity'] = '1';
+            s_form.style['width'] = '470px';
+            s_form.style['height'] = '450px';
         }
 
+        // 로그인 버튼 애니메이션으로 나오기
+        function fn_registe_ani(){
+            displayNone('sign_form','block');
+            setTimeout("fn_registe()",500);
+        }
+
+
+
+        // 로그인 화면 sign in/ sing up
+        function resetClass(element, classname) {
+            element.classList.remove(classname);
+        }
+
+        function fn_signUn(){
+            let form = document.getElementsByClassName("form")[0];
+            resetClass(form, "signin");
+            resetClass(form, "reset");
+            form.classList.add("signup");
+            document.getElementById("submit-btn").innerText = "Sign Up";
+        }
+
+        function fn_signIn(){
+            let form = document.getElementsByClassName("form")[0];
+            resetClass(form, "signup");
+            resetClass(form, "reset");
+            form.classList.add("signin");
+            document.getElementById("submit-btn").innerText = "Sign In";
+
+        }
+
+        // 로그인 화면 Close
+        function fn_close(){
+            // 로그인 화면 제어
+            let c_reg = document.getElementById('c_registe');
+            let s_form = document.getElementById('sign_form');
+            s_form.style['right'] = '100px';
+            s_form.style['top'] = '100%';
+            s_form.style['bottom'] = '10%';
+            s_form.style['opacity'] = '0';
+            s_form.style['width'] = '10px';
+            s_form.style['height'] = '70px';
+            setTimeout("displayNone('sign_form','none');",1000);
+            
+            // 이미지 제어
+            displayNone("main_contents", "block");
+            setTimeout("changeOpacity('main_contents',1);",500)
+            setTimeout("imgRotateId('main_contents', 0, 1.5, 0);",500)
+            
+            
+        }
 
     </script>
 </head>
 <body>
     <div id="container" style="display: block;">
-        <div class="main_contents">
-            <!-- 메인의 제목 이미지와 gif들 -->
+        <!-- 메인의 gif와 title 이미지 -->
+        <div id="main_contents">
             <div id="main_title" class="row">
                 <img id="main_title_img" src="image/mainTitle.png" alt="">
             </div>
@@ -233,13 +329,14 @@
                 <div class="p_div_imp" ><img id="gif9" class="main_img" src="gif/11.gif" alt=""></div>
             </div>
         </div>
+        <!-- 메인에 고정된 버튼, 홈버튼, 바텀바 -->
         <div class="main_fixed">
-            <!-- 메인에 고정된 버튼, 홈버튼, 바텀바 -->
             <div id="title_name">
                 <img src="image/title.png" onclick="homeBut()" alt="">
             </div>
             <div id="main_button">
                 <ul>
+                    <li>condition</li>
                     <li>policy</li>
                     <li>attendance</li>
                     <li>board</li>
@@ -247,9 +344,38 @@
                 </ul>
             </div>
             <div id="bottom_button">
-                <button type="button" onclick="fn_registe()">로그인/회원가입</button>
+                <button type="button" onclick="fn_registe_ani()">로그인/회원가입</button>
             </div>
             <div id="bottom_bar"></div>
+        </div>
+        <!-- 로그인 창 -->
+        <div id="p_registe">
+            <div id="c_registe">
+                <div id="sign_form" class="form signup">
+                    <div class="form-header">
+                      <div class="show-signup" onclick="fn_signUn()">Sign Up</div>
+                      <div class="show-signin" onclick="fn_signIn()">Sign In</div>
+                      <div class="show-close" onclick="fn_close()">Close</div>
+                    </div>
+                    <div class="arrow"></div>
+                    <div class="form-elements">
+                      <div class="form-element">
+                        <input type="text" placeholder="Username">
+                      </div>
+                      <div class="form-element">
+                        <input type="password" placeholder="Password">
+                      </div>
+                      <div class="form-element">
+                        <input type="password" placeholder="Confirm password">
+                      </div>
+                      <div class="form-element">
+                        <button id="submit-btn">Sign Up</button>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            
+
         </div>
     </div>
 </body>
