@@ -17,6 +17,8 @@
         .main_img{
             width: 150px;
             margin-top: -300px;
+            text-align: center;
+            z-index: 99;
         }
         .main_img_div{
             display: flex;
@@ -31,6 +33,38 @@
         .p_div_imp{
             text-align: center;
         }
+       
+        /* 메인의 타이틀 css */
+        #main_title{
+            justify-content: center;
+        }
+        #main_title > img{
+            width: 584px;
+            height: 121px;
+            margin-top: -200px;
+            position: absolute;
+            z-index: 100;
+            rotate: 520deg;
+            transition-duration: 1s;
+        }
+        #main_gifs{
+            opacity: 0;
+            transition-duration: 3.5s;
+        }
+        /* main 고정된 것들 */
+        #title_name{
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            margin-left: 10px;
+            opacity: 0;
+            transition-duration: 2s;
+        }
+        #title_name > img{
+            width: 150px;
+            height: 75px;
+            float: left;
+        }
         #bottom_bar{
             position: fixed;
             bottom: 0;
@@ -38,31 +72,58 @@
             height: 1px;
             width: 1px;
         }
-        /* 메인의 타이틀 css */
-        .main_title{
-
+        #main_button > ul{
+            list-style: none;
+            font-size: 0.75em;
+            font-weight: bold;
+            font-size: 23px;
+        }
+        #main_button > ul > li{
+            display: inline-block;
+            margin-left: 30px;
+        }
+        #main_button{
+            position: absolute;
+            top: 42px;
+            z-index: 200;
+            transition-duration: 1.5s;
+            right: 1500px;
+            opacity: 0;
+        }
+        #bottom_button{
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            margin-right: 20px;
         }
     </style>
     <script>
         // 로드되면 바텀 창 바뀜
         window.onload = function(){
-            // 바텀 바 로드
+            // 바텀 바 로드 // 타이틀 버튼
             let btn = document.getElementById('bottom_bar');
+            let mbt = document.getElementById('main_button');
             btn.style.width = '100%';
-            btn.style.height = '70px';
-            btn.style.backgroundColor = 'rgb(0, 110, 110)';
+            btn.style.height = '60px';
+            btn.style.backgroundColor = 'rgb(0, 50, 110)';
+            mbt.style.right = '38px';
+
+            changeOpacity('main_button',1);
+            changeOpacity('title_name',1);
+            changeOpacity('main_gifs',1);
+
             // 이미지 로드
             // 함수 포문과 재귀함수 등등 써서 최대한 줄이려 했지만 실패함
-            setTimeout('',1000);
-            setTimeout('imgRotateId(gif1,-15,3,400);',1000);setTimeout('imgRotateId(gif1,0,2,350)',3000); setTimeout('imgRotateId(gif1,0,2,400)',5000);
-            setTimeout('imgRotateId(gif2,-10,2,400);',1000);setTimeout('imgRotateId(gif2,30,2,200)',3000); setTimeout('imgRotateId(gif2,0,2,400)',5000);
-            setTimeout('imgRotateId(gif3,-26,1,400);',1000);setTimeout('imgRotateId(gif3,15,1,10)',2000); setTimeout('imgRotateId(gif3,0,1,400)',3000);
-            setTimeout('imgRotateId(gif4,24,3,400);',1000);setTimeout('imgRotateId(gif4,0,2,400)',4000); setTimeout('imgRotateId(gif4,0,1,400)',6000);
-            setTimeout('imgRotateId(gif5,20,2,400);',1000);setTimeout('imgRotateId(gif5,-20,1,230)',3000); setTimeout('imgRotateId(gif5,0,2,400)',4000);
-            setTimeout('imgRotateId(gif6,-20,2,400);',1000);setTimeout('imgRotateId(gif6,15,2,300)',4000); setTimeout('imgRotateId(gif6,0,1,400)',4000);
-            setTimeout('imgRotateId(gif7,-15,1,400);',1000);setTimeout('imgRotateId(gif7,30,1,40)',2000); setTimeout('imgRotateId(gif7,0,2,400)',3000);
-            setTimeout('imgRotateId(gif8,-30,4,400);',1000);setTimeout('imgRotateId(gif8,0,2,400)',5000); setTimeout('imgRotateId(gif8,0,1,400)',7000);
-            setTimeout('imgRotateId(gif9,-25,2,400);',1000);setTimeout('imgRotateId(gif9,25,1,120)',3000); setTimeout('imgRotateId(gif9,0,2,400)',4000);
+            setTimeout("imgRotateId('main_title_img',-20,0.8,240);",3500);setTimeout("imgRotateId('main_title_img',90,0.8,70);",4200);setTimeout("imgRotateId('main_title_img',-10,1.5,200);",4800);setTimeout("imgRotateId('main_title_img',10,0.8,160);",6000);setTimeout("imgRotateId('main_title_img',0,1,190);",6500);
+            setTimeout('imgRotateId("gif1",-15,3,500);',1000);setTimeout('imgRotateId("gif1",0,2,450)',2800); setTimeout('imgRotateId("gif1",0,2,500)',4600);
+            setTimeout('imgRotateId("gif2",-10,2,500);',1000);setTimeout('imgRotateId("gif2",30,2,300)',2800); setTimeout('imgRotateId("gif2",0,2,500)',4600);
+            setTimeout('imgRotateId("gif3",-26,1,500);',1000);setTimeout('imgRotateId("gif3",15,1,110)',1800); setTimeout('imgRotateId("gif3",0,1,500)',2600);
+            setTimeout('imgRotateId("gif4",24,3,500);',1000);setTimeout('imgRotateId("gif4",0,2,500)',3800); setTimeout('imgRotateId("gif4",0,1,500)',5600);
+            setTimeout('imgRotateId("gif5",20,2,500);',1000);setTimeout('imgRotateId("gif5",-20,1,330)',2800); setTimeout('imgRotateId("gif5",0,2,500)',3600);
+            setTimeout('imgRotateId("gif6",-20,2,500);',1000);setTimeout('imgRotateId("gif6",15,2,400)',2800); setTimeout('imgRotateId("gif6",0,1,500)',3600);
+            setTimeout('imgRotateId("gif7",-15,1,500);',1000);setTimeout('imgRotateId("gif7",30,1,140)',1800); setTimeout('imgRotateId("gif7",0,2,500)',2600);
+            setTimeout('imgRotateId("gif8",-30,4,500);',1000);setTimeout('imgRotateId("gif8",0,2,500)',4800); setTimeout('imgRotateId("gif8",0,1,500)',6600);
+            setTimeout('imgRotateId("gif9",-25,2,500);',1000);setTimeout('imgRotateId("gif9",25,1,220)',2800); setTimeout('imgRotateId("gif9",0,2,500)',3600);
         }
         //  =========================================== 메인의 gif 파일들 동작
         let mainImg = document.getElementsByClassName('main_img');
@@ -134,25 +195,33 @@
             }
         }
 
+        // 불투명도 바꾸기
+        function changeOpacity(p_id, p_num){
+            let getEle = document.getElementById(p_id);
+            getEle.style["opacity"] = p_num;
+        }
 
-        let gif1 = 'gif1'; let gif2 = 'gif2'; let gif3 = 'gif3'; let gif4 = 'gif4'; let gif5 = 'gif5'; let gif6 = 'gif6';
-        let gif7 = 'gif7'; let gif8 = 'gif8'; let gif9 = 'gif9';
+        // 홈 버튼 함수
+        function homeBut(){
+            window.open('main2.html','_self');
+        }
 
+        // 홈 바텀의 로그인 버튼
+        function fn_registe(){
+            changeOpacity('main_gifs',0);
+        }
 
 
     </script>
 </head>
 <body>
-    <div id="main" style="display: block;">
+    <div id="container" style="display: block;">
         <div class="main_contents">
-            <div class="row">
-                <div class="main_title">we are ready to serve</div>
-                <div class="main_note">
-                    현재 자신의 조건으로 해당되는 정책들, 보조금들을 조회할 수 있는 서비스를 제공합니다. <br>
-                    회원가입 후 사용가능한 커뮤니티와 게임들도 즐겨보세요! 저희 BaRa는 언제나 청년분들과 함께합니다.
-                </div>
+            <!-- 메인의 제목 이미지와 gif들 -->
+            <div id="main_title" class="row">
+                <img id="main_title_img" src="image/mainTitle.png" alt="">
             </div>
-            <div class="row main_img_div">
+            <div id="main_gifs" class="row main_img_div">
                 <div class="p_div_imp" ><img id="gif1" class="main_img" src="gif/1.gif" alt=""></div>
                 <div class="p_div_imp" ><img id="gif2" class="main_img" src="gif/3.gif" alt=""></div>
                 <div class="p_div_imp" ><img id="gif3" class="main_img" src="gif/4.gif" alt=""></div>
@@ -164,9 +233,24 @@
                 <div class="p_div_imp" ><img id="gif9" class="main_img" src="gif/11.gif" alt=""></div>
             </div>
         </div>
+        <div class="main_fixed">
+            <!-- 메인에 고정된 버튼, 홈버튼, 바텀바 -->
+            <div id="title_name">
+                <img src="image/title.png" onclick="homeBut()" alt="">
+            </div>
+            <div id="main_button">
+                <ul>
+                    <li>policy</li>
+                    <li>attendance</li>
+                    <li>board</li>
+                    <li>game</li>
+                </ul>
+            </div>
+            <div id="bottom_button">
+                <button type="button" onclick="fn_registe()">로그인/회원가입</button>
+            </div>
+            <div id="bottom_bar"></div>
+        </div>
     </div>
-    <div><button style="top: 0; position: fixed;" type="button" onclick="imgRotateClass(classImg,60,3);
-        setTimeout('imgRotateClass(classImg,-60,3)',3000); setTimeout('imgRotateClass(classImg,0,3)',6000);">테스트</button></div>
-    <div id="bottom_bar"></div>
 </body>
 </html>
