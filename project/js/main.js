@@ -119,8 +119,8 @@ function homeBut() {
 function fn_registe() {
     // 메인 이미지들
     changeOpacity('main_contents', 0);
-    imgRotateId('main_contents', 0, 1.5, -650);
-    setTimeout('displayNone("main_contents", "None");', 1500)
+    imgRotateId('main_contents', 0, 1, -650);
+    setTimeout('displayNone("main_contents", "None");', 1000)
     let c_reg = document.getElementById('c_registe');
     let s_form = document.getElementById('sign_form');
     c_reg.style['position'] = 'static';
@@ -134,14 +134,30 @@ function fn_registe() {
 // 로그인 버튼 눌렀을 시 condition 동적인 움직임
 function fn_registeCon(){
     changeOpacity('c_condition', 0);
-    setTimeout("fn_closeCon()", 1500);
-    setTimeout('displayNone("b_condition", "none");', 2800); 
+    setTimeout("fn_closeCon()", 1000);
+    setTimeout('displayNone("b_condition", "none");', 2500); 
 }
 
 // 로그인 버튼 애니메이션으로 나오기
 function fn_registe_ani() {
+    changeOpacity("carouselExampleControls", 0);
+    setTimeout("closePolicy();", 1400);
+
     displayNone('sign_form', 'block');
-    setTimeout("fn_registe()", 2000);
+    setTimeout("fn_registe()", 800);
+}
+// 로그인 버튼 애니메이션으로 들어가기
+function fn_registe_close(){
+    let c_reg = document.getElementById('c_registe');
+    let s_form = document.getElementById('sign_form');
+    s_form.style['right'] = '100px';
+    s_form.style['transition-duration'] = '1.5s';
+    s_form.style['top'] = '100%';
+    s_form.style['bottom'] = '10%';
+    s_form.style['opacity'] = '0';
+    s_form.style['width'] = '10px';
+    s_form.style['height'] = '70px';
+    setTimeout("displayNone('sign_form','none');", 800);
 }
 
 
@@ -172,21 +188,13 @@ function fn_signIn() {
 // 로그인 화면 Close
 function fn_close() {
     // 로그인 화면 제어
-    let c_reg = document.getElementById('c_registe');
-    let s_form = document.getElementById('sign_form');
-    s_form.style['right'] = '100px';
-    s_form.style['top'] = '100%';
-    s_form.style['bottom'] = '10%';
-    s_form.style['opacity'] = '0';
-    s_form.style['width'] = '10px';
-    s_form.style['height'] = '70px';
-    setTimeout("displayNone('sign_form','none');", 800);
+    fn_registe_close();
 
     // 이미지 제어
     displayNone("main_contents", "block");
     if(!unDownImg){
-        setTimeout("changeOpacity('main_contents',1);", 2000)
-        setTimeout("imgRotateId('main_contents', 0, 1, 0);", 300)
+        setTimeout("changeOpacity('main_contents',1);", 1500);
+        setTimeout("imgRotateId('main_contents', 0, 1, 0);", 300);
         comeback_Img();
     }else{
         setTimeout("changeOpacity('main_contents',1);", 500)
@@ -198,18 +206,18 @@ function fn_close() {
 function comeback_Img(){
     let img_Ele = document.getElementById('main_contents');
     displayNone("main_contents", "block");
-    img_Ele.style['transition-duration'] = "2s";
-    setTimeout("changeOpacity('main_contents',1);", 2500); 
-    setTimeout("imgRotateId('main_title_img',540,1,1200);", 1000);setTimeout("imgRotateId('main_title_img',0,2,190);", 2000);
-    setTimeout('imgRotateId("gif1",360,1,1000)', 1000);setTimeout('imgRotateId("gif1",0,2,500)', 2000); 
-    setTimeout('imgRotateId("gif2",-180,1,1000)', 1000);setTimeout('imgRotateId("gif2",0,2,500)', 2000); 
-    setTimeout('imgRotateId("gif3",720,1,1000)', 1000);setTimeout('imgRotateId("gif3",0,2,500)', 2000); 
-    setTimeout('imgRotateId("gif4",-0,1,1000)', 1000);setTimeout('imgRotateId("gif4",0,2,500)', 2000);
-    setTimeout('imgRotateId("gif5",420,1,1000)', 1000);setTimeout('imgRotateId("gif5",0,2,500)', 2000); 
-    setTimeout('imgRotateId("gif6",-200,1,1000)', 1000);setTimeout('imgRotateId("gif6",0,2,500)', 2000); 
-    setTimeout('imgRotateId("gif7",50,1,1000)', 1000);setTimeout('imgRotateId("gif7",0,2,500)', 2000); 
-    setTimeout('imgRotateId("gif8",-260,1,1000)', 1000);setTimeout('imgRotateId("gif8",0,2,500)', 2000); 
-    setTimeout('imgRotateId("gif9",180,1,1000)', 1000);setTimeout('imgRotateId("gif9",0,2,500)', 2000);
+    img_Ele.style['transition-duration'] = "1.5s";
+    setTimeout("changeOpacity('main_contents',1);", 1300); 
+    setTimeout("imgRotateId('main_title_img',540,1,1200);", 100);setTimeout("imgRotateId('main_title_img',0,1,190);", 1100);
+    setTimeout('imgRotateId("gif1",360,1,1000)', 100);setTimeout('imgRotateId("gif1",0,2,500)', 1100); 
+    setTimeout('imgRotateId("gif2",-180,1,1000)', 100);setTimeout('imgRotateId("gif2",0,2,500)', 1100); 
+    setTimeout('imgRotateId("gif3",720,1,1000)', 100);setTimeout('imgRotateId("gif3",0,2,500)', 1100); 
+    setTimeout('imgRotateId("gif4",-0,1,1000)', 100);setTimeout('imgRotateId("gif4",0,2,500)', 1100);
+    setTimeout('imgRotateId("gif5",420,1,1000)', 100);setTimeout('imgRotateId("gif5",0,2,500)', 1100); 
+    setTimeout('imgRotateId("gif6",-200,1,1000)', 100);setTimeout('imgRotateId("gif6",0,2,500)', 1100); 
+    setTimeout('imgRotateId("gif7",50,1,1000)', 100);setTimeout('imgRotateId("gif7",0,2,500)', 1100); 
+    setTimeout('imgRotateId("gif8",-260,1,1000)', 100);setTimeout('imgRotateId("gif8",0,2,500)', 1100); 
+    setTimeout('imgRotateId("gif9",180,1,1000)', 100);setTimeout('imgRotateId("gif9",0,2,500)', 1100);
 }
 
 // 메인의 이미지들 떨어지는 함수
@@ -250,11 +258,15 @@ function fn_closeCon(){
     b_con.style['height'] = '10px'
     b_con.style['top'] = '0%'
     b_con.style['right'] = '25%'
-    b_con.style['transition-duration'] = '2s'
+    b_con.style['transition-duration'] = '1.5s'
     changeOpacity('b_condition', 0)
 }
 // condition 버튼 클릭
 function fn_condition(){
+    // police 버튼 사라지기
+    changeOpacity("carouselExampleControls", 0);
+    setTimeout("closePolicy();", 1400);
+    // 이미지 다운 
     mainImgDown();
     setTimeout('displayNone("b_condition", "block");', 1700);
     setTimeout('fn_showCon()',1800);
@@ -280,7 +292,37 @@ function out_entry(){
 }
 
 // police 버튼 관련 !!
+// police 버튼 나오기
+function movePolicy(){
+    let p_pol = document.getElementById('p_policy');
+    changeOpacity("carouselExampleControls", 1);
+    p_pol.style['transition-duration'] = '1.5s';
+    p_pol.style['width'] = 'auto';
+    p_pol.style['top'] = '330px';
+    p_pol.style['right'] = '-75px';
+    p_pol.style['opacity'] = '1';
+}
+
+
+// police 버튼 들어가기
+function closePolicy(){
+    let p_pol = document.getElementById('p_policy');
+    p_pol.style['transition-duration'] = '1s';
+    p_pol.style['width'] = '1px';
+    p_pol.style['top'] = '0px';
+    p_pol.style['right'] = '-1600px';
+    p_pol.style['opacity'] = '-1600px';
+    setTimeout('displayNone("p_policy", "none");',800);
+}
+
 function fn_policy(){
+    // 메인에서 바로 policy 버튼
     mainImgDown();
-    setTimeout('displayNone("p_policy", "block");', 1700);
+    setTimeout('displayNone("p_policy", "block");',1500); 
+    setTimeout("movePolicy()", 1600);
+    // condition 에서 policy 버튼
+    fn_registeCon();
+    // login 화면에서 policy 버튼
+    setTimeout("fn_registe_close();",500);
+    
 }
