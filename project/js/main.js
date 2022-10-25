@@ -1,5 +1,35 @@
 // 로드되면 바텀 창 바뀜
 window.onload = function () {
+    // 공공 API 받아와서
+    // 값들 배열에 집어넣기!!!!!!!!!
+    let v_ajax = new XMLHttpRequest();
+    let query = encodeURIComponent("청년취업");
+
+    // https://www.youthcenter.go.kr/opi/empList.do
+    v_ajax.open("GET", "http://127.0.0.1:5050/send_data?url=https://www.youthcenter.go.kr/opi/empList.do?pageIndex=1&display=30&query="+query+"&bizTycdSel=&openApiVlak=5063d4888bafb47dceace58f&srchPolyBizSecd=");
+    v_ajax.send();
+
+    v_ajax.onreadystatechange = function(){
+        if(v_ajax.readyState == 4 && v_ajax.status == 200){
+            console.log(v_ajax);
+            let v_xml = v_ajax.responseText;
+            let parser = new DOMParser();
+            let dataXml = parser.parseFromString(v_xml,'text/xml');
+            console.log(dataXml);
+
+            polyBizSjnm = dataXml.getElementsByTagName('polyBizSjnm');
+            polyItcnCn = dataXml.getElementsByTagName('polyItcnCn');
+            sporCn = dataXml.getElementsByTagName('sporCn');
+            rqutUrla = dataXml.getElementsByTagName('rqutUrla');
+            ageInfo = dataXml.getElementsByTagName('ageInfo');
+            empmSttsCn = dataXml.getElementsByTagName('empmSttsCn');
+            accrRqisCn = dataXml.getElementsByTagName('accrRqisCn');
+            majrRqisCn = dataXml.getElementsByTagName('majrRqisCn');
+
+            console.log(polyBizSjnm);
+        }
+    }   
+    
     // 바텀 바 로드 // 타이틀 버튼
     let btn = document.getElementById('bottom_bar');
     let mbt = document.getElementById('main_button');
@@ -15,7 +45,7 @@ window.onload = function () {
     // 이미지 로드
     // 함수 포문과 재귀함수 등등 써서 최대한 줄이려 했지만 실패함
     setTimeout("imgRotateId('main_title_img',-20,0.8,240);", 3500); setTimeout("imgRotateId('main_title_img',90,0.8,70);", 4200); setTimeout("imgRotateId('main_title_img',-10,1.5,200);", 4800); setTimeout("imgRotateId('main_title_img',15,0.8,170);", 6000); setTimeout("imgRotateId('main_title_img',0,1,190);", 6500);
-    setTimeout('imgRotateId("gif1",-15,3,500);', 1000); setTimeout('imgRotateId("gif1",0,2,450)', 2800); setTimeout('imgRotateId("gif1",0,2,500)', 4600);
+    setTimeout('imgRotateId("gif1",-15,3,500);', 1000); setTimeout('imgRotateId("gif1",0,2,500)', 2800); setTimeout('imgRotateId("gif1",0,2,500)', 4600);
     setTimeout('imgRotateId("gif2",-10,2,500);', 1000); setTimeout('imgRotateId("gif2",30,2,300)', 2800); setTimeout('imgRotateId("gif2",0,2,500)', 4600);
     setTimeout('imgRotateId("gif3",-26,1,500);', 1000); setTimeout('imgRotateId("gif3",15,1,110)', 1800); setTimeout('imgRotateId("gif3",0,1,500)', 2600);
     setTimeout('imgRotateId("gif4",24,3,500);', 1000); setTimeout('imgRotateId("gif4",0,2,500)', 3800); setTimeout('imgRotateId("gif4",0,1,500)', 5600);
@@ -325,4 +355,61 @@ function fn_policy(){
     // login 화면에서 policy 버튼
     setTimeout("fn_registe_close();",500);
     
+}
+
+
+// 공공 API 가지고 오기
+let polyBizSjnm;    // 정책명
+let polyItcnCn;     // 정책내용
+let sporCn;         // 지원내용
+let rqutUrla;       // url사이트
+
+let ageInfo;        // 참여요건 - 연령
+let empmSttsCn;     // 참여요건 - 취업상태
+let accrRqisCn;     // 참여요건 - 학력
+let majrRqisCn;     // 참여요건 - 전공
+function fn_getxml(){
+    let v_ajax = new XMLHttpRequest();
+    let query = encodeURIComponent("청년취업");
+
+    // https://www.youthcenter.go.kr/opi/empList.do
+    v_ajax.open("GET", "http://127.0.0.1:5050/send_data?url=https://www.youthcenter.go.kr/opi/empList.do?pageIndex=1&display=10&query="+query+"&bizTycdSel=004001,004002003&openApiVlak=5063d4888bafb47dceace58f&srchPolyBizSecd=003002001,003002002");
+    v_ajax.send();
+
+    v_ajax.onreadystatechange = function(){
+        if(v_ajax.readyState == 4 && v_ajax.status == 200){
+            console.log(v_ajax);
+            let v_xml = v_ajax.responseText;
+            let parser = new DOMParser();
+            let dataXml = parser.parseFromString(v_xml,'text/xml');
+            console.log(dataXml);
+
+            polyBizSjnm = dataXml.getElementsByTagName('polyBizSjnm');
+            polyItcnCn = dataXml.getElementsByTagName('polyItcnCn');
+            sporCn = dataXml.getElementsByTagName('sporCn');
+            rqutUrla = dataXml.getElementsByTagName('rqutUrla');
+
+            console.log(polyBizSjnm);
+        }
+    }   
+}
+
+// card-body 클래스
+let card_body = document.getElementsByClassName('card-body');
+console.log(card_body);
+// card-body 에 값들 집어 넣기
+function get_card_body(){
+    console.log(polyBizSjnm);
+    for(let i = 0; i < card_body.length; i++){
+        card_body[i].children[0].innerHTML = polyBizSjnm[i].textContent;
+        card_body[i].children[1].innerHTML = "참여 요건<br>" + "연령 : " + ageInfo[i].textContent + "<br>"
+                                             + "취업상태 : " + empmSttsCn[i].textContent + "<br>"
+                                             + "학력 :" + accrRqisCn[i].textContent + "<br>"
+                                             + "전공 :" + majrRqisCn[i].textContent + "<br>";
+        card_body[i].children[2].innerHTML = "정책 내용<br>" + polyItcnCn[i].textContent;
+        card_body[i].children[3].innerHTML = "지원 내용<br>" + sporCn[i].textContent;
+        card_body[i].children[4].innerHTML = "URL : " + rqutUrla[i].textContent;
+        let changeHref = rqutUrla[i].textContent;
+        card_body[i].children[4].href = changeHref;
+    }
 }

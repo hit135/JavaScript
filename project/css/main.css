@@ -252,14 +252,18 @@ body {
     transition-duration: 2s;
 }
 .card-body{
-    background-color: #6c7486;
     height: 25rem;
 }
 .card{
+    background-color: #e0e0bb;
+    overflow: auto;
     width: 21rem;
     height: 25rem;
     margin-right: 30px;
     display: inline-block;
+}
+.card::-webkit-scrollbar{
+    display: block !important;
 }
 .carousel-control-prev-icon{
     position: relative;
