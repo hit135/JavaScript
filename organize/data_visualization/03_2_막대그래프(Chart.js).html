@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>막대그래프(Chart)</title>
+</head>
+<body>
+
+    <div style="width: 400px; height: 300px;">
+        <canvas id="myChart" width="100" height="60"></canvas>
+    </div>
+    <input type="button" value="javascript추가" onclick="f_addJS()">
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById("myChart");
+
+        // csv 파일 불러오기~~ ajax로
+        let v_ajax = new XMLHttpRequest();
+        // 겟방식 오픈
+        v_ajax.open("GET", "./03_3_score.csv");
+        // 통신요청
+        v_ajax.send()
+        
+        // 전역변수란
+        let v_name = [];
+        let v_javaScore = [];
+        let v_databaseScore = [];
+        let v_javascriptScore = [];
+        let myChart = null;
+
+        // v_ajax가 로드되면
+        v_ajax.onload = function(){
+            console.log("😀 ~ v_ajax.response", v_ajax.response)
+            let v_result = v_ajax.response;
+
+            // 계행문자로 나눠줌
+            let v_lines = v_result.split("\n");
+
+            for(let i = 1; i < v_lines.length; i++){
+                // console.log("v_lines[i] : " , v_lines[i]);
+                let v_temp = v_lines[i].split(", ");
+                console.log(v_temp[0]); // 이름
+                console.log(v_temp[1]); // 자바
+                console.log(v_temp[2]); // DB
+                console.log(v_temp[3]); // JS
+
+                v_name.push(v_temp[0]);
+                v_javaScore.push(v_temp[1]);
+                v_databaseScore.push(v_temp[2]);
+                v_javascriptScore.push(v_temp[3]);
+            }
+
+            console.log("😀 ~ v_lines[0]", v_lines[0]); // 과목들
+            console.log("😀 ~ v_lines[1].split(", ");", v_lines[1].split(", ")); // 기윤
+            console.log("😀 ~ v_lines[2].split(", ");", v_lines[2].split(", ")); // 재현
+
+            // 비동기 아작스 통신이기 때문에
+            // 아작스가 온로드 되기전에 밖에 놔두면
+            // 값이 없는것들을 그린다
+            // 다른곳에서 차트를 집으려면 변수명을 지어줘야 한다
+            myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: v_name,
+                    datasets: [{
+                        label: 'Java',
+                        data: v_javaScore
+                    }, {
+                        label: 'Databse',
+                        data : v_databaseScore
+                    }]
+                }
+
+            });
+        }
+
+        // 자바스크립트 점수 추가하는 버튼
+        function f_addJS(){
+            // .data >> 값 잘나옴
+            console.log(myChart["data"]);
+            // .type는 또 안되네
+            console.log(myChart.type);
+
+            // 이미 한번 만들어진 Chart객체를 수정하는 방식
+            myChart["data"]["datasets"].push({
+                label: 'Javascript',
+                data: v_javascriptScore
+            });
+            // 변경된 사항을 반영하는 메소드 update();
+            myChart.update();
+            
+            // 버튼 한번만 눌리게 어케함
+        }
+
+
+    </script>
+    
+</body>
+</html>

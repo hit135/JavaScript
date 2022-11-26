@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>종량제시각화</title>
+</head>
+<body>
+    <h3>종량제 시각화</h3>
+    <div style="width: 400px; height: 360px;">
+        <canvas id="myChart" width="100" height="80"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+
+        
+        // 나는 배열에 다 담아서 했는데..
+        // 배열을 일일히 다 만드는게 아니라
+        // json 하나에 담았으면 더 편했다
+
+        // 전역변수 선언
+        const ctx = document.getElementById("myChart");
+        let seoul = [];
+        let deajon = [];
+        let deagoo = [];
+        let busan = [];
+        let gwangju = [];
+        // 모든 도시 객체를 담은 배열
+        let totalCity = [seoul, deajon, deagoo, busan, gwangju];
+        // 도시명
+        let nameCity = ["서울특별시", "대전광역시", "대구광역시", "부산광역시", "광주광역시"];
+
+        // 리터에 따른 봉투 평균값
+        let tenTrash = [];
+        let twentyTrash = [];
+        let fiftyTrash = [];
+        let hundredTrash = [];
+        let averageTrashArray = [tenTrash, twentyTrash, fiftyTrash, hundredTrash]
+        // 리터명
+        let trashName = ["10ℓ가격", "20ℓ가격", "50ℓ가격", "100ℓ가격"];
+
+
+
+        // ajax로 로컬 json파일 가져오기
+        let v_ajax = new XMLHttpRequest();
+        v_ajax.open("GET", "./01_price.json")
+        v_ajax.send();
+        // ajax 로딩 완료
+        v_ajax.onload = function(){
+            console.log(v_ajax.response);
+            // json 스트링이면 json으로 파싱해야지~
+            result = JSON.parse(v_ajax.response);
+            console.log(result);
+            console.log(result.fields);
+
+            // 모든 도시 배열에 다 담기
+            input_array_city(nameCity, totalCity, result);
+
+            console.log("😀 ~ totalCity[0]", totalCity[0])  // 서울
+
+            // 서울 10l 평균
+            let seoulTenArray = arrayTrashEnvelope(totalCity[0], "10ℓ가격");
+            console.log("😀 ~ seoulTenArray", seoulTenArray)
+
+            // 도시들의 모든 쓰레기봉투 10l 평균값 배열에 담기
+            for(let j = 0; j < trashName.length; j++){
+                for(let i = 0; i < totalCity.length; i++){
+                    let tempAverage = arrayTrashEnvelope(totalCity[i], trashName[j]);
+                    averageTrashArray[j].push(tempAverage);
+                }
+            }
+            // 잘 담겼나 확인
+            console.log("😀 ~ averageTrashArray", averageTrashArray)
+
+            // 함수 실행
+            f_draw(result);
+        }
+
+        // 그리는 함수
+        function f_draw(p_data){
+            console.log("p_data : ", p_data);
+
+            // 하드코딩 줄이고 그리기
+            let arrayData = [];
+            for(let i = 0; i < trashName.length; i++){
+                let tempJSON = {};
+                tempJSON["label"] = trashName[i];
+                tempJSON["data"] = averageTrashArray[i];
+                arrayData.push(tempJSON);
+            }
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: nameCity,
+                    // datasets이 배열이라는게 중요하다!!!
+                    // 배열에 미리 담아두면 확 줄일 수 있다.
+                    datasets: arrayData
+                }
+            });
+            // 서울, 대전, 대구, 부산, 광주 지역의
+            // 10L, 20L, 50L, 100L 쓰레기 봉투 가격을 막대그래프로 표현
+            // 서울 10L 평균가격, 20L 평균 가격..
+
+            // x축이 서울, 대전, 대구, 부산, 광주
+            // 그 축안에 10L평균, 20L평균...
+            // 내가 구해야 하는것은 각지역의 10L, 20L, .. 평균
+        }
+
+        // 도시에 따른 json 배열에 집어넣기
+        function input_array_city(p_name, p_city, p_data){
+            for(let j = 0; j < p_name.length; j++){
+
+                for(let i = 0; i < p_data["records"].length; i++){
+                    if(p_data["records"][i]["시도명"] == p_name[j]){
+                        p_city[j].push(p_data["records"][i]);
+                    }
+                }
+            }
+        }
+
+        // 도시의 리터값에 따른 봉투 평균값 구하기 >> 봉투값이 0이면 나눌때 빼줌
+
+        function arrayTrashEnvelope(p_city, p_trash){
+            let totalPrice = 0;
+            let realCityLength = p_city.length;
+            for(let i = 0; i < p_city.length; i++){
+                totalPrice += (p_city[i][p_trash]) * 1;
+                // 0일때 길이에서 빼기
+                if((p_city[i][p_trash]) == 0){
+                    realCityLength--;
+                }
+            }
+            let tempArray = totalPrice / realCityLength;
+            return tempArray;
+        }
+
+    </script>
+
+
+
+
+</body>
+</html>

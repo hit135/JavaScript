@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>데이터시각화(Chart)</title>
+</head>
+<body>
+    <!-- Chart.js 사용 -->
+    <h3>학생 지역 조사</h3>
+    <!-- 크기는 canvas를 둘러싼 div의 크기를 조정!! -->
+    <div style="width: 400px; height: 300px;">
+        <!-- canvas 태그에 width, height을 조정하면 비율이 조정된다!!!! -->
+        <!-- 크기가 아닌 비율!! -->
+        <canvas id="myChart" width="6" height="4"></canvas>
+    </div>
+    
+    <!-- 만약 남의 차트를 긁어와서 에딧한다면 -->
+    <!-- 버전이 다르지 않게 조심해라 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('myChart');
+    
+        new Chart(ctx, {
+            type: 'bar',    // bar면 막대그래프, line이면 꺾은선그래프, pie 원형그래프, doughnut은 원형그래프에 빵꾸, rader 방사형 그래프
+            data: {
+                // 라벨.. x축 각각의 변수명
+                labels: ['유성구', '서구', '동구', '중구', '대덕구', '타지역'],
+                datasets: [{
+                    label: '학생 지역 조사',
+                    data: [2, 4, 0, 2, 1, 0],
+                    borderWidth: 2,
+                    // rgb, 16진수, 컬러명 다 된다!
+                    backgroundColor : "rgb(255, 0, 255, 0.2)"
+                    },
+                    {
+                    label: '학생 선호 지역 조사',
+                    data: [3, 1, 2, 3, 1, 1],
+                    borderWidth: 2,
+                    // rgb, 16진수, 컬러명 다 된다!
+                    backgroundColor : "rgb(0, 0, 255, 0.5)"
+                    }]
+                },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                // 상단 legend(명패) 지우기
+                plugins: {
+                    legend: {
+                        display : false
+                    }
+                }
+            }
+        });
+    </script>
+
+
+
+</body>
+</html>
