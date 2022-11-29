@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://code.jquery.com/jquery-1.10.1.js"></script>
+    <title>Document</title>
+    <script>
+        $(document).ready(function(){
+            $("button").click(function(){
+                // 이미지 이동 + 메소드 체인으로 사라지게까지
+                // animate()
+                $("#slime").animate({left:'100px'}).fadeOut("slow");
+            });
+                // 포커스가 갔을 때, 벗어났을 때..
+                // focus(), blur()
+            $("input").focus(function(){
+                $(this).css("background-color", "yellow");
+            });
+            $("input").blur(function(){
+                $(this).css("background-color", "white");
+            });
+
+            // 원하지 않는 값이 들어오면 날려버리기 >> 업무시스템에서 꽤 쓴다
+            // keyup()
+            $("input").keyup(function(){
+                $(this).val($(this).val().replace(/[^0-9]/g,""));
+            });
+        });
+
+    </script>
+</head>
+<body>
+    <img src="image/slime.png" id="slime" alt="" width="120px" height="100px" style="position: relative;">
+    <br>
+    <button>animate()</button>
+    <br>
+    입력창 : <input type="text">
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+    <script>
+        // (1) 온로드와 비슷함 $(document).ready(function()
+            // h2를 클릭하면 하이드
+        // $(document).ready(function(){
+        //     $("h2").click(function(){
+        //         $(this).hide();
+        //     });
+        // });
+
+
+        // 클릭 버튼 만들기 >> hide(), show(), toggle()
+
+        $(document).ready(function(){
+            $("#hide_btn").click(function(){
+                $("h2").hide('fast');
+            });
+            $("#show_btn").click(function(){
+                $("h2").show('slow');
+            });
+            $("#toggle_btn").click(function(){
+                $("h2").toggle('fast');
+            });
+        });
+
+
+        // (2) >> 1번과 같음
+        $(function(){
+        
+        });
+    </script>
+    <title>Document</title>
+</head>
+<body>
+    <h2>클릭하면 사라짐</h2>
+    <button id="hide_btn">안보이게</button>
+    <button id="show_btn">보이게</button>
+    <button id="toggle_btn">토글</button>
+    
+</body>
+</html>

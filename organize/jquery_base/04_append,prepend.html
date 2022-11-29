@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="http://code.jquery.com/jquery-1.10.1.js"></script>
+    <script>
+        // 뒤에 붙는 append() 앞에 붙는 prepend()
+        $(document).ready(function(){
+            $("#btn1").click(function(){
+                $("p").append("<b style='color:red'>Hello ! </b>")
+            });
+            $("#btn2").click(function(){
+                $("p").prepend("<b style='color:red'>Hello ! </b>")
+            });
+            $("#btn3").click(function(){
+                $("p").append($("b").html());
+            });
+        });
+    </script>
+</head>
+<body>
+    <p> i would like to say:</p>
+    <button id="btn1">append()</button>
+    <button id="btn2">prepend()</button>
+    <button id="btn3">html()</button>
+    <!-- 요소가 있는 것을 집을 때는 그러면 어떻게 하느냐? -->
+    <!-- 셀렉하고 .html() -->
+    <br>
+    <b style='color:red'>Hello ! </b>
+
+
+</body>
+</html>
