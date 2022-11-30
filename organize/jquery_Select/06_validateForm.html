@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <title>Document</title>
+    <script>
+      // 요즘에는 부트스트랩에서 발리데이션을 지원한다...!
+        $(document).ready(function(){
+
+          const forms = document.querySelectorAll('.needs-validation')
+
+          // Loop over them and prevent submission
+          Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+              if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+              }
+
+              form.classList.add('was-validated')
+            }, false)
+          });
+
+          /* 포커스에서 벗어날 때 틀리면 안의 글자 삭제 */
+          // .parent() >> 부모찾기
+          // .childer().eq(0) >> 하위 요소의 0번째 >> eq는 몇번째
+          $('.form-control').focusout(function(){
+
+            if($(this).parent().find('.invalid-feedback').is(':visible')){
+              $(this).val('');
+
+            }
+          });
+        });
+
+    </script>
+
+
+
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+              <form class="row g-3 needs-validation" novalidate>
+                <div class="col-md-4">
+                  <label for="validationCustom01" class="form-label">First name</label>
+                  <!-- required를 넣어서 필수로 필요하다고 적용한다? -->
+                  <!-- pattern으로 정규표현식을 써서 발리드의 조건을 걸어준다 -->
+                  <input type="text" class="form-control" id="validationCustom01" value="Mark" required pattern="[a-zA-Z]{3,15}">
+                  <div class="valid-feedback">
+                    사용 가능한 이름입니다!
+                  </div>
+                  <div class="invalid-feedback">
+                    이름은 영문자 3 ~ 15자리 입니다.
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <label for="validationCustom02" class="form-label">Last name</label>
+                  <input type="text" class="form-control" id="validationCustom02" value="Otto" required>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <label for="validationCustomUsername" class="form-label">email</label>
+                  <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrepend">@</span>
+                    <!-- type에 email을 주면 @를 꼭 포함해야 한다! -->
+                    <input type="email" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                    <div class="invalid-feedback">
+                      골뱅이 있어야함...!
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label for="validationCustom03" class="form-label">City</label>
+                  <input type="text" class="form-control" id="validationCustom03" required>
+                  <div class="invalid-feedback">
+                    Please provide a valid city.
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <label for="validationCustom04" class="form-label">State</label>
+                  <select class="form-select" id="validationCustom04" required>
+                    <option selected disabled value="">Choose...</option>
+                    <option>...</option>
+                  </select>
+                  <div class="invalid-feedback">
+                    Please select a valid state.
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <label for="validationCustom05" class="form-label">Zip</label>
+                  <!-- numberOnly 숫자만  >> 왜 안먹냐.. // minlength 최소 글자 maxlength 최대 글자  쓰읍.. 있는 기능인데 안먹는거 같네..-->
+                  <input type="text" class="form-control" id="validationCustom05" required pattern="[0-9]{5,8}">
+                  <div class="valid-feedback">
+                    우편번호가 정확합니다!
+                  </div>
+                  <div class="invalid-feedback">
+                    우편번호를 정확히 입력해주세요!
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                    <label class="form-check-label" for="invalidCheck">
+                      Agree to terms and conditions
+                    </label>
+                    <div class="invalid-feedback">
+                      You must agree before submitting.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <button class="btn btn-primary" type="submit">Submit form</button>
+                </div>
+              </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+</body>
+</html>

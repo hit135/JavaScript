@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="http://code.jquery.com/jquery-1.10.1.js"></script>
+    <script>
+        // 제외시키고 모두에게 적용
+        $(document).ready(function(){
+            // :not(선택한것) 선택한것을 제외하고
+            $('#div_p p:not(.p_tag01)').css('color', 'green');
+
+        });
+
+    </script>
+</head>
+<body>
+    <div id="div_p">
+        <p> 넥스트 아이티 입니다.</p>
+        <p class="p_tag01"> 화면구현 시간입니다.</p>
+        <p> 반값습니다..!</p>
+
+    </div>
+
+
+</body>
+</html>

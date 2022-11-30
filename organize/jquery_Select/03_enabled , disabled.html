@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://code.jquery.com/jquery-1.10.1.js"></script>
+    <title>Document</title>
+    <script>
+        // input:enabled , input:disabled
+        $(document).ready(function(){
+            $("input:enabled").css('color', 'blue');
+            $("input:disabled").css('color', 'red');
+
+            // 더블클릭시 활성화
+            // disabled일 때는 클릭도 안먹는다
+            $("button").click(function(){
+                $("#input02").attr('disabled', false).css('color', 'green');
+            });
+
+            
+            $("#input01").dblclick(function(){
+                $(this).attr('disabled', true);
+                alert($(this).attr());
+            });
+
+
+            // div 쪽
+            // div 태그 옆 선택...! >>> A+B >>> A 태그 옆의 B
+            // 바로옆에!
+            $("div+p").css('color', 'pink');
+            
+            // div ~ p 태그 사이의 모든 것들
+            // css 셀렉터가 굉장히 세밀하다
+            $("div~p").css('color', 'blue');
+
+        });
+
+
+    </script>
+</head>
+<body>
+    <!-- disabled의 특징은 서브밋을 해도 데이터가 보내지지 않는다 -->
+    <!-- 그래서 readonly를 쓰면 쓸 수는 없지만 데이터는 날라감 >> but, 좀 쓸수 있을꺼 같이 보인다 -->
+    <form action="#" method="get">
+        <input type="text" id="input01" name="input01" value="활성화 기본">
+        <input type="text" id="input02" name="input02" value="비활성화" disabled="disabled">
+        <button type="button">전송</button>
+
+    </form>
+    
+    <div>
+        <div>
+            <p> 첫번째 p 태그 </p>
+            <p> 첫번째의 두번째 p 태그 </p>
+        </div>
+    
+        <p> 중간 p</p>
+        <p> 중간 p2 </p>
+    
+        <div>
+            <p> 두번째 p 태그 </p>
+            <p> 두번째의 두번째 p 태그 </p>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

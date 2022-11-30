@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://code.jquery.com/jquery-1.10.1.js"></script>
+    <title>Document</title>
+    <script>
+        // 체크된 값 가져오기
+        $(document).ready(function(){
+            // checked
+            // $(':checked')
+            $('button').click(function(){
+                // alert($('input[type=checkbox]:checked').val());
+
+                // type=checkbox 인 것들을 다 집어준다..!
+                /* $('input[type=checkbox]:checked').each(function(item, index){
+                    alert($(this).val());
+                }); */
+
+                // []안에는 속성값을 집어준다고 생각하면 된다..!
+
+                $('input[name=chk]:checked').each(function(item, index){
+                    alert($(this).val());
+                });
+                // alert($(':checked').val());
+
+                // .is는 상태를 확인! ture, false
+                alert($('input[name=chk2]').is(':checked'));
+                if($('input[name=chk2]').is(':checked')){
+                    alert('선택하신게 3이 맞나요?')
+                }
+
+            });
+
+
+
+        });
+
+
+    </script>
+</head>
+<body>
+    <input type="text">
+    <input type="checkbox" name="chk" value="1" checked><label for="">일</label>
+    <input type="checkbox" name="chk" value="2"><label for="">이</label>
+
+    <input type="checkbox" name="chk2" value="3"><label for="">삼</label>
+    <button>확인</button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

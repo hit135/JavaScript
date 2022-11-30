@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://code.jquery.com/jquery-1.10.1.js"></script>
+    <title>Document</title>
+    <script>
+        $(document).ready(function(){
+            // 띄어쓰기는 후손(후손 아무나 다 가능)
+            // 꺽새는 자식(자손) - 자식은 바로 밑에 애들만..
+            $('div hi, div h2').css('color', 'gray');
+            // 결과는 같음 방식은 다르지만
+            // $('div hi, div h2').css({color : 'gray'});
+
+            $('div > h1').css('color', 'red');
+            $('div  li').css('color', 'pink');
+            // 짝수 
+            $('div li:nth-child(2n)').css('color', 'green');
+            // 뒤에서 두번째
+            $('div li:nth-last-child(2)').css('color', 'black');
+
+            // hover 후에 콜백
+            $('div li').hover(function(){
+                // 제이쿼리는 , 하고 뒤에 쓰면 콜백함수가 된다
+                $(this).css('color', 'black');
+            } , function(){
+                $(this).css('color', 'red');
+            } );
+        });
+
+
+    </script>
+
+</head>
+<body>
+    <div>
+        <h1> h1 태그 </h1>
+        <h2> h2 태그 </h2>
+        <ul>
+            <li> ul 태그와 li (div 의 후손 )</li>
+            <li> ul 태그와 li (div 의 후손 )</li>
+            <li> ul 태그와 li (div 의 후손 )</li>
+            <li> ul 태그와 li (div 의 후손 )</li>
+            <li> ul 태그와 li (div 의 후손 )</li>
+        </ul>
+
+    </div>
+
+
+
+
+
+
+    
+</body>
+</html>
