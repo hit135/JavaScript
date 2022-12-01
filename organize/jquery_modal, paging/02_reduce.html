@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- reduce
+            jquery가 아니어도 쓸 수 있음!
+            데이터를 재구성할 때.. 몇개씩 담을때 많이 쓴다!!
+            배열.reduce(function(누적값, 현재값, 인덱스, 요소){
+            return 결과}, 초기값); -->
+    <script>
+        let data = [1, 2, 3];
+        let result = data.reduce(function(acc, cur, i){
+            /* 0(제일 첫 초기값) 1 0(인덱스) >> 0+1 2 1(인덱스) >> 1+2 3 2(인덱스) */
+            /* 이걸 이용해 페이징 처리 가능하다! */
+            // console.log(acc, cur, i);
+            return acc + cur;
+        }, 0);
+
+
+        let size = 10;
+        let data2 = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17];
+        let dataSet = data2.reduce(function(acc, val, i){
+            // console.log(acc, val, i);
+            
+            /* 원리를 모르겠는뎅 */
+            /* 또잉?!?!?!?!?!?! */
+            // 연산자는 왼쪽부터 오른쪽으로 평가를 진행하는데,
+            // 중간에 평가 결과가 나오면 오른쪽 끝까지 가지 않고 평가 결과를 반환해 버린다.
+            // 또는 연산자!
+            let idx = Math.floor(i / size);
+            let page = acc[idx] || (acc[idx] = []);
+            page.push(val);
+            return acc;
+        }, []);
+
+        console.log(dataSet);
+
+
+        // 좀더 쉬운 예시..!
+        let data3 = ['kim' , 'lee', 'hong', 'lee', 'hong', 'kim', 'kim'];
+        let result3 = data3.reduce(function(acc, cur, i, arr){
+            console.log(acc, cur, i);
+
+            if(cur in acc){
+                acc[cur] = acc[cur] + 1;
+            }else{
+                acc[cur] = 1;
+            }
+            return acc;
+        }, {});
+
+        console.log(result3);
+
+    </script>
+    
+
+
+    
+</body>
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <title>Document</title>
+    <script>
+
+        // 모달로 상세내역 보여주기!!
+
+
+        let page_size = 10;
+        let currentPage = 0;
+        let pages = null;
+
+
+        // 모달에 국문이름, 영문이름 넣기 위해서
+        // 전역 변수 선언
+        let kor_name = null;
+        let eng_name = null;
+
+
+        $(document).ready(function(){
+            // 화면에 셀렉한 개수만큼 뿌려주기
+            $('#list_size').change(function(){
+                console.log($('#list_size').val()); 
+                page_size = $('#list_size').val();
+                $('.page-data').empty();
+                $('.list-item').empty();
+                fn_getdata();
+            });
+
+            // 동적으로 생성된 것들에 이벤트를 주고 싶다면
+            //$(document).on('이벤트', '셀렉', function(){ 실행문 })
+            $(document).on('click', '.coin_market', function(){
+                // 마켓 뽑아내기
+                // 셀렉하는게 너무너무너무 중요하다!!!!!
+                console.log($(this).children()[0].innerHTML); 
+                let market = $(this).children()[0].innerHTML;
+
+                // 함수구현
+                fn_changeModal(market);
+                
+                // 모달창 보여주기
+                $('#content').modal('show');
+
+            });
+
+
+            // 01 모달 참조
+            /*  $('#btn').click(function(){
+                    $('#exampleModal').modal('show')
+                });
+            }); */
+
+
+
+
+        });
+        // 리듀스 앞에서 한것 복붙
+        // 아마 사이즈만큼 페이징처리겠징?
+        // 페이징 함수
+        function paginate(arr, size){
+            return arr.reduce(function(acc, val, i){
+            let idx = Math.floor(i / size);
+            let page = acc[idx] || (acc[idx] = []);
+            page.push(val);
+            return acc;
+        }, []);
+        }
+
+        // 실현 함수
+        function fn_getdata(){
+            $.ajax({
+                  url : "https://api.upbit.com/v1/market/all"
+                , dataType : "json"
+                , success : function(data){
+                    // console.log(data);
+                    // ajax로 데이터를 가져와서 페이징 처리하고..!
+                    pages = paginate(data, page_size);
+                    console.log(pages);
+
+                    // 현재 페이지에 따라 화면에 뽑아주기
+                    fn_print_row(pages[currentPage]);
+
+                    // 이제 버튼에 1~28 버튼 만들어주기!!
+                    let pageLi = "";
+                    for(let i in pages){
+                        let index = (i*1) + 1
+                        console.log(i);
+                        /* 페이징 처리한 번호에 클릭 이벤트 주기 */
+                        /* onclick="fn_pageChange('+index+')" id="page_'+index+'" */
+                        pageLi += '<li onclick="fn_pageChange('+(index -1)+')" id="page_'+(index -1)+'" class="page-item list-item">';
+                        pageLi += '<a class="page-link" href="javascript:void(0)">' + index;
+                        pageLi += '</a></li>';
+                    };
+                    $('.page-list').after(pageLi);
+
+                    // 로드시 1번 선택해주기
+                    // $('#page_' + 0).addClass('active');
+                    // 하지만 이 방법은 이쁘지 않지
+                }
+                // 그래서 아작스가 성공하든 실패하든 완료가 되면 실행되는
+                // complete를 이용!
+                , complete : function(){
+                    fn_pageChange(currentPage);
+                }
+                
+            });
+        }
+
+        // 배열을 화면에 뿌려주는 함수
+        function fn_print_row(arr){
+            $.each(arr , function(index, val){
+                $('.page-data').append("<tr class='coin_market'><td>" + val.market + "</td>"
+                                    +  "<td>" + val.korean_name + "</td>"
+                                    +  "<td>" + val.english_name + "</td></tr>"     
+                                    );
+            });
+        }
+        
+        // 뿌려준 번호를 1~10 11~20 이렇게 나누기
+
+
+
+
+        // 번호 눌렀을 때 해당 페이지로 이동 함수
+        function fn_pageChange(page){
+            currentPage = page;
+            // 색깔 활성화 부분
+            $('.list-item').removeClass('active');
+            $('#page_' + page).addClass('active');
+            // 끝
+
+            // 값을 지워준것
+            $('.page-data').empty();
+            pageData = pages[page]
+            fn_print_row(pageData);
+        }
+
+        // 다음페이지로 이동시 클릭 이벤트를 줄 함수
+        function fn_nextPage(){
+            if(pages.length -1 > currentPage){
+                page = currentPage + 1;
+            }
+            fn_pageChange(page);
+        }
+
+        // 이전페이지로 이동시 클릭 이벤트를 줄 함수
+        function fn_prePage(){
+            if(currentPage < pages.length && currentPage != 0){
+                page = currentPage -1 ;
+            }
+            fn_pageChange(page);
+        }
+
+
+
+
+        // 모달 창에 값에 따라 뿌려줄 함수 만들기
+        function fn_changeModal(markets){
+
+            // 여기서 받은 markets는 비트코인 상세페이지를 열기위한
+            // 각자의 markets
+
+            // 일단 확인
+            // alert($("#sel_out option:selected").val());
+            let val_url = "https://api.upbit.com/v1/ticker?markets=" + markets;
+
+
+            // 일단 비워주고..!
+            $("#detail_content").empty();
+            $.ajax({
+                  url : val_url 
+                , type : "GET"
+                , dataType : "json"
+                , success : function(data){
+                    console.log(data);
+                    // $("#content").show();
+                    // $("#content").empty();
+                    data.forEach(function(el, index){
+                        $("#detail_content").append("<div class='col1'><b>코인</b></div>");
+                        $("#detail_content").append("<div class='col2'> 마켓 : " + el.market + "</div>");
+                        $("#detail_content").append("<div class='col3'> 거래일 : " + el.trade_date + "</div>");
+                        $("#detail_content").append("<div class='col4'> 거래가격 : ₩" + el.trade_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + "원</div>");
+                    });
+                }
+                , error : function(e){
+                    console.log(e);
+                }
+            });
+        }
+
+           
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</head>
+<body onload="fn_getdata();">
+    <!-- row건수 선택 10 ~ 100 -->
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <!-- 부트 스트랩에서 클래스에 부여한 css들을 잘 활용해보자?.... -->
+                <div class="container-fluid justify-content-end">
+                    <div class="form-group row justify-content-center">
+                        <div class="w100">
+                            <select name="" id="list_size" class="form-control">
+                                <option value="10">10개</option>
+                                <option value="15">15개</option>
+                                <option value="20">20개</option>
+                                <option value="30">30개</option>
+                                <option value="50">50개</option>
+                                <option value="100">100개</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+
+
+    </div>
+    <!-- 일단 껍대기!! -->
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+            <table class="table table-hover">
+                <!-- colgroup 컬럼의 비율을 정해주면 고정된다 -->
+                <colgroup>
+                    <col width = "20%">
+                    <col width = "40%">
+                    <col width = "40%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>코드</th>
+                        <th>국문이름</th>
+                        <th>영문이름</th>
+                    </tr>
+                </thead>
+                <tbody class="page-data"></tbody>
+            </table>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item page-list" onclick="fn_prePage()">
+                        <a class="page-link" href="#">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item" onclick="fn_nextPage()">
+                        <a class="page-link" href="#">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- 모달 창 -->
+        <div class="modal" tabindex="-1" id="content">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">코인 상세 정보</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p id="detail_content">content</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                  <button type="button" class="btn btn-primary">저장</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          
+    </div>
+    
+    
+
+
+</body>
+</html>
