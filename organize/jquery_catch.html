@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // 스크립트는 유해서 트라이캐치를 잘 안쓰지만
+        // 그래도 쓸 상황이 있기도 하다
+        let msg = "";
+        function test(){
+            try{
+                allert("오류");
+            }catch(error){
+                alert(error.message);
+            }finally{
+                alert("오류 처리 뒤 실행");
+            }
+        }
+
+    </script>
+</head>
+<body>
+    <button type="button" onclick="test()"> 체크 </button>
+</body>
+</html>
