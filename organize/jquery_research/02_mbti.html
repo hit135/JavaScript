@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <title>중요! CSV 파일 불러오기</title>
+    <script>
+        // CSV파일 불러오기
+        // CSV는 보통 ,로 개행문자임.. 아니면 다른 개행문자를 뭘 썼는지 확인해야함
+
+        // 이름과 아이디를 위한        
+        let mbtiTypeText = ['E', 'I', 'S', 'N', 'T', 'F', 'J', 'P'];
+        let mbtiName = ['EI', 'EI' , 'SN', 'SN', 'TF', 'TF', 'JP', 'JP']
+
+
+        $(document).ready(function(){
+            // console.log($("#l1-0").text()
+            let data;
+
+            // 참고
+/*             $('.base').append()
+
+            data.forEach(function(el, index){
+                            $("#content").append("<div class='col1'> 마켓 : " + el.market + "</div>");
+                            $("#content").append("<div class='col2'> 거래일 : " + el.trade_date + "</div>");
+                            $("#content").append("<div class='col3'> 거래가격 : " + el.trade_price + "</div>");
+                        }); */
+
+            $.ajax({
+                  type : 'get'
+                , url : 'mbti/MBTI_Q2.csv'
+                , dataType : 'text'
+                , success : function(res){
+                    // console.log(csvToJson(res));
+                    data = csvToJson(res);
+                    // E or I
+                    // S or N
+                    // T or F
+                    // J or P
+                    // (1) ~ (4) 에서 많은 선택을 한 성향 선택
+                    // 최종 MBTI 출력 MBTI와 같은 MBTI_A 에서 내용을 가져와 출력
+
+                    // 틀만들기
+                    // base 클래스를 가진 친구들에 다 밀어주기
+
+                    // 이제 뽑은 데이터를 for문으로 값 밀어넣기
+                    // 포문에 밀어넣었음
+                    for(let i = 0; i < data.length - 1; i++){
+                       //  console.log(data[i].E);
+                       let mbtiType = [data[i].E, data[i].I, data[i].S, data[i].N, data[i].T, data[i].F, data[i].J, data[i].P];
+
+
+                        for(let j = 0; j<mbtiType.length; j++){
+                            // console.log(mbtiType[j]);
+                            $("#" + mbtiTypeText[j] + "_id").append('<div class="form-check">');
+                            $("#" + mbtiTypeText[j] + "_id").append('<input type="radio" class="form-check-input" name="'+mbtiName[j]+i+'name"'+' id="'+ mbtiTypeText[j]+i +'" value="'+ mbtiTypeText[j]+'">');
+                            $("#" + mbtiTypeText[j] + "_id").append('<label for="" id="label'+ mbtiTypeText[j] + i +'" class="form-check-label"> &nbsp;' + mbtiType[j] + '</label>');
+                            $("#" + mbtiTypeText[j] + "_id").append('</div>');
+
+                        }
+                    }
+
+                    // 화면에 출력했음
+                    // 이제 더 많이 셀렉된 알파벳 구하기
+                    // 전송 버튼을 누르면!
+
+                    // printMBTI(data);
+
+
+                }
+                , error : function(e){
+                    console.log(e);
+                }
+
+            });
+
+            // 버튼 클릭시!!
+            $("#resultBtn").click(function(){
+                let countE = countI = countS = countN = countT = countF = countJ = countP =  0;
+                let result = "";
+
+                try{
+                    
+                    for(let i = 0; i < 9; i++){
+                           //  console.log(data[i].E);
+                           let mbtiType = [data[i].E, data[i].I, data[i].S, data[i].N, data[i].T, data[i].F, data[i].J, data[i].P];
+                           let objVal = '';
+    
+                            for(let j = 0; j<mbtiType.length; j++){
+                                // console.log(mbtiType[j]);
+    
+                                let obj = $('input[name='+mbtiName[j]+i+'name]');
+                                objVal = $('input[name='+mbtiName[j]+i+'name]:checked').val();
+
+
+                                // 비교를 위한 숫자 올리기
+                                switch(objVal){
+                                    case 'E' : countE++ 
+                                    break;
+                                    case 'I' : countI++
+                                    break;
+                                    case 'S' : countS++
+                                    break;
+                                    case 'N' : countN++
+                                    break;
+                                    case 'T' : countT++
+                                    break;
+                                    case 'F' : countF++
+                                    break;
+                                    case 'J' : countJ++
+                                    break;
+                                    case 'P' : countP++
+                                    break;
+                                }
+
+
+                                // 빈값이 없나 체크
+                               /*  if(!fn_check(obj)){
+                                    throw 'finish';
+                                }  */
+                            }
+        
+
+                        }
+
+                        alert("전송");
+                        result += ((countE > countI) ? 'E' : 'I');
+                        result += ((countS > countN) ? 'S' : 'N');
+                        result += ((countT > countF) ? 'T' : 'F');
+                        result += ((countJ > countP) ? 'J' : 'P');
+                        alert(result);
+
+                        $('#mbtiResultModal').modal('show');
+
+                        // mbti의
+                        // 결과값 받아오기!!
+                        // 아작스를 이용해 결과값 받아와서 모달에 넣기
+                        $.ajax({
+                             type : 'get'
+                            ,url : 'mbti/MBTI_A2.csv'
+                            ,dataType : 'text'
+                            ,success : function(res){
+                                data = csvToJson(res);
+                                // console.log(data);
+                                $('#detail_content').empty();
+                                $('#detail_content').append("<p class='text-center fw-bold'>"+ result  + "의 결과</p>");
+
+                                for(let i = 0; i < data.length - 1; i++){
+                                    // console.log(data[i][result]);
+                                    $('#detail_content').append("<ul class='list-group list-group-flush'><li class='list-group-item'>"+ data[i][result]  + "</li></ul>");
+                                }
+
+                                $('#detail_content').append();
+                            }
+                        });
+
+
+                    // $("#research_form").submit();
+
+
+                }catch(Exception){
+                    if(Exception !== 'finish') throw Exception;
+                    else return false;
+                }
+
+            });
+
+            
+
+
+        });
+
+
+
+        // 뽑은 데이터 함수로 밀어넣기 // 안씀
+        function printMBTI(data){
+
+            for(let i = 0; i < 10; i++){
+                $("#q1-" + i).val(i);
+                // $("'#q1-" + i + "'").html() = data[i].E;
+                $("#l1-" + i).text(data[i].E);
+
+                $("#q2-" + i).val(i);
+                $("#l2-" + i).text(data[i].I);
+            }
+        }
+
+        // 정규식 써서 전처리를 한 후에
+        // 불러오자?
+        // csv 불러오는 함수?
+        // 좀 어려운데..?
+        function csvToJson(csv_data){
+            let rows = csv_data.split('\r\n');
+            let jsonArray = [];
+            let header = rows[0].split(',');
+            for(let i = 1; i < rows.length; i++){
+                let obj = {};
+                let row = rows[i].split(',');
+                for(let j = 0; j < header.length ; j++){
+                    obj[header[j]] = row[j];
+                }
+                jsonArray.push(obj);
+            }
+            return jsonArray;
+            // json으로 반환 할 경우
+            // return JSON.stringify(jsonArray);
+        }
+
+
+
+        // 다들 잘 선택했는지 체크
+        function fn_check(obj){
+            let flag = false;
+            // each(인덱스 값, 당시의 값에 변수 부여)? 이건가
+            $(obj).each(function(i, v){
+                if($(v).is(":checked")){
+                    flag = true;
+                }
+            });
+            if(!flag){
+                alert("문항당 1개는 선택하셔야 합니다!");
+                // 첫번째 선택...!!! .eq()
+                $(obj).eq(0).focus();
+            };
+            return flag;
+        }
+
+        // 어떻게 할까..
+        // 틀은 4개가 필요
+        // 일단 E와 I의 틀을 생각
+        // 질문은 10개
+        // 그럼 id에 숫자를 줘서 for문 돌리기?
+    </script>
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <p class="fw-bold fs-1 text-center"> MBTI 조사 </p>
+        </div>
+        <!-- 헤더부분 -->
+        <div class="row">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-auto align-self-center">
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+                <form action="" id="">
+                <!-- E와 I --><label for="ei0" id="l1-0" class="form-check-label"></label>
+                        <div class="tab-content">
+                            <!-- E와 I -->
+                            <div class="row">
+                                <b class="col-5"></b>
+                                <b class="col-3" style="font-size:25px ;">선호하는 세계</b>
+                            </div>
+                            <div class="row g-12">
+                                <!-- 하나의 로우에서 반반 나누겠다 12가 총 가로 길이니까 -->
+                                <!-- 1. E -->
+                                <!-- 너무 하드 코딩인데.. -->
+                                <div class="col-sm-6 base" id="">
+                                    <label for="" id="E_id"></label>
+                                </div>
+
+                                <!-- 2. I -->
+                                <div class="col-sm-6 base" id="">
+                                    <label for="" id="I_id"></label>
+                                </div>
+                                <div><br></div><hr>
+                            </div>
+                            <!-- S와 N -->
+                            <div class="row">
+                                <b class="col-5"></b>
+                                <b class="col-3" style="font-size:25px ;">인식형태</b>
+                            </div>
+                            <div class="row g-12">
+                                <div class="col-sm-6 base" id="">
+                                    <label for="" id="S_id"></label>
+                                </div>
+                                <div class="col-sm-6 base" id="">
+                                    <label for="" id="N_id"></label>
+                                </div>
+                            </div>
+                            <div><br></div><hr>
+                            <!-- T와 F -->
+                            <div class="row">
+                                <b class="col-5"></b>
+                                <b class="col-3" style="font-size:25px ;">판단기준</b>
+                            </div>
+                            <div class="row g-12">
+                                <div class="col-sm-6 base" id="">
+                                    <label for="" id="T_id">T</label>
+                                </div>
+                                <div class="col-sm-6 base" id="">
+                                    <label for="" id="F_id">F</label>
+                                </div>
+                            </div>
+                            <div><br></div><hr>
+                            <!-- J와 P -->
+                            <div class="row">
+                                <b class="col-5"></b>
+                                <b class="col-3" style="font-size:25px ;">생활양식</b>
+                            </div>
+                            <div class="row g-12">
+                                <div class="col-sm-6 base" id="">
+                                    <label for="" id="J_id"></label>
+                                </div>
+                                <div class="col-sm-6 base" id="">
+                                    <label for="" id="P_id"></label>
+                                </div>
+                            </div>
+                            <div><br></div>
+                        </div>
+                    </div>
+                    <button class="w-100 btn btn-primary btn-lg" id="resultBtn" type="button">결과</button>
+                    <div>
+                        <br><br>
+                    </div>
+                </form>
+
+
+            <!-- 모달 창 -->
+        <div class="modal" tabindex="-1" id="mbtiResultModal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">MBTI 결과</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p id="detail_content">content</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                  <button type="button" class="btn btn-primary">확인</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+    
+</body>
+</html>

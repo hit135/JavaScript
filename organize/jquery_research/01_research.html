@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <title>설문지 만들기</title>
+
+    <script>
+        $(document).ready(function(){
+
+            // 2-1 체크박스
+            $('#q2_id').on('click', 'input', function(){
+                // 체크박스 5번째를(기타) 클릭하면 인풋창이 나오도록
+                if($('#q2-5').is(":checked")){
+                    $('#input2-5').show('slow');
+                }else{
+                    // 다른 체크박스 클릭시 기존에 입력한거 날리고
+                    $('#input2-5').val("");
+                    // 숨기기
+                    $('#input2-5').hide('slow');
+                }
+
+                // 체크박스 2-1 (안봄) 선택시 3,4 비활성화
+                // 다른거 선택시 활성화
+
+                if($('#q2-1').is(":checked")){
+                    $('#q3_id').hide('fast');
+                    // 만약 선택한게 있다면 그것들 다 지우고 안보이게 만들어주기
+                    // .prop()
+                    $('#q3_id input').prop("checked", false);
+
+                    $('#q4_id').hide('fast');
+                    $('#q4_id input').prop("checked", false);
+                }else{
+                    $('#q3_id').show('fast');
+                    $('#q4_id').show('fast');
+                }
+            });
+
+            // 버튼 클릭시 전송
+            // 그러나 전부 체크된게 있어야함
+            $(".btn").click(function(){
+
+                let q2_val = "";
+
+                // 2-1(안봄) 선택시 3,4 빼고 체크
+                // id를 1~5 이런식으로 줘서 for문으로 가능
+                // 모든 선택창에 접근
+
+                // 전송을 할 때 한번 삑나면 멈추게 예외처리함
+                try{
+                    for(let i = 1 ; i <= 5; i++){
+                        let obj = $("input[name=q"+ i + "]");
+    
+    
+    
+                        /// console.log(obj);
+    
+                        // 2번 설문에서 값 추출
+                        if(i == 2){
+                            q2_val = $("input[name=q2]:checked").val();
+                        }
+
+
+                        // 2번 설문의 밸류가 1이면 그리고 셀렉박스의 3번째나 4번째일때가 아니면!!!!
+                        if(!((q2_val == "1" && i == 3) || (q2_val == "1" && i == 4))){
+                            if(!fn_check(obj)){
+                                throw 'finish';
+                            }
+                        }
+
+                        // 2번 설문에서 값을 추출해서 밸류값이 5일 때
+                        // 인풋창에서 뽑은 값을 집어넣기
+                        if(q2_val == "5"){
+                            // $("#q2-5") = $("input[name=q2]:checked")
+                            $("input[name=q2]:checked").val($('#input2-5').val());
+                        }
+
+                        /* 
+                        // $("#reasearch_form").submit();
+    
+                        // 전부 체크가 됐나?
+                        if(!fn_check(obj)){
+                            // 알럿창 많이 뜨니까 멈추게 브레이크
+                            break;
+                            console.log(obj);
+                        } */
+                    }
+
+                    
+                    alert("전송");
+                    $("#research_form").submit();
+
+                }catch(Exception){
+                    if(Exception !== 'finish') throw Exception;
+                    else return false;
+
+                }
+ 
+            });
+
+
+        });
+
+
+        // 반복작업 함수처리
+        function fn_check(obj){
+            let flag = false;
+            // each(인덱스 값, 당시의 값에 변수 부여)? 이건가
+            $(obj).each(function(i, v){
+                if($(v).is(":checked")){
+                    flag = true;
+                }
+            });
+            if(!flag){
+                alert("문항당 1개는 선택하셔야 합니다!");
+                // 첫번째 선택...!!! .eq()
+                $(obj).eq(0).focus();
+            };
+            return flag;
+        }
+
+
+    </script>
+
+
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <h1> 영화 설문조사 </h1>
+        </div>
+        <div class="row">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-auto align-self-center">
+                            <p> 잘 선택해주세요!! </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- 폼태그로 넘기기 -->
+                <form action="http://localhost:8080/research.jsp" method="get" id="research_form">
+                    <div class="card-body be-light">
+                        <div class="tab-content">
+                            <div class="row g-12">
+                                <!-- 하나의 로우에서 반반 나누겠다 12가 총 가로 길이니까 -->
+                                <!-- 1. 성별 -->
+                                <div class="col-sm-6" id="q1_id">
+                                    <label for="">1. 성별을 선택하세요</label>
+                                    <div class="form-check">
+                                        <input type="radio" class="form-chec-input" name="q1" id="q1-1" value="남자">
+                                        <label for="q1-1" class="form-check-label">남자</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="radio" class="form-chec-input" name="q1" id="q1-2" value="여자">
+                                        <label for="q1-2" class="form-check-label">여자</label>
+                                    </div>
+                                </div>
+
+                                <!-- 2. 한달에 몇번 보는지 -->
+                                <div class="col-sm-6" id="q2_id">
+                                    <label for="">2. 한달에 평균 몇번 정도 영화를 보나요?</label>
+                                    <div class="row">
+                                        <div class="col-2">
+
+                                            <div class="form-check">
+                                                <input type="radio" class="form-check-input" name="q2" id="q2-1" value="1">
+                                                <label for="q2-1" class="form-check-label">안봄(0)</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input type="radio" class="form-check-input" name="q2" id="q2-2" value="2">
+                                                <label for="q2-2" class="form-check-label">1 ~ 2</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input type="radio" class="form-check-input" name="q2" id="q2-3" value="3">
+                                                <label for="q2-3" class="form-check-label">3 ~ 4</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input type="radio" class="form-check-input" name="q2" id="q2-4" value="4">
+                                                <label for="q2-4" class="form-check-label">5 ~ 6</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input type="radio" class="form-check-input" name="q2" id="q2-5" value="5">
+                                                <label for="q2-5" class="form-check-label">기타</label>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-10">
+                                            <div class="form-check"></div>
+                                            <div class="form-check"></div>
+                                            <div class="form-check"></div>
+                                            <div class="form-check"></div>
+                                            <div class="form-check">
+                                                <!-- placeholder 뒤에 흐릿하게 보이도록 -->
+                                                <input type="text" placeholder="숫자만 입력" class="form-control" id="input2-5" style="display:none ;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                            </div>
+                            <div class="row g-12">
+                                <!-- 3. 주로 누구와 보시나요? 아래로 말고 옆으로 가도록 설정 -->
+                                <div class="col-sm-6" id="q3_id">
+                                    <label for="" class="form-label">3. 누구와 보나요?</label>
+                                    <div class="input-group mb-3">
+                                        <div class="form-check">
+                                            <input type="radio" class="form-check-input" id="q3-1" name="q3" value="1">
+                                            <label for="q3-1" class="form-check-label">혼자</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="radio" class="form-check-input" id="q3-2" name="q3" value="2">
+                                            <label for="q3-2" class="form-check-label">동성 친구와</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="radio" class="form-check-input" id="q3-3" name="q3" value="3">
+                                            <label for="q3-3" class="form-check-label">이성 친구와</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="radio" class="form-check-input" id="q3-4" name="q3" value="4">
+                                            <label for="q3-4" class="form-check-label">연인과</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="radio" class="form-check-input" id="q3-5" name="q3" value="5">
+                                            <label for="q3-5" class="form-check-label">부모님과</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 주로 무엇으로 보시나요? -->
+                                <div class="col-sm-6" id="q4_id">
+                                    <label for="" class="form-label">4. 무엇으로 보시나요?</label>
+                                    <div class="input-group mb-3">
+                                        <div class="form-check">
+                                            <input type="radio" class="form-check-input" id="q4-1" name="q4" value="1">
+                                            <label for="q4-1" class="form-check-label">스마트폰</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="radio" class="form-check-input" id="q4-2" name="q4" value="2">
+                                            <label for="q4-2" class="form-check-label">태블릿</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="radio" class="form-check-input" id="q4-3" name="q4" value="3">
+                                            <label for="q4-3" class="form-check-label">PC</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="radio" class="form-check-input" id="q4-4" name="q4" value="4">
+                                            <label for="q4-4" class="form-check-label">TV</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="radio" class="form-check-input" id="q4-5" name="q4" value="5">
+                                            <label for="q4-5" class="form-check-label">극장</label>
+                                        </div>
+                                    </div>
+                            </div>
+                                <hr>
+                            </div>
+                            <!-- 다중 선택 체크 박스 -->
+                            <div class="row g-12">
+                                <div class="col-sm-12" id="q5_id">
+                                    <label for="" class="form-label">5. 좋아하는 장르는? (다중선택가능)</label>
+                                    <div class="input-group mb-3">
+                                        <div class="form-check">
+                                            <input type="checkbox" name="q5" id="q5-1" class="form-check-input" value="범죄">
+                                            <label class="form-check-label" for="q5-1">범죄</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" name="q5" id="q5-2" class="form-check-input" value="느와르">
+                                            <label class="form-check-label" for="q5-2">느와르</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" name="q5" id="q5-3" class="form-check-input" value="무협">
+                                            <label class="form-check-label" for="q5-3">무협</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" name="q5" id="q5-4" class="form-check-input" value="액션">
+                                            <label class="form-check-label" for="q5-4">액션</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" name="q5" id="q5-5" class="form-check-input" value="공포">
+                                            <label class="form-check-label" for="q5-5">공포</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" name="q5" id="q5-6" class="form-check-input" value="코미디">
+                                            <label class="form-check-label" for="q5-6">코미디</label>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <button class="w-100 btn btn-primary btn-lg" type="button">전송</button>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+    
+</body>
+</html>
