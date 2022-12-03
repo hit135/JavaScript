@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>환율시각화</title>
+</head>
+<body>
+    <h3>한국 환율 추세</h3>
+    <div style="width: 700px; height: 560px;">
+        <canvas id="myChart" width="100" height="80"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById("myChart");
+        const c_data = localStorage.getItem("exData");
+        // console.log("😀 ~ c_data", c_data)
+
+        const v_data = JSON.parse(c_data);
+        //console.log("😀 ~ v_data", v_data)
+
+        // 환율데이터
+        let r_data = v_data["rates"];
+        console.log("😀 ~ r_data", r_data)
+
+        // 날짜
+        let dateSet = Object.keys(r_data);
+        console.log("😀 ~ dateSet", dateSet)
+
+        let krwRate = [];
+        // r_data 접근
+        for(let keys in r_data){
+            krwRate[krwRate.length] = r_data[keys]["KRW"];
+        }
+
+        //console.log("😀 ~ krwRate", krwRate)
+
+
+        // 휠을 굴리면 차트 변하는 이벤트
+        let v_state = 0;        // v_state가 0이면 year단위, 1이면 3달, 2이면 1달, 3이면 1주일에 대해 그려줌
+        ctx.addEventListener("wheel", function(e){
+            // 휠을 올리면 e.wheelDelta에 150이 담기고
+            // 내리면 -150이 담긴다.
+
+            // 휠을 올리면
+            if(e.wheelDelta > 0){
+                if(v_state > 2){
+                    v_state = 3;
+                }else{
+                    v_state++;
+                }
+            // 휠을 내리면
+            }else if(e.wheelDelta < 0){
+                if(v_state < 1){
+                    v_state = 0;
+                }else{
+                    v_state--;
+                }
+            }
+
+            // 그리는 함수
+            console.log(v_state);
+            f_draw(v_state);
+
+        });
+
+        // 차트 그리기
+        let myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: dateSet,
+                datasets: [{
+                    label: "KRW",
+                    data: krwRate,
+                    pointRadius: 0,
+                    borderColor: 'pink'
+                }]
+            },
+            options: {
+                elements: {
+                    line: {
+                        tension: 0.4
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display : false
+                    }
+                }
+            }
+        });
+
+        // 데이터의 가장 최근 날짜에서 p_num을 뺀 날부터 가장 최근 날짜까지 반복문 함수
+        // krw 환율에 대한
+        function f_inputDate(p_num, p_r_data, p_dateSet, p_v_labels, p_v_data){
+            for(let i = p_dateSet.length - p_num; i < p_dateSet.length; i++){
+                    p_v_labels.push(p_dateSet[i]);
+                    p_v_data.push(p_r_data[p_dateSet[i]]["KRW"]);
+                }
+        }
+
+        // 차트 업데이트 함수
+        function f_draw(p_state){
+            let v_labels = [];
+            let v_data = [];
+            console.log(dateSet);
+            if(p_state == 0){
+                // 1년치 그림
+                // 날짜
+                f_inputDate(dateSet.length, r_data, dateSet, v_labels, v_data);
+            }else if(p_state == 1){
+                // 3달치 그림   >> 90일
+                // 날짜
+                f_inputDate(90, r_data, dateSet, v_labels, v_data);
+            }else if(p_state == 2){
+                // 1달치 그림
+                f_inputDate(30, r_data, dateSet, v_labels, v_data);
+            }else if(p_state == 3){
+                // 1주일치 그림
+                f_inputDate(7, r_data, dateSet, v_labels, v_data);
+            }
+            console.log("v_labels",v_labels);
+            console.log("v_data",v_data);
+
+            myChart.data.labels = v_labels;
+            myChart.data.datasets[0]["label"] = v_data;
+            myChart.update();
+        }
+
+    </script>
+    
+</body>
+</html>
