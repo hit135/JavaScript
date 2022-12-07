@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+    <title>json 다루기(종량제)</title>
+</head>
+<body>
+    시도명 <input type="text" id="inputRegion">
+    시군구명 <input type="text" id="inputCity">
+    <br><br>
+    봉투용량
+    <select id="inputSize">
+        <option value="5ℓ가격">5리터</option>
+        <option value="10ℓ가격">10리터</option>
+        <option value="20ℓ가격">20리터</option>
+        <option value="50ℓ가격">50리터</option>
+        <option value="100ℓ가격">100리터</option>
+    </select>
+    <input type="button" value="검색" onclick="f_search()">
+
+    <br><br>
+    <input type="button" id="price_bnt" value="가격순▼" onclick="f_arange('price')">
+    <input type="button" value="시군구▼" onclick="f_arange('city')">
+    <!-- 크기를 지정해서 스크롤바 만들기 -->
+    <div id="headerTable"></div>
+    <div id="resultTable" style="width: 800px; height: 400px; overflow-y:scroll;"></div>
+
+   
+
+    
+
+
+
+
+
+
+
+
+
+
+    <!-- ./ == 현재폴더 -->
+    <!-- 공공데이터포털 - 전국종량제봉투가격표준데이터 -->
+    <script src="./01_priceJS.js"></script>
+    <script>
+        /* let v_json = {};
+        v_json.name = "찬웅";
+        v_json = {"name" : "찬웅", "age" : 30}; */
+
+        // 다른곳에서 가져온 데이터를 일단은 상수에 담음으로써
+        // 원본데이터를 보존시켜준다
+        const jsonData = c_data;
+        console.log(jsonData);
+
+        // 키값 가져오기
+        const c_records = jsonData["records"];
+        // const c_records = jsonData.records;
+        console.log("c_records : ", c_records);         // 배열
+
+        console.log("c_records[0] : ", c_records[0]);   // json객체
+        console.log("c_records[0]['5ℓ가격'] : " ,c_records[0]["5ℓ가격"]);
+
+        // json 객체의 key값들을 배열로 가져오기
+        const keyList = Object.keys(c_records[0]);
+        console.log("keyList : " , keyList);
+
+        // c_records에서 서울특별시에 해당하는 데이터 중
+        // 시도명 : 서울특별시
+        // 종량제봉투사용대상 : 가정용
+        // 종랑제봉투용도 : 생활쓰레기
+        // 종량제봉투종류 : 규격봉투
+        // 종량제봉투처리방식 : 소각용
+        // 에 해당하는 모든데이터를 v_seoul에 담기
+
+        let v_seoul = [];
+        
+        // 배열에 값 집어넣기 로직..
+        // v_seoul[v_seoul.length] = "가"; == v_seoul[0] = "가"
+        // v_seoul[v_seoul.length] = "나"; == v_seoul[1] = "나"
+
+
+        for(let i = 0; i < c_records.length; i++){
+            // console.log(c_records[i][keyList[0]])
+            let c_records_index = c_records[i];
+
+            if((   c_records_index[keyList[0]] == '서울특별시') 
+                && c_records_index[keyList[5]] == '가정용' 
+                && c_records_index[keyList[4]] == '생활쓰레기'
+                && c_records_index[keyList[2]] == '규격봉투'
+                && c_records_index[keyList[3]] == '소각용' ){
+                /* 조건문 끝 실행문 */
+                // 배열에 집어넣기 .push or [i] = ~~
+                // v_seoul.push(c_records_index);
+                v_seoul[v_seoul.length] = c_records_index;
+            }
+        }
+        
+        console.log("v_seoul : " , v_seoul);
+
+        let test = "테스트 입니다~";
+        console.log("🚀 ~ file: 01.JSON다루기(종량제).html:103 ~ test", test)
+
+        // 서울 종량제 봉투 10리터 중 가격이 가장 비싼 동네 뽑기
+        // 서울 종량제 봉투를 다 담은 배열 만들기
+        // 그 중에서 10리터 값이 제일 큰 인덱스
+
+        let seoul_arry = []
+        for(let i = 0; i < c_records.length; i++){
+            if(c_records[i][keyList[0]] == '서울특별시'){
+                seoul_arry.push(c_records[i]);
+            }
+        }
+
+        console.log("🚀 ~ file: 01.JSON다루기(종량제).html:82 ~ seoul_arry", seoul_arry)
+
+        let maxResult = seoul_arry[0];
+
+        for(let i = 0; i < seoul_arry.length; i++){
+            console.log("maxResult : " , maxResult[keyList[12]]);
+            console.log("i의 10리터 가격: " ,parseInt(seoul_arry[i][keyList[12]]));
+
+            if(parseInt(maxResult) < parseInt(seoul_arry[i][keyList[12]])){
+                maxResult = seoul_arry[i]
+            }
+        }
+            
+        console.log("🚀 ~ file: 01.JSON다루기(종량제).html:93 ~ maxResult", maxResult)
+        console.log("서울에서 10l 종량제가 가장 비싼 동네 : ", maxResult[keyList[1]])
+
+
+        
+
+        // v_seoul 에서 10리터 가격이 380원인 동네를 전부 배열에 담기
+        let v_richCityList = [];
+
+        for(let i = 0; i < v_seoul.length; i++){
+            if(v_seoul[i][keyList[12]] == 380){
+                v_richCityList.push(v_seoul[i])
+            }
+        }
+        console.log("🚀 ~ file: 01.JSON다루기(종량제).html:109 ~ v_richCityList", v_richCityList)
+
+
+
+        // 서울 종량제 봉투 10리터 가격의 평균 구하기
+
+        let totalPrice = 0;
+        let v_seoul_length = v_seoul.length;
+        // parseInt기억하기 자바는 Integer.parseInt()
+        for(let i = 0 ; i < v_seoul.length; i++){
+            totalPrice += parseInt(v_seoul[i][keyList[12]]);
+            console.log("오잉", v_seoul[i][keyList[12]]);
+        }
+
+        console.log("totalPrice : " , totalPrice)
+        console.log("v_seoul_length : " , v_seoul_length)
+        console.log("real average : " , Math.round(totalPrice/v_seoul_length))
+
+    </script>
+
+
+    <script>
+        // 화면에 그리기
+        const v_resultTable = document.getElementById("resultTable");
+        // document.getElementById("headerTable").innerHTML += "<h3>" + keyList[0] + " | " + keyList[1] + " | " + keyList[12] +"</h3>";
+        
+        // 전역으로 변수 하나 선언..
+        // 검색 결과 데이터
+        let v_resultData = [];
+
+        // 써치 밸류 뽑기 위해 전역변수 선언
+        let v_select = "";
+
+
+
+        // 검색 기능 구현
+        function f_search(){
+            const v_inputRegion = document.getElementById("inputRegion");
+            const v_inputCity = document.getElementById("inputCity");
+            const v_inputSize = document.getElementById("inputSize");
+
+            // select 태그에서 선택한 값 뽑기
+            // .options를 하면 옵션태그 전부 배열로 담아준다
+            const v_options = v_inputSize.options;
+            for(let i = 0; i < v_options.length; i++){
+                if(v_options[i].selected){
+                    v_select = v_options[i].value;
+                }
+            }
+            console.log("v_select : " + v_select);
+
+
+            // 검색 목록 비우기
+            v_resultTable.innerHTML = "";
+            // 검색 결과 배열도 비우기
+            v_resultData = [];
+
+            // for문 화면 그리기    
+            for(let i = 0; i < c_records.length; i++){
+                /* 다양한 방법으로 그리기..
+                v_resultTable.innerHTML += "<h3>" + c_records[i]["시도명"] 
+                                        + " | " + c_records[i]["시군구명"]
+                                        + " | " + c_records[i]["10ℓ가격"] + "</h3>";
+                */
+                // 검색어를 포함하고 있는지 체크
+                let c_records_index = c_records[i];
+
+                if(c_records_index[keyList[5]] == '가정용' 
+                && c_records_index[keyList[4]] == '생활쓰레기'
+                && c_records_index[keyList[2]] == '규격봉투'
+                && c_records_index[keyList[3]] == '소각용' ){
+
+                    if(c_records[i]["시도명"].indexOf(v_inputRegion.value) != -1
+                        && c_records[i]["시군구명"].indexOf(v_inputCity.value) != -1){
+                        // 전역 변수인 배열에 검색 결과를 담기
+                        v_resultData.push(c_records[i]);
+                        // 검색어 그리기
+                        v_resultTable.innerHTML += `<h3>${c_records[i]["시도명"]}
+                            | ${c_records[i]["시군구명"]}
+                            | ${[v_select]}
+                            | ${c_records[i][v_select]}</h3>`;
+                    }
+                }
+            }            
+        }
+
+        // 정렬
+        // 문제
+        // 한번 정렬 버튼을 누르면 버튼이 가격순▼에서 가격순▲ 으로 바뀌고
+        // 역순으로 정렬이 되도록 기능 추가하기
+        function f_arange(p_type){
+
+
+            // 배열 정렬!! 함수?
+            // sort()썻을 때 배열에 다 숫자면 상관없지만
+            // 숫자가 아니기 때문에 지정해줘야 한다
+            // sort 안에 들어가는 익명함수는 compareFunction이라 한다
+            // compareFunction의 리턴값이 음수인지 양수인지에 따라 정렬이 이루어진다
+
+            if(p_type == 'price'){
+                let price_bnt_val = $("#price_bnt").val();
+                console.log(price_bnt_val);
+                // 버튼 모양 바꿔주고
+                ( price_bnt_val == "가격순▲") ? $("#price_bnt").val("가격순▼") : $("#price_bnt").val("가격순▲");
+
+                if(price_bnt_val == "가격순▼"){
+                    v_resultData.sort(function(a, b){
+                    return a[v_select] - b[v_select]
+                    });
+                }else if(price_bnt_val == "가격순▲"){
+                    v_resultData.sort(function(a, b){
+                    return b[v_select] - a[v_select]
+                    });
+                }
+                
+
+
+               
+
+
+            }else if(p_type == 'city'){
+                // 문자열의 경우 유니코드 숫자에 대해 부등호 비교는 되자만
+                // 빼기 연산이 안된다
+                // 따라서 부등호 비교 결과에 따른 리턴값을 설정해주어야 한다.
+                v_resultData.sort(function(a, b){
+                    let resultCnt = 0
+                    a["시군구명"] > b["시군구명"] ? resultCnt = 1 : resultCnt = -1;
+
+                    return resultCnt;
+                });
+            }
+
+
+            // 정렬후 비워주고
+            v_resultTable.innerHTML = "";
+            
+            // 다시 그려주자
+            for(let i = 0; i < v_resultData.length; i++){
+                v_resultTable.innerHTML += `<h3>${v_resultData[i]["시도명"]}
+                            | ${v_resultData[i]["시군구명"]}
+                            | ${[v_select]}
+                            | ${v_resultData[i][v_select]}</h3>`;
+            }
+
+        }
+
+
+    </script>    
+</body>
+</html>
