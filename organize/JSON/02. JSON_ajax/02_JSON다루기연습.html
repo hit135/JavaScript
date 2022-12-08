@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <script>
+         // data 가져오기
+        const c_data = localStorage.getItem("exData");
+        // console.log("😀 ~ c_data", c_data)
+
+        // json 파싱
+        const v_data = JSON.parse(c_data);
+        console.log("😀 ~ v_data", v_data)
+
+        // json 파싱한것중 필요한 값만 뽑기
+        const p_data = v_data["rates"];
+        console.log("😀 ~ p_data", p_data)
+        console.log("😀 ~ p_data[2020-01-01]", p_data["2020-01-01"])
+        p_data["2020-01-01"]["AED"]
+        console.log("😀 ~ p_data[2020-01-01]  :::: ", p_data["2020-01-01"])
+
+        // p_data 키값만 뽑아내서 배열에 담기
+        let p_data_keys = Object.keys(p_data);
+        console.log("😀 ~ p_data_keys", p_data_keys)
+
+        // countryList 나라 리스트 뽑기
+        let countryList = Object.keys(p_data[p_data_keys[2]]);
+        console.log("😀 ~ countryList", countryList)
+
+        // JSON  >> for in 문
+        test_array = [];
+        for(let i in p_data){
+            // console.log("😀 ~ i", i)
+            test_array.push(i);
+            console.log("😀 ~ p_data[i]", p_data[i])
+        }
+        test_array
+        console.log("😀 ~ test_array", test_array)
+    </script>
+
+</body>
+</html>

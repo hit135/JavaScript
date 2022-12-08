@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>json다루기(환율)</title>
+</head>
+<body>
+    <select name="" id="sel_contry" onchange="f_changeContry()">
+        <option value="" selected>== 나라선택 ==</option>
+    </select>
+    <div class="" style="width: 300px; height: 600px; overflow-y:scroll;">
+        <table >
+            <thead>
+                <tr>
+                    <td>나라 | </td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;날짜&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | </td>
+                    <td>&nbsp;&nbsp;&nbsp;환율&nbsp;&nbsp;&nbsp; | </td>
+                </tr>
+            </thead>
+            <tbody id="country_sel_tbody">
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+
+
+
+
+    <script>
+        
+        // data 가져오기
+        const c_data = localStorage.getItem("exData");
+        // console.log("🚀 ~ file: 02_JSON다루기(환율).html:15 ~ c_data", c_data)
+        
+        // json String을 json 객체로 변환
+        const c_json = JSON.parse(c_data);
+        console.log("🚀 ~ file: 02_JSON다루기(환율).html:19 ~ c_json", c_json)
+        
+        // 데이터 확인해보고 원하는 데이터만 뽑기
+        const c_rate = c_json["rates"];
+        console.log("🚀 ~ file: 02_JSON다루기(환율).html:23 ~ c_rate", c_rate)
+
+        // c_rate의 키목록 열람(날짜 목록)
+        const dateList = Object.keys(c_rate);
+        console.log("🚀 ~ file: 02_JSON다루기(환율).html:27 ~ dateList", dateList)
+
+        // 통화 목록 열람(국가 목록)
+        const countryList = Object.keys(c_rate[dateList[0]]);
+        console.log("🚀 ~ file: 02_JSON다루기(환율).html:31 ~ countryList", countryList)
+
+        // 한국은 KRW
+        // KRW에 해당하는 환율 데이터만 수집
+        // v_krwList[0] = {"date" : 2020-01-01, "rate" : 1100}
+        // v_krwList[1] = {"date" : 2020-01-02, "rate" : 1200}
+        // 이런식으로 뽑아봐라
+        let v_krwList = [];
+        
+        for(let i = 0; i < dateList.length; i++){
+            let v_krwJson = {};
+            v_krwJson.date = dateList[i]
+            v_krwJson["rate"] = c_rate[dateList[i]]["KRW"]
+            v_krwList.push(v_krwJson);
+        }
+        console.log(v_krwList);
+
+        // { "KRW" : [ {"date" : 2020-01-01, "rate" : 1300}, ... {"date": 2021-01-01, "rate:" 1300}] }
+        let v_krw = {"KRW" : v_krwList};
+        console.log("😀 ~ v_krw", v_krw)
+
+        // 모든 나라에 대해서 
+        // { "KRW" : [ {"date" : 2020-01-01, "rate" : 1300}, ... {"date": 2021-01-01, "rate:" 1300}] 
+        // , "JPY" : [ {"date" : 2020-01-01, "rate" : 130}, ... {"date": 2021-01-01, "rate:" 130}]  }
+        let allRate = {};
+
+        // 나라이름만큼 반복문
+        for(let i = 0; i < countryList.length; i++){
+            // 날짜만큼 반복문
+            let temp_array = []
+            for(let j = 0; j < dateList.length; j++){
+                let v_krwJson = {};
+                v_krwJson.date = dateList[j]
+                v_krwJson["rate"] = c_rate[dateList[j]][countryList[i]]
+                temp_array.push(v_krwJson);
+            }
+            allRate[countryList[i]] = temp_array
+        }
+        console.log("😀 ~ allRate", allRate)
+
+        // JPY가 가장 비쌋던 날짜와 가격
+        // JPY가 가장 쌌던 날짜와 가격
+        // JPY 환율 평균
+
+        let jpyRate = allRate["JPY"];
+        console.log("😀 ~ jpyRate", jpyRate)
+
+        // 맥스..
+        let maxJpyRate = jpyRate[0]['rate']
+        let maxJpyJson = {}
+        console.log("😀 ~ maxJpyRate 처음 : ", maxJpyRate)
+
+        // 로우..
+        let miniJpyRate = jpyRate[0]['rate']
+        let miniJpyJson = {}
+        console.log("😀 ~ miniJpyRate 처음 : ", miniJpyRate)
+
+        // 평균..
+        let totalJpyRate = 0;
+        let averageJpyRate = 0;
+
+        // 맥스값 구하기
+        // 로우값 구하기
+        for(let i = 0; i < jpyRate.length; i++){
+            if(jpyRate[i]['rate'] > maxJpyRate){
+                maxJpyRate = jpyRate[i]['rate'];
+                maxJpyJson = jpyRate[i];
+            }
+            if(jpyRate[i]['rate'] < miniJpyRate){
+                miniJpyRate = jpyRate[i]['rate'];
+                miniJpyJson = jpyRate[i]
+            }
+
+            totalJpyRate += jpyRate[i]['rate'];
+            averageJpyRate = (Math.round((totalJpyRate / jpyRate.length) * 100)) / 100;
+
+        }
+        console.log("😀 ~ maxJpyRate 로직 후 : ", maxJpyRate)
+        console.log("😀 ~ JPY 환율이 가장 비쌌던 날짜와 가격 : maxJpyJson >> ", maxJpyJson)
+        console.log("😀 ~ miniJpyRate", miniJpyRate)
+        console.log("😀 ~ JPY 환율이 가장 쌌던 날짜와 가격 : miniJpyJson >> ", miniJpyJson)
+        console.log("😀 ~ totalJpyRate", totalJpyRate)
+        console.log("😀 ~ JPY의 환율 평균 : averageJpyRate >> ", averageJpyRate)
+
+    </script>
+
+    <script>
+
+        // 전역변수 선언
+        let selContry = document.getElementById("sel_contry");
+        console.log("😀 ~ selContry", selContry)
+        let countrySelTbody = document.getElementById("country_sel_tbody");
+
+
+        // 셀렉박스가 바뀔때마다의 함수
+        function f_changeContry(){
+            // alert("f_changeContry");
+            // 옵션의 밸류값 추출
+            let country_value = selContry.value;
+            // console.log("😀 ~ country_value", country_value)
+
+            // 안의 내용 비워주기
+            countrySelTbody.innerHTML = "";
+            let temp_table_html = "";
+            for(let key in allRate){
+                // console.log("JSON 포인문 : " , key, allRate[key]);
+                // 키값과 나라가 일치
+                if(key == country_value){
+                    // 배열 돌리기
+                    for(let i = 0; i < allRate[key].length; i++){
+
+                        temp_table_html += `<tr><td>${key} 
+                                        | </td><td>${allRate[key][i]["date"]} 
+                                        | </td><td>${allRate[key][i]["rate"]} | </td></tr>`
+
+                        
+                    }
+                    
+                }
+            }
+            countrySelTbody.innerHTML += temp_table_html;
+
+        }
+
+
+        // 나라 선택 박스에 값 넣기
+        window.onload = function(){
+            
+            /*  for(let i = 0; i < countryList.length; i++){
+                selContry.innerHTML += `<option value="${countryList[i]}">== ${countryList[i]} ==</option>`
+                // 랜더링 할 떄 포문을 한번에 다다다닥 넣으면 안좋다
+            } */
+
+            // 문자열에 더해준다음
+            // 랜더링은 한번만 하는게 좋다
+            let v_temp = "";
+            for(let i = 0; i < countryList.length; i++){
+                v_temp += `<option value="${countryList[i]}">== ${countryList[i]} ==</option>`
+            }
+            selContry.innerHTML += v_temp
+
+        }
+
+    </script>
+
+
+
+
+
+
+</body>
+</html>
