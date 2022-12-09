@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+    <title>csv 파일 만들기</title>
+</head>
+<body>
+
+    <div class="contains">
+        <input id="excelDownload" type="button" value="환율 csv 다운">
+    </div>
+
+
+    
+    <script>
+        const c_data = localStorage.getItem('exData');
+        const v_data = JSON.parse(c_data)["rates"];
+        // console.log("😀 ~ v_data", v_data);
+        // 날짜 리스트
+        const dateList = Object.keys(v_data);
+        console.log("😀 ~ dateList", dateList)
+        let krwRate = []; // 한국 환율
+        console.log("😀 ~ krwRate", krwRate)
+        let jpyRate = []; // 일본 환율
+        console.log("😀 ~ jpyRate", jpyRate)
+
+        for(let keys in v_data){
+            krwRate.push(v_data[keys]["KRW"].toFixed(2) );
+            jpyRate.push(v_data[keys]["JPY"].toFixed(2) );
+        }
+        
+        // 1. 다운로드 버튼 클릭 이벤트 
+        $("#excelDownload").click(function () {
+            // alert("클릭입니당~")
+            let filename = "testFile.csv";
+            getCSV(filename);
+        });
+
+        // 2. csv 생성 함수 만들기!
+        function getCSV(filename) {
+            var csv = [];
+            var row = [];
+            
+            //1열에는 컬럼명
+            row.push(
+                "날짜",
+                "한국 환율",
+                "일본 환율",
+            );
+            
+            // .join함수..! .join("구분자")
+            // 배열 인덱스 사이에 구분자가 들어가고
+            // 하나의 문자열로 바꿔줌
+            csv.push(row.join(","));
+
+            //chartDataList는 데이터 배열
+            for(let i = 0; i < dateList.length; i++){
+                row = [];
+                row.push(dateList[i]);
+                row.push(krwRate[i]);
+                row.push(jpyRate[i]);
+
+                csv.push(row.join(","));
+            };
+
+            downloadCSV(csv.join("\n"), filename);
+        }
+
+        // 3. CSV 다운로드 함수
+        function downloadCSV(csv, filename) {
+            var csvFile;
+            var downloadLink;
+
+            //한글 처리를 해주기 위해 BOM 추가하기
+            const BOM = "\uFEFF";
+            csv = BOM + csv;
+
+            csvFile = new Blob([csv], { type: "text/csv" });
+            downloadLink = document.createElement("a");
+            downloadLink.download = filename;
+            downloadLink.href = window.URL.createObjectURL(csvFile);
+            downloadLink.style.display = "none";
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+        }
+
+    </script>
+    
+    
+</body>
+</html>
