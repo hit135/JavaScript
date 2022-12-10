@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xml >> json 변환</title>
+</head>
+<body>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/x2js/1.2.0/xml2json.min.js" integrity="sha512-HX+/SvM7094YZEKOCtG9EyjRYvK8dKlFhdYAnVCGNxMkA59BZNSZTZrqdDlLXp0O6/NjDb1uKnmutUeuzHb3iQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        // xml <-> json 변환
+        // 대세는 json이지만, 일부는 아직 xml로 서비스중
+
+        // XML(Extensible Markup Language), 데이터를 정의하는 규칙을 제공하는 마크업 언어
+        // XML은 태그를 내 마음대로 만들 수 있음 (HTML은 정해진 태그만 사용 가능)
+
+        let v_xmlStr = "<?xml version='1.0' encoding='utf-8' ?>";
+        v_xmlStr += "<나만의태그>";
+        v_xmlStr += "<이름>박형구</이름>";
+        v_xmlStr += "<나이>30</나이>";
+        v_xmlStr += "</나만의태그>";
+
+        // DOMParser()는 xml 문자열을 xml 객체로 바꿔줌
+        let v_dP = new DOMParser();
+
+        // xml 문자열을 xml 객체로 바꾸기
+        let v_xml = v_dP.parseFromString(v_xmlStr, "text/xml");
+        console.log("v_xml ", v_xml)
+        console.log(v_xml.getElementsByTagName("이름") );
+        console.log(v_xml.getElementsByTagName("이름")[0] );
+        console.log(v_xml.getElementsByTagName("이름")[0].innerHTML );
+        
+        // xml 은 불편하다!! >> json 변환
+        // x2js 라이브러리에서 X2JS 객체 가져와 선언
+        let x2js = new X2JS();
+
+        // xml 문자열을 json객체로 변환
+        let v_json = x2js.xml_str2json(v_xmlStr);
+        console.log("v_json : ", v_json)
+
+        // xml을 json으로
+        let v_json2 = x2js.xml2json(v_xml);
+        console.log("c_json : ", v_json2);
+
+        // json객체를 xml 문자열로
+        let xml_str = x2js.json2xml_str(v_json);
+        console.log("xml_str : ", xml_str)
+
+        // json객체를 xml 객체로
+        let xml = x2js.json2xml(v_json);
+        console.log("xml : ", xml)
+
+
+
+    </script>
+    
+</body>
+</html>
