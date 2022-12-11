@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>미세먼지 시각화</title>
+</head>
+<body>
+    
+    <div style="width: 1500px; height: 1000px;">
+        <canvas id="myChart" width="100" height="60"></canvas>
+    </div>
+
+
+    
+    <script>
+        let url = "https://apis.data.go.kr/B552584/UlfptcaAlarmInqireSvc/getUlfptcaAlarmInfo?serviceKey=16uIzTzryuHnVrB4JPveq0nPHxIdIPg515hQFBw3lrFFl63sKKKYwQKAf7pfbusynsTd63dOA0qE4Ex4jjW3nA%3D%3D&returnType=json&numOfRows=100&pageNo=1&year=2022";
+
+        $(document).ready(function(){
+
+            // ajax로 받아오기
+            $.ajax({
+                    url : url 
+                    , type : "GET"
+                    , dataType : "json"
+                    , success : function(data){
+                        console.log(data);
+                        let fineDustDays = data["response"]["body"]["items"];
+                        console.log("fineDustDays : ", fineDustDays);
+                        // 지역만 뽑아내기
+                        let tempLocal = [];
+                        console.log("tempLocal : ", tempLocal)
+                        for(let i =0; i < fineDustDays.length; i++){
+                            tempLocal.push(fineDustDays[i].districtName);
+                        }
+                        // 중복제거!
+                        console.log("tempLocal : ", tempLocal);
+                        const set = new Set(tempLocal);
+                        const local = [...set];
+                        console.log("local : ", local);
+                        // 지역을 뽑아냈으니!
+                        // 이제 지역값을 비교해서 배열에 수를 추가해준다!
+                        let localNum = [];
+                        for(let i = 0; i < local.length; i++){
+                            let tempNum = 0;
+                            for(let j = 0; j < tempLocal.length; j++){
+                                if(local[i] == tempLocal[j]){
+                                    tempNum++
+                                }
+                            }
+                            localNum.push(tempNum);
+                        }
+                        console.log("localNum : " , localNum);
+                        // console.log("localNum.sort(); : ", localNum.sort());
+                        // 정렬하기 위해서는 지역과 숫자값을 짝지어줘야 한다
+                        let mateLocalNum = [];
+                        for(let i = 0; i < local.length; i++){
+                            let tempJson = {};
+                            tempJson["local"] = local[i];
+                            tempJson["localNum"] = localNum[i];
+                            mateLocalNum.push(tempJson);
+                        }
+                        console.log("mateLocalNum : " , mateLocalNum);
+                        // .slice()를 이용해서 변하지 않는 배열 복사
+                        let tempSortNum = localNum.slice();
+                        tempSortNum.sort(function(a,b) {
+                            return b-a;
+                        });
+                        console.log("tempSortNum : " , tempSortNum);
+                        // 이제 tempSortNum과 mateLocalNum의 밸류값 비교
+                        let sortLocal = [];
+                        for(let i = 0; i < tempSortNum.length ; i++){
+                            let tempSortLocal = "";
+                            for(let j = 0; j < mateLocalNum.length; j++){
+                                if(mateLocalNum[j]["localNum"] == tempSortNum[i]){
+                                    tempSortLocal = mateLocalNum[j]["local"];
+                                    // 지역이 중복되지 않도록 뽑은 밸류값은 0으로 만들기
+                                    // 그리고 작은 포문 멈춰주기
+                                    mateLocalNum[j]["localNum"] = 0;
+                                    break;
+                                }
+                            }
+                            sortLocal.push(tempSortLocal);
+                        }
+                        // 내림차순 정렬된 지역 : sortLocal
+                        // 내림차순 정렬된 값들 : tempSortNum
+                        console.log("sortLocal : " , sortLocal);
+
+                        // 2022년에 localNum은 경보가 발령된 수
+                        // local은 지역들 수
+                        // 이것들로 차트만 그려주면 된다
+                        drawChart(sortLocal , tempSortNum);
+                    }
+                    , error : function(e){
+                        console.log(e);
+                    }
+                });
+        });
+
+        // 전역에 랜덤 생상 선언
+        let colorArray = [];
+        for(let i = 0 ; i < 17; i++){
+            randomRgb(colorArray);
+        }
+        console.log("colorArray : " , colorArray);
+        // 차트 그리는 함수
+        function drawChart(local , localNum){
+            const ctx = document.getElementById("myChart");
+            myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: local, 
+                    datasets: [{
+                        label: '2022년 미세먼지 이력',
+                        data: localNum, 
+                        backgroundColor : colorArray
+                    }]
+                },
+                options: {
+                    plugins:{
+                        legend:{
+                            display : false
+                        }
+                    }
+                }
+            });
+        }
+
+        // 랜덤 색상 배정 함수
+        function randomRgb(colorArray) {
+            let tempR = Math.ceil(Math.random() * 255);
+            let tempG = Math.ceil(Math.random() * 255);
+            let tempB = Math.ceil(Math.random() * 255);
+
+            "rgb(255, 0, 255, 0.2)"
+
+            colorArray.push("rgb(" + tempR + ", " + tempG + ", "
+                        + tempB + ", 0.5)");
+        }
+
+    </script>
+</body>
+</html>
