@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.youth.policy.dao.IPolicyDao">
+
+<delete id="deleteAll">
+	DELETE FROM young_policy
+</delete>
+
+<insert id="insertPolicy" parameterType="kr.or.youth.policy.vo.YouthPolicy">
+	INSERT INTO young_policy
+			(
+				  BASEROWNUM
+				, BIZID
+				, POLYBIZTY
+				, POLYBIZSJNM
+				, POLYITCNCN
+				, PLCYTPNM
+				, SPORSCVL
+				, SPORCN
+				, AGEINFO
+				, EMPMSTTSCN
+				, ACCRRQISCN
+				, MAJRRQISCN
+				, CNSGNMOR
+				, RQUTPRDCN
+				, RQUTURLA
+			)
+			VALUES (
+						#{rownum}
+						, #{bizId}
+						, #{polyBizTy}
+						, #{polyBizSjnm}
+						, #{polyItcnCn}
+						, #{plcyTpNm}
+						, #{sporScvl}
+						, #{sporCn}
+						, #{ageInfo}
+						, #{empmSttsCn}
+						, #{accrRqisCn}
+						, #{majrRqisCn}
+						, #{cnsgNmor}
+						, #{rqutPrdCn}
+						, #{rqutUrla}
+					)
+</insert>
+
+
+
+
+</mapper>

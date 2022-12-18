@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <display-name>project</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  
+  
+  
+<welcome-file-list>
+  <welcome-file>index.jsp</welcome-file>
+</welcome-file-list>
+  
+<filter>
+	<filter-name>First_EncodingFilter</filter-name>
+	<filter-class>kr.or.youth.common.util.YouthPolicyEncodingFilter</filter-class>
+</filter>
+<filter-mapping>
+	<filter-name>First_EncodingFilter</filter-name>
+	<url-pattern>/*</url-pattern>
+</filter-mapping>
+  
+  
+  
+  
+<!-- DB에 연결 -->  
+<servlet>
+	<servlet-name>OracleDriverLoder</servlet-name>
+	<servlet-class>kr.or.youth.jdbc.OracleDriverLoder</servlet-class>
+	<load-on-startup>1</load-on-startup>
+</servlet>
+  
+
+
+<servlet>
+	<servlet-name>YouthPolicyServlet</servlet-name>
+	<servlet-class>kr.or.youth.servlet.YouthPolicyServlet</servlet-class>
+	<load-on-startup>2</load-on-startup>
+</servlet>
+<servlet-mapping>
+	<servlet-name>YouthPolicyServlet</servlet-name>
+	<url-pattern>*.do</url-pattern>
+</servlet-mapping>
+  
+<!-- json으로 정책 가져오기 -->
+<servlet>
+	<servlet-name>JSONServlet</servlet-name>
+	<servlet-class>kr.or.youth.servlet.JSONServlet</servlet-class>
+	<load-on-startup>3</load-on-startup>
+</servlet>
+<servlet-mapping>
+	<servlet-name>JSONServlet</servlet-name>
+	<url-pattern>/json</url-pattern>
+</servlet-mapping>
+
+<!-- json으로 포인트 주기 -->
+<servlet>
+	<servlet-name>AttendanceServlet</servlet-name>
+	<servlet-class>kr.or.youth.servlet.AttendanceServlet</servlet-class>
+	<load-on-startup>3</load-on-startup>
+</servlet>
+<servlet-mapping>
+	<servlet-name>AttendanceServlet</servlet-name>
+	<url-pattern>/attendance</url-pattern>
+</servlet-mapping> 
+  
+<!-- 달력에 출석 도장 찍어주기 -->
+<servlet>
+	<servlet-name>AttendanceCheckServlet</servlet-name>
+	<servlet-class>kr.or.youth.servlet.AttendanceCheckServlet</servlet-class>
+	<load-on-startup>3</load-on-startup>
+</servlet>
+<servlet-mapping>
+	<servlet-name>AttendanceCheckServlet</servlet-name>
+	<url-pattern>/attendCheck</url-pattern>
+</servlet-mapping> 
+
+<!-- 멤버리스트 가져오기 -->
+<servlet>
+	<servlet-name>MemberListServlet</servlet-name>
+	<servlet-class>kr.or.youth.servlet.MemberListServlet</servlet-class>
+	<load-on-startup>3</load-on-startup>
+</servlet>
+<servlet-mapping>
+	<servlet-name>MemberListServlet</servlet-name>
+	<url-pattern>/memberList</url-pattern>
+</servlet-mapping> 
+  
+  
+  
+</web-app>
